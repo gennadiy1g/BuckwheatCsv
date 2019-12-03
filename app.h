@@ -6,10 +6,44 @@
 
 #include <wx/grid.h>
 
+enum { ID_Hello = 1 };
+
 class App : public wxApp
 {
 public:
     virtual bool OnInit();
+};
+
+class AppGridTable : public wxGridTableBase
+{
+public:
+    AppGridTable() {};
+
+    int GetNumberRows() override
+    {
+        return 100;
+    }
+
+    int GetNumberCols() override
+    {
+        return 26;
+    }
+
+    wxString GetValue(int row, int col) override
+    {
+        return wxString::Format("(%d, %d)", row, col);
+    }
+
+    void SetValue(int, int, const wxString&) override
+    { /* ignore */
+    }
+
+    bool IsEmptyCell(int, int) override
+    {
+        return false;
+    }
+
+private:
 };
 
 class AppFrame : public wxFrame
@@ -23,6 +57,5 @@ private:
     void OnAbout(wxCommandEvent& event);
 
     wxGrid* mGrid;
+    AppGridTable* mTable;
 };
-
-enum { ID_Hello = 1 };

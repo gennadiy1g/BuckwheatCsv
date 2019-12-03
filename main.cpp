@@ -27,7 +27,8 @@ AppFrame::AppFrame()
     SetMenuBar(menuBar);
 
     mGrid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    mGrid->CreateGrid(100, 26);
+    mTable = new AppGridTable();
+    mGrid->SetTable(mTable, true);
 
     CreateStatusBar();
     SetStatusText("Welcome to wxWidgets!");
