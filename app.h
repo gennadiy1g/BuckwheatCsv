@@ -31,7 +31,7 @@ public:
 
     wxString GetValue(int row, int col) override
     {
-        return wxString::Format("(%d, %d)", row, col);
+        return L"";
     }
 
     void SetValue(int, int, const wxString&) override
