@@ -58,5 +58,5 @@ private:
     void OnAbout(wxCommandEvent& event);
 
     wxGrid* mGrid;
-    EmptyGridTable* mTable;
+    wxGridTableBase* mTable;
 };
