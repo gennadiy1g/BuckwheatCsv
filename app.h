@@ -14,6 +14,20 @@ public:
     virtual bool OnInit();
 };
 
+class MainFrame : public wxFrame
+{
+public:
+    MainFrame();
+
+private:
+    void OnHello(wxCommandEvent& event);
+    void OnExit(wxCommandEvent& event);
+    void OnAbout(wxCommandEvent& event);
+
+    wxGrid* mGrid;
+    wxGridTableBase* mTable;
+};
+
 class EmptyGridTable : public wxGridTableBase
 {
 public:
@@ -43,20 +57,4 @@ public:
     {
         return false;
     }
-
-private:
-};
-
-class MainFrame : public wxFrame
-{
-public:
-    MainFrame();
-
-private:
-    void OnHello(wxCommandEvent& event);
-    void OnExit(wxCommandEvent& event);
-    void OnAbout(wxCommandEvent& event);
-
-    wxGrid* mGrid;
-    wxGridTableBase* mTable;
 };
