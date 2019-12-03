@@ -18,6 +18,7 @@ class EmptyGridTable : public wxGridTableBase
 {
 public:
     EmptyGridTable() {};
+    virtual ~EmptyGridTable() = default; // Defaulted virtual destructor
 
     int GetNumberRows() override
     {
