@@ -27,7 +27,7 @@ AppFrame::AppFrame()
     SetMenuBar(menuBar);
 
     mGrid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    mTable = new AppGridTable();
+    mTable = new EmptyGridTable();
     mGrid->SetTable(mTable, true);
 
     CreateStatusBar();

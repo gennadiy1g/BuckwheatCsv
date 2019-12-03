@@ -14,10 +14,10 @@ public:
     virtual bool OnInit();
 };
 
-class AppGridTable : public wxGridTableBase
+class EmptyGridTable : public wxGridTableBase
 {
 public:
-    AppGridTable() {};
+    EmptyGridTable() {};
 
     int GetNumberRows() override
     {
@@ -57,5 +57,5 @@ private:
     void OnAbout(wxCommandEvent& event);
 
     wxGrid* mGrid;
-    AppGridTable* mTable;
+    EmptyGridTable* mTable;
 };
