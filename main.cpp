@@ -5,7 +5,7 @@
 #include <wx/wx.h>
 #endif
 
-class MyApp : public wxApp
+class App : public wxApp
 {
 public:
     virtual bool OnInit();
@@ -24,9 +24,9 @@ private:
 
 enum { ID_Hello = 1 };
 
-wxIMPLEMENT_APP(MyApp);
+wxIMPLEMENT_APP(App);
 
-bool MyApp::OnInit()
+bool App::OnInit()
 {
     AppFrame* frame = new AppFrame();
     frame->Show(true);
