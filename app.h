@@ -47,10 +47,10 @@ public:
 private:
 };
 
-class AppFrame : public wxFrame
+class MainFrame : public wxFrame
 {
 public:
-    AppFrame();
+    MainFrame();
 
 private:
     void OnHello(wxCommandEvent& event);

@@ -4,12 +4,12 @@ wxIMPLEMENT_APP(App);
 
 bool App::OnInit()
 {
-    AppFrame* frame = new AppFrame();
+    MainFrame* frame = new MainFrame();
     frame->Show(true);
     return true;
 }
 
-AppFrame::AppFrame()
+MainFrame::MainFrame()
     : wxFrame(NULL, wxID_ANY, "Hello World")
 {
     wxMenu* menuFile = new wxMenu;
@@ -33,22 +33,22 @@ AppFrame::AppFrame()
     CreateStatusBar();
     SetStatusText("Welcome to wxWidgets!");
 
-    Bind(wxEVT_MENU, &AppFrame::OnHello, this, ID_Hello);
-    Bind(wxEVT_MENU, &AppFrame::OnAbout, this, wxID_ABOUT);
-    Bind(wxEVT_MENU, &AppFrame::OnExit, this, wxID_EXIT);
+    Bind(wxEVT_MENU, &MainFrame::OnHello, this, ID_Hello);
+    Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
+    Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
 }
 
-void AppFrame::OnExit(wxCommandEvent& event)
+void MainFrame::OnExit(wxCommandEvent& event)
 {
     Close(true);
 }
 
-void AppFrame::OnAbout(wxCommandEvent& event)
+void MainFrame::OnAbout(wxCommandEvent& event)
 {
     wxMessageBox("This is a wxWidgets Hello World example", "About Hello World", wxOK | wxICON_INFORMATION);
 }
 
-void AppFrame::OnHello(wxCommandEvent& event)
+void MainFrame::OnHello(wxCommandEvent& event)
 {
     wxLogMessage("Hello world from wxWidgets!");
 }
