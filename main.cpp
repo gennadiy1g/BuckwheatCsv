@@ -51,5 +51,6 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    wxLogMessage("Hello world from wxWidgets!");
+    mTable = new CsvFileGridTable();
+    mGrid->SetTable(mTable, true);
 }
