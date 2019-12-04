@@ -1,3 +1,4 @@
+#include "GridTable.h"
 #include "app.h"
 
 wxIMPLEMENT_APP(App);
