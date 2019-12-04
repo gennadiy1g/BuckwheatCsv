@@ -7,8 +7,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="App.h"/>
     <File Name="GridTable.h"/>
-    <File Name="app.h"/>
     <File Name="main.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
