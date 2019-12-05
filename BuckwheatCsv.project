@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="BuckwheatCsv" Version="11000" InternalType="GUI">
   <VirtualDirectory Name="CsvTable">
+    <File Name="CsvTable/utilities.h"/>
+    <File Name="CsvTable/utilities.cpp"/>
+    <File Name="CsvTable/log.h"/>
     <File Name="CsvTable/CsvTable.h"/>
     <File Name="CsvTable/CsvTable.cpp"/>
   </VirtualDirectory>
