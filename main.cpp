@@ -28,8 +28,8 @@ MainFrame::MainFrame()
     SetMenuBar(menuBar);
 
     mGrid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    mTable = new EmptyGridTable();
-    mGrid->SetTable(mTable, true);
+    mGridTable = new EmptyGridTable();
+    mGrid->SetTable(mGridTable, true);
 
     CreateStatusBar();
     SetStatusText("Welcome to wxWidgets!");
@@ -51,6 +51,6 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    mTable = new CsvFileGridTable();
-    mGrid->SetTable(mTable, true);
+    mGridTable = new CsvFileGridTable();
+    mGrid->SetTable(mGridTable, true);
 }

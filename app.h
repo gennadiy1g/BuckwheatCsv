@@ -25,5 +25,5 @@ private:
     void OnAbout(wxCommandEvent& event);
 
     wxGrid* mGrid;
-    wxGridTableBase* mTable;
+    wxGridTableBase* mGridTable;
 };
