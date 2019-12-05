@@ -1,32 +1,17 @@
-#include <boost/locale/localization_backend.hpp>
-#include <numeric>
-
 #include "App.h"
-#include "CsvTable/log.h"
 #include "CsvTable/utilities.h"
 #include "GridTable.h"
-
-namespace blocale = boost::locale;
-
-using namespace std::literals::string_literals;
 
 wxIMPLEMENT_APP(App);
 
 bool App::OnInit()
 {
+    MainFrame* frame = new MainFrame();
+    frame->Show(true);
+
     initLocalization();
     initLogging();
 
-    auto& gLogger = GlobalLogger::get();
-    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "->" << FUNCTION_FILE_LINE;
-
-    auto backends = blocale::localization_backend_manager::global().get_all_backends();
-    std::string backendsList = std::accumulate(backends.cbegin(), backends.cend(), ""s,
-        [](const std::string& a, const std::string& b) { return a + (a == "" ? "" : ", ") + b; });
-    BOOST_LOG_SEV(gLogger, bltrivial::debug) << "Localization backends: " << backendsList << '.';
-
-    MainFrame* frame = new MainFrame();
-    frame->Show(true);
     return true;
 }
 
