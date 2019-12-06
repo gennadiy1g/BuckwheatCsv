@@ -7,6 +7,8 @@ wxIMPLEMENT_APP(App);
 bool App::OnInit()
 {
     MainFrame* frame = new MainFrame();
+    mLogWindow = std::make_unique<wxLogWindow>(frame, "wxLog", true, false);
+    wxLogMessage("%s", "Hello");
     frame->Show(true);
 
     initLocalization();

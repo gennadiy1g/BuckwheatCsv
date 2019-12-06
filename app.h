@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include <wx/wxprec.h>
 
 #ifndef WX_PRECOMP
@@ -7,6 +9,7 @@
 #endif
 
 #include <wx/grid.h>
+#include <wx/log.h>
 
 enum { ID_Hello = 1 };
 
@@ -14,6 +17,9 @@ class App : public wxApp
 {
 public:
     virtual bool OnInit();
+
+private:
+    std::unique_ptr<wxLogWindow> mLogWindow;
 };
 
 class MainFrame : public wxFrame
