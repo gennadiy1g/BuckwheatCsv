@@ -32,7 +32,7 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="MinGW ( MinGW )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g;-O0;-Wall;$(shell wx-config --cxxflags --unicode=yes  )" C_Options="-g;-O0;-Wall;$(shell wx-config --cxxflags --unicode=yes  )" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0"/>
+      <Compiler Options="-g;-O0;-Wall;-mthreads;-DHAVE_W32API_H;-D__WXMSW__;-D_UNICODE;-IC:/wxWidgets-3.1.3/lib/gcc_lib/mswu;-IC:/wxWidgets-3.1.3/include;-Wno-ctor-dtor-privacy;-pipe;-fmessage-length=0" C_Options="-g;-O0;-Wall;-mthreads;-DHAVE_W32API_H;-D__WXMSW__;-D_UNICODE;-IC:/wxWidgets-3.1.3/lib/gcc_lib/mswu;-IC:/wxWidgets-3.1.3/include;-Wno-ctor-dtor-privacy;-pipe;-fmessage-length=0" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0"/>
       <Linker Options="-mwindows;$(shell wx-config   --libs --unicode=yes)" Required="yes"/>
       <ResourceCompiler Options="$(shell wx-config --rcflags)" Required="no"/>
       <General OutputFile="" IntermediateDirectory="" Command="$(WorkspacePath)\cmake-build-$(WorkspaceConfiguration)\output\$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(WorkspacePath)/cmake-build-$(WorkspaceConfiguration)/output" PauseExecWhenProcTerminates="yes" IsGUIProgram="yes" IsEnabled="yes"/>
