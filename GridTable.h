@@ -79,6 +79,6 @@ public:
 
 private:
     std::unique_ptr<TokenizedFileLines> mTokenizedFileLines;
-    int mPrevRow { -1 };
-    const std::vector<std::wstring>* mPrevTokenizedFileLine;
+    int mRow { -1 };
+    const std::vector<std::wstring>* mTokenizedFileLine;
 };

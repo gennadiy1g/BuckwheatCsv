@@ -8,9 +8,9 @@ CsvFileGridTable::CsvFileGridTable()
 
 wxString CsvFileGridTable::GetValue(int row, int col)
 {
-    if (row != mPrevRow) {
-        mPrevTokenizedFileLine = &mTokenizedFileLines->getTokenizedLine(row);
-        mPrevRow = row;
+    if (row != mRow) {
+        mTokenizedFileLine = &mTokenizedFileLines->getTokenizedLine(row);
+        mRow = row;
     }
-    return mPrevTokenizedFileLine->at(col);
+    return mTokenizedFileLine->at(col);
 }
