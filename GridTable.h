@@ -12,8 +12,7 @@
 
 #include "CsvTable/CsvTable.h"
 
-class EmptyGridTable : public wxGridTableBase
-{
+class EmptyGridTable : public wxGridTableBase {
 public:
     EmptyGridTable() {};
     virtual ~EmptyGridTable() = default; // Defaulted virtual destructor
@@ -43,15 +42,9 @@ public:
     }
 };
 
-class CsvFileGridTable : public wxGridTableBase
-{
+class CsvFileGridTable : public wxGridTableBase {
 public:
-    CsvFileGridTable()
-    {
-        mTokenizedFileLines =
-            std::make_unique<TokenizedFileLines>(LR"^(C:\Users\genna_000\Documents\BuckwheatCsv\test data\Hits.csv)^");
-        mTokenizedFileLines->getPositionsOfSampleLines();
-    }
+    CsvFileGridTable();
 
     virtual ~CsvFileGridTable() = default; // Defaulted virtual destructor
 
@@ -73,10 +66,7 @@ public:
         return mTokenizedFileLines->numColumns();
     }
 
-    wxString GetValue(int row, int col) override
-    {
-        return mTokenizedFileLines->getTokenizedLine(row).at(col);
-    }
+    wxString GetValue(int row, int col) override;
 
     void SetValue(int, int, const wxString&) override
     { /* ignore */
@@ -89,4 +79,6 @@ public:
 
 private:
     std::unique_ptr<TokenizedFileLines> mTokenizedFileLines;
+    int mPrevRow { -1 };
+    const std::vector<std::wstring>* mPrevTokenizedFileLine;
 };
