@@ -26,7 +26,7 @@ bool App::OnInit()
 }
 
 MainFrame::MainFrame()
-    : wxFrame(NULL, wxID_ANY, "Hello World")
+    : wxFrame(NULL, wxID_ANY, "Buckwheat CSV")
 {
     wxMenu* menuFile = new wxMenu;
     menuFile->Append(wxID_OPEN, "&Open...\tCtrl-O", "Open file");
@@ -67,7 +67,7 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    wxFileDialog openFileDialog(this, "Open File", "", "", "Delimited text files (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab",
+    wxFileDialog openFileDialog(this, "Open file", "", "", "Delimited text files (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab",
         wxFD_OPEN | wxFD_FILE_MUST_EXIST);
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
