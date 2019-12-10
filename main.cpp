@@ -4,6 +4,8 @@
 #include "CsvTable/utilities.h"
 #include "GridTable.h"
 
+using namespace std::literals::string_literals;
+
 wxIMPLEMENT_APP(App);
 
 bool App::OnInit()
@@ -69,8 +71,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
     }
-    wxLogDebug("%s (%s %s:%i)", openFileDialog.GetPath(), __FUNCTION__, __FILE__, __LINE__);
-
-    //    mGridTable = new CsvFileGridTable();
-    //    mGrid->SetTable(mGridTable, true);
+    mGridTable = new CsvFileGridTable(bfs::path(openFileDialog.GetPath()));
+    mGrid->SetTable(mGridTable, true);
+    mGrid->ForceRefresh();
 }
