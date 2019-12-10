@@ -43,6 +43,7 @@ MainFrame::MainFrame()
     SetMenuBar(menuBar);
 
     mGrid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+    mGrid->EnableEditing(false);
     mGridTable = new EmptyGridTable();
     mGrid->SetTable(mGridTable, true);
 
