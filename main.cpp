@@ -72,6 +72,8 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         return;
     }
     mGridTable = new CsvFileGridTable(bfs::path(openFileDialog.GetPath()));
+    mGrid->BeginBatch();
     mGrid->SetTable(mGridTable, true);
-    mGrid->ForceRefresh();
+    mGrid->EndBatch();
+    //    mGrid->ForceRefresh();
 }
