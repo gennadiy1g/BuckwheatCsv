@@ -1,8 +1,8 @@
 #include "GridTable.h"
 
-CsvFileGridTable::CsvFileGridTable()
+CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath)
 {
-    mTokenizedFileLines = std::make_unique<TokenizedFileLines>(LR"^(C:\Users\genna_000\Documents\BuckwheatCsv\test data\Hits.csv)^");
+    mTokenizedFileLines = std::make_unique<TokenizedFileLines>(filePath);
 }
 
 wxString CsvFileGridTable::GetValue(int row, int col)
