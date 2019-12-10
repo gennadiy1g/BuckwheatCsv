@@ -1,3 +1,5 @@
+#include <wx/filedlg.h>
+
 #include "App.h"
 #include "CsvTable/utilities.h"
 #include "GridTable.h"
@@ -62,6 +64,13 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    mGridTable = new CsvFileGridTable();
-    mGrid->SetTable(mGridTable, true);
+    wxFileDialog openFileDialog(this, "Open File", "", "", "Delimited text files (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab",
+        wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+    if (openFileDialog.ShowModal() == wxID_CANCEL) {
+        return;
+    }
+    wxLogDebug("%s (%s %s:%i)", openFileDialog.GetPath(), __FUNCTION__, __FILE__, __LINE__);
+
+    //    mGridTable = new CsvFileGridTable();
+    //    mGrid->SetTable(mGridTable, true);
 }
