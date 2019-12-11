@@ -13,3 +13,8 @@ wxString CsvFileGridTable::GetValue(int row, int col)
     }
     return mTokenizedFileLine->at(col);
 }
+
+wxString CsvFileGridTable::GetColLabelValue(int col)
+{
+    return wxGridTableBase::GetColLabelValue(col);
+}

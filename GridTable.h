@@ -52,6 +52,8 @@ public:
 
     bool IsEmptyCell(int, int) override { return false; }
 
+    virtual wxString GetColLabelValue(int col) override;
+
 private:
     std::unique_ptr<TokenizedFileLines> mTokenizedFileLines;
     int mRow { -1 };
