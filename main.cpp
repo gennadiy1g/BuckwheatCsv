@@ -1,8 +1,8 @@
 #include <wx/filedlg.h>
 
-#include "App.h"
 #include "CsvTable/utilities.h"
 #include "GridTable.h"
+#include "main.h"
 
 using namespace std::literals::string_literals;
 

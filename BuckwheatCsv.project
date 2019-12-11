@@ -10,8 +10,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="main.h"/>
     <File Name="GridTable.cpp"/>
-    <File Name="App.h"/>
     <File Name="GridTable.h"/>
     <File Name="main.cpp"/>
   </VirtualDirectory>
