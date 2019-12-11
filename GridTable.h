@@ -17,29 +17,15 @@ public:
     EmptyGridTable() {};
     virtual ~EmptyGridTable() = default; // Defaulted virtual destructor
 
-    int GetNumberRows() override
-    {
-        return 100;
-    }
+    int GetNumberRows() override { return 100; }
 
-    int GetNumberCols() override
-    {
-        return 26;
-    }
+    int GetNumberCols() override { return 26; }
 
-    wxString GetValue(int row, int col) override
-    {
-        return L"";
-    }
+    wxString GetValue(int row, int col) override { return L""; }
 
-    void SetValue(int, int, const wxString&) override
-    { /* ignore */
-    }
+    void SetValue(int, int, const wxString&) override {}
 
-    bool IsEmptyCell(int, int) override
-    {
-        return false;
-    }
+    bool IsEmptyCell(int, int) override { return false; }
 };
 
 class CsvFileGridTable : public wxGridTableBase {
@@ -56,26 +42,15 @@ public:
     CsvFileGridTable(CsvFileGridTable&& src) = default;
     CsvFileGridTable& operator=(CsvFileGridTable&& rhs) = default;
 
-    int GetNumberRows() override
-    {
-        return mTokenizedFileLines->numLines();
-    }
+    int GetNumberRows() override { return mTokenizedFileLines->numLines(); }
 
-    int GetNumberCols() override
-    {
-        return mTokenizedFileLines->numColumns();
-    }
+    int GetNumberCols() override { return mTokenizedFileLines->numColumns(); }
 
     wxString GetValue(int row, int col) override;
 
-    void SetValue(int, int, const wxString&) override
-    { /* ignore */
-    }
+    void SetValue(int, int, const wxString&) override {}
 
-    bool IsEmptyCell(int, int) override
-    {
-        return false;
-    }
+    bool IsEmptyCell(int, int) override { return false; }
 
 private:
     std::unique_ptr<TokenizedFileLines> mTokenizedFileLines;
