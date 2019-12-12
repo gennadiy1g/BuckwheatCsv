@@ -42,7 +42,7 @@ public:
     CsvFileGridTable(CsvFileGridTable&& src) = default;
     CsvFileGridTable& operator=(CsvFileGridTable&& rhs) = default;
 
-    int GetNumberRows() override { return mTokenizedFileLines->numLines(); }
+    int GetNumberRows() override;
 
     int GetNumberCols() override { return mTokenizedFileLines->numColumns(); }
 
@@ -57,5 +57,6 @@ public:
 private:
     std::unique_ptr<TokenizedFileLines> mTokenizedFileLines;
     int mRow { -1 };
-    const std::vector<std::wstring>* mTokenizedFileLine;
+    bool mHeadersInFirstRow { true };
+    const std::vector<std::wstring>* mTokenizedFileLine { nullptr };
 };
