@@ -8,7 +8,7 @@
 
 class OpenFileDialog : public wxDialog {
 public:
-    OpenFileDialog(wxWindow* parent, wxWindowID id); // Constructor
+    OpenFileDialog(wxWindow* parent); // Constructor
     virtual ~OpenFileDialog() = default; // Defaulted virtual destructor
 
     // Disallow assignment and pass-by-value.
@@ -18,4 +18,6 @@ public:
     // Explicitly default move constructor and move assignment operator.
     OpenFileDialog(OpenFileDialog&& src) = default;
     OpenFileDialog& operator=(OpenFileDialog&& rhs) = default;
+
+    wxString GetPath() const;
 };

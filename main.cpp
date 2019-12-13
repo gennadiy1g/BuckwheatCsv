@@ -2,6 +2,7 @@
 
 #include "CsvTable/utilities.h"
 #include "GridTable.h"
+#include "OpenFileDialog.h"
 #include "main.h"
 
 using namespace std::literals::string_literals;
@@ -67,8 +68,7 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    wxFileDialog openFileDialog(this, "Open file", "", "", "Delimited text files (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab",
-        wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+    OpenFileDialog openFileDialog(this);
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
     }
