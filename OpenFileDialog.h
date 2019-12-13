@@ -1,0 +1,21 @@
+#pragma once
+
+#include <wx/wxprec.h>
+
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
+
+class OpenFileDialog : public wxDialog {
+public:
+    OpenFileDialog(wxWindow* parent, wxWindowID id); // Constructor
+    virtual ~OpenFileDialog() = default; // Defaulted virtual destructor
+
+    // Disallow assignment and pass-by-value.
+    OpenFileDialog(const OpenFileDialog& src) = delete;
+    OpenFileDialog& operator=(const OpenFileDialog& rhs) = delete;
+
+    // Explicitly default move constructor and move assignment operator.
+    OpenFileDialog(OpenFileDialog&& src) = default;
+    OpenFileDialog& operator=(OpenFileDialog&& rhs) = default;
+};

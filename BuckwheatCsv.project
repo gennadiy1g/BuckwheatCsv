@@ -10,6 +10,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="OpenFileDialog.cpp"/>
+    <File Name="OpenFileDialog.h"/>
     <File Name="main.h"/>
     <File Name="GridTable.cpp"/>
     <File Name="GridTable.h"/>
