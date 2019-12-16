@@ -1,5 +1,6 @@
 #pragma once
 
+#include <wx/filepicker.h>
 #include <wx/wxprec.h>
 
 #ifndef WX_PRECOMP
@@ -20,4 +21,7 @@ public:
     OpenFileDialog& operator=(OpenFileDialog&& rhs) = default;
 
     wxString GetPath() const;
+
+private:
+    wxFilePickerCtrl* mFilePickerCtrl { nullptr };
 };
