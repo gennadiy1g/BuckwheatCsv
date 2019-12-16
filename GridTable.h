@@ -30,7 +30,7 @@ public:
 
 class CsvFileGridTable : public wxGridTableBase {
 public:
-    CsvFileGridTable(const bfs::path& filePath);
+    explicit CsvFileGridTable(const bfs::path& filePath);
 
     virtual ~CsvFileGridTable() = default; // Defaulted virtual destructor
 
