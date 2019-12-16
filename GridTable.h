@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include <wx/wxprec.h>
 
 #ifndef WX_PRECOMP
@@ -44,7 +42,7 @@ public:
 
     int GetNumberRows() override;
 
-    int GetNumberCols() override { return mTokenizedFileLines->numColumns(); }
+    int GetNumberCols() override { return mTokenizedFileLines.numColumns(); }
 
     wxString GetValue(int row, int col) override;
 
@@ -55,7 +53,7 @@ public:
     virtual wxString GetColLabelValue(int col) override;
 
 private:
-    std::unique_ptr<TokenizedFileLines> mTokenizedFileLines;
+    TokenizedFileLines mTokenizedFileLines;
     int mRow { -1 };
     bool mHeadersInFirstRow { true };
     const std::vector<std::wstring>* mTokenizedFileLine { nullptr };
