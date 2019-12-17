@@ -22,5 +22,3 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     SetSizerAndFit(topSizer); // use the sizer for layout and set size and hints
 }
-
-wxString OpenFileDialog::GetPath() const { return ""; }

@@ -20,7 +20,7 @@ public:
     OpenFileDialog(OpenFileDialog&& src) = default;
     OpenFileDialog& operator=(OpenFileDialog&& rhs) = default;
 
-    wxString GetPath() const;
+    wxString GetPath() const { return mFilePickerCtrl->GetPath(); };
 
 private:
     wxFilePickerCtrl* mFilePickerCtrl { nullptr };
