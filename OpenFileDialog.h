@@ -23,5 +23,7 @@ public:
     wxString GetPath() const { return mFilePickerCtrl->GetPath(); };
 
 private:
+    void OnOK(wxCommandEvent& event);
+
     wxFilePickerCtrl* mFilePickerCtrl { nullptr };
 };
