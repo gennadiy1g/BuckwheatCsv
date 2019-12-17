@@ -10,13 +10,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     topSizer->Add(mFilePickerCtrl, wxSizerFlags(0).Align(wxALIGN_CENTER_HORIZONTAL).Border(wxALL));
 
-    wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
-
-    buttonSizer->Add(new wxButton(this, wxID_OK, "OK"),
-        wxSizerFlags(0).Align(wxALIGN_CENTER_VERTICAL).Border(wxALL));
-
-    buttonSizer->Add(new wxButton(this, wxID_CANCEL, "Cancel"),
-        wxSizerFlags(0).Align(wxALIGN_CENTER_VERTICAL).Border(wxALL));
+    auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
 
     topSizer->Add(buttonSizer, wxSizerFlags(0).Center());
 
