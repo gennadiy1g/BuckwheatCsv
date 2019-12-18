@@ -10,9 +10,9 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     topSizer->Add(mFilePickerCtrl, wxSizerFlags(0).Align(wxALIGN_CENTER_HORIZONTAL).Border(wxALL));
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
-    topSizer->Add(buttonSizer, wxSizerFlags(0).Center());
+    topSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
 
-    topSizer->AddSpacer(5);
+//    topSizer->AddSpacer(5);
 
     SetSizerAndFit(topSizer); // use the sizer for layout and set size and hints
 
