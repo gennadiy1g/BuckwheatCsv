@@ -12,8 +12,6 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     topSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
 
-//    topSizer->AddSpacer(5);
-
     SetSizerAndFit(topSizer); // use the sizer for layout and set size and hints
 
     Bind(wxEVT_BUTTON, &OpenFileDialog::OnOK, this, wxID_OK);
