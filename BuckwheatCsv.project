@@ -10,6 +10,7 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="resource.rc"/>
     <File Name="OpenFileDialog.cpp"/>
     <File Name="OpenFileDialog.h"/>
     <File Name="main.h"/>
