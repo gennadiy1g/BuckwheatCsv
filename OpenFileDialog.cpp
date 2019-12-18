@@ -9,6 +9,9 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     auto topSizer = new wxBoxSizer(wxVERTICAL);
     topSizer->Add(mFilePickerCtrl, wxSizerFlags(0).Align(wxALIGN_CENTER_HORIZONTAL).Border(wxALL));
 
+    auto separatorSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Separator character");
+    topSizer->Add(separatorSizer, wxSizerFlags(0).Border().Expand());
+
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     topSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
 
