@@ -17,7 +17,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     separatorSizer->Add(new wxRadioButton(this, wxID_ANY, "Vertical bar"), sizerFlags);
     separatorSizer->Add(new wxRadioButton(this, wxID_ANY, "Space"), sizerFlags);
     separatorSizer->Add(new wxRadioButton(this, wxID_ANY, "Other"), sizerFlags);
-    separatorSizer->Add(new wxTextCtrl(this, wxID_ANY), sizerFlags);
+    separatorSizer->Add(new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1)), sizerFlags);
 
     topSizer->Add(separatorSizer, wxSizerFlags(0).Border().Expand());
 
