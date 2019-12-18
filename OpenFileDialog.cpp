@@ -3,11 +3,10 @@
 OpenFileDialog::OpenFileDialog(wxWindow* parent)
     : wxDialog(parent, wxID_ANY, "Open file")
 {
-    mFilePickerCtrl = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)",
-        wxDefaultPosition, wxSize(500, -1), wxFLP_DEFAULT_STYLE);
+    mFilePickerCtrl = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)");
 
     auto topSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(mFilePickerCtrl, wxSizerFlags(0).Align(wxALIGN_CENTER_HORIZONTAL).Border(wxALL));
+    topSizer->Add(mFilePickerCtrl, wxSizerFlags(0).Border().Expand());
 
     auto separatorSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Separator character");
     wxSizerFlags sizerFlags(0);
