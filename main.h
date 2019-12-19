@@ -11,10 +11,7 @@
 #include <wx/grid.h>
 #include <wx/log.h>
 
-enum { ID_Hello = 1 };
-
-class App : public wxApp
-{
+class App : public wxApp {
 public:
     virtual bool OnInit();
 
@@ -22,8 +19,7 @@ private:
     std::unique_ptr<wxLogWindow> mLogWindow;
 };
 
-class MainFrame : public wxFrame
-{
+class MainFrame : public wxFrame {
 public:
     MainFrame();
 
