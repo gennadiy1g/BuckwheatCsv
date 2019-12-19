@@ -23,13 +23,13 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space"), sizerFlags);
     separatorSizer->Add(new wxRadioButton(this, ID_Other, "Other"), sizerFlags);
 
-    auto textCtrl = new wxTextCtrl();
+    mTextCtrl = new wxTextCtrl();
     /* A window can be created initially disabled by calling wxWindow::Enable() on it before calling wxWindow::Create()
      * to create the actual underlying window.
      * See https://docs.wxwidgets.org/3.1.3/classwx_window.html#a4e933aa891f42fbb3b87438057c573af for the example */
-    textCtrl->Enable(false);
-    textCtrl->Create(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1));
-    separatorSizer->Add(textCtrl, sizerFlags);
+    mTextCtrl->Enable(false);
+    mTextCtrl->Create(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1));
+    separatorSizer->Add(mTextCtrl, sizerFlags);
 
     topSizer->Add(separatorSizer, wxSizerFlags(0).Border().Expand());
 
@@ -55,4 +55,6 @@ void OpenFileDialog::OnOK(wxCommandEvent& event)
 void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
 {
     wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
+    mSeparatorID = event.GetId();
+    mTextCtrl->Enable(mSeparatorID == ID_Other);
 }

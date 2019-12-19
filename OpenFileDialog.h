@@ -36,4 +36,6 @@ private:
     void OnRadioButton(wxCommandEvent& event);
 
     wxFilePickerCtrl* mFilePickerCtrl { nullptr };
+    int mSeparatorID { ID_Comma };
+    wxTextCtrl* mTextCtrl { nullptr };
 };
