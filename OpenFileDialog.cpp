@@ -38,11 +38,11 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     SetSizerAndFit(topSizer); // use the sizer for layout and set size and hints
 
-    Bind(wxEVT_BUTTON, &OpenFileDialog::OnOK, this, wxID_OK);
+    Bind(wxEVT_BUTTON, &OpenFileDialog::OnOKButton, this, wxID_OK);
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnRadioButton, this, wxID_ANY);
 }
 
-void OpenFileDialog::OnOK(wxCommandEvent& event)
+void OpenFileDialog::OnOKButton(wxCommandEvent& event)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     if (!wxFile::Exists(GetPath())) {
