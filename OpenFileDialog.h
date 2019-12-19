@@ -7,6 +7,15 @@
 #include <wx/wx.h>
 #endif
 
+enum {
+    ID_Comma = wxID_HIGHEST + 1,
+    ID_Tab,
+    ID_Semicolon,
+    ID_VerticalBar,
+    ID_Space,
+    ID_Other
+};
+
 class OpenFileDialog : public wxDialog {
 public:
     OpenFileDialog(wxWindow* parent); // Constructor
@@ -24,6 +33,7 @@ public:
 
 private:
     void OnOK(wxCommandEvent& event);
+    void OnRadioButton(wxCommandEvent& event);
 
     wxFilePickerCtrl* mFilePickerCtrl { nullptr };
 };

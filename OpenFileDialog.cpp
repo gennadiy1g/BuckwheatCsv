@@ -13,15 +13,15 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     sizerFlags.Border().CenterVertical();
 
     auto radioButton = new wxRadioButton();
-    radioButton->Create(this, wxID_ANY, "Comma");
+    radioButton->Create(this, ID_Comma, "Comma");
     radioButton->SetValue(true);
     separatorSizer->Add(radioButton, sizerFlags);
 
-    separatorSizer->Add(new wxRadioButton(this, wxID_ANY, "Tab"), sizerFlags);
-    separatorSizer->Add(new wxRadioButton(this, wxID_ANY, "Semicolon"), sizerFlags);
-    separatorSizer->Add(new wxRadioButton(this, wxID_ANY, "Vertical bar"), sizerFlags);
-    separatorSizer->Add(new wxRadioButton(this, wxID_ANY, "Space"), sizerFlags);
-    separatorSizer->Add(new wxRadioButton(this, wxID_ANY, "Other"), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab"), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Semicolon, "Semicolon"), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar"), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space"), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Other, "Other"), sizerFlags);
 
     auto textCtrl = new wxTextCtrl();
     /* A window can be created initially disabled by calling wxWindow::Enable() on it before calling wxWindow::Create()
@@ -39,6 +39,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     SetSizerAndFit(topSizer); // use the sizer for layout and set size and hints
 
     Bind(wxEVT_BUTTON, &OpenFileDialog::OnOK, this, wxID_OK);
+    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnRadioButton, this, wxID_ANY);
 }
 
 void OpenFileDialog::OnOK(wxCommandEvent& event)
@@ -49,4 +50,9 @@ void OpenFileDialog::OnOK(wxCommandEvent& event)
         return;
     }
     event.Skip(true);
+}
+
+void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
+{
+    wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
 }
