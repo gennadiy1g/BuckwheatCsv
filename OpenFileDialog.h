@@ -32,7 +32,6 @@ public:
     wxString GetPath() const { return mFilePickerCtrl->GetPath(); };
 
 private:
-    void OnOKButton(wxCommandEvent& event);
     void OnRadioButton(wxCommandEvent& event);
 
     wxFilePickerCtrl* mFilePickerCtrl { nullptr };

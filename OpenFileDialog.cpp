@@ -39,18 +39,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     SetSizerAndFit(topSizer); // use the sizer for layout and set size and hints
 
-    Bind(wxEVT_BUTTON, &OpenFileDialog::OnOKButton, this, wxID_OK);
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnRadioButton, this, wxID_ANY);
-}
-
-void OpenFileDialog::OnOKButton(wxCommandEvent& event)
-{
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    if (!wxFile::Exists(GetPath())) {
-        wxMessageBox(GetPath() + "\nFile not found.\nCheck the file name and try again.", "Open file", wxOK | wxICON_EXCLAMATION | wxCENTRE, this);
-        return;
-    }
-    event.Skip(true);
 }
 
 void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
