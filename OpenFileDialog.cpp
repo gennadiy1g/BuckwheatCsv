@@ -3,7 +3,8 @@
 OpenFileDialog::OpenFileDialog(wxWindow* parent)
     : wxDialog(parent, wxID_ANY, "Open file")
 {
-    mFilePickerCtrl = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)");
+    mFilePickerCtrl = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)",
+        wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE, FilePathValidator());
 
     auto topSizer = new wxBoxSizer(wxVERTICAL);
     topSizer->Add(mFilePickerCtrl, wxSizerFlags(0).Border().Expand());
@@ -57,4 +58,17 @@ void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
     wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
     mSeparatorID = event.GetId();
     mTextCtrl->Enable(mSeparatorID == ID_Other);
+}
+
+bool FilePathValidator::Validate(wxWindow* parent)
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
+    if (!wxFile::Exists(filePickerCtrl->GetPath())) {
+        wxMessageBox(filePickerCtrl->GetPath() + "\nFile not found.\nCheck the file name and try again.", "Open file",
+            wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
+        return false;
+    } else {
+        return true;
+    }
 }

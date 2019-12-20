@@ -39,3 +39,11 @@ private:
     int mSeparatorID { ID_Comma };
     wxTextCtrl* mTextCtrl { nullptr };
 };
+
+class FilePathValidator : public wxValidator {
+public:
+    virtual bool Validate(wxWindow* parent) override;
+    virtual bool TransferToWindow() override { return true; };
+    virtual bool TransferFromWindow() override { return true; };
+    virtual wxObject* Clone() const override { return new FilePathValidator(*this); }
+};
