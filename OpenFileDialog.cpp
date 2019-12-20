@@ -29,6 +29,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
      * See https://docs.wxwidgets.org/3.1.3/classwx_window.html#a4e933aa891f42fbb3b87438057c573af for the example */
     mTextCtrl->Enable(false);
     mTextCtrl->Create(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1));
+    mTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mTextCtrl, sizerFlags);
 
     topSizer->Add(separatorSizer, wxSizerFlags(0).Border().Expand());
