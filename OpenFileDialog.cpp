@@ -4,7 +4,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     : wxDialog(parent, wxID_ANY, "Open file")
 {
     mFilePickerCtrl = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)",
-        wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE, FilePathValidator());
+        wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE, FilePathValidator(mPath));
 
     auto topSizer = new wxBoxSizer(wxVERTICAL);
     topSizer->Add(mFilePickerCtrl, wxSizerFlags(0).Border().Expand());
@@ -49,6 +49,11 @@ void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
     mTextCtrl->Enable(mSeparatorID == ID_Other);
 }
 
+FilePathValidator::FilePathValidator(wxString& path)
+    : mPath(path)
+{
+}
+
 bool FilePathValidator::Validate(wxWindow* parent)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
@@ -61,3 +66,19 @@ bool FilePathValidator::Validate(wxWindow* parent)
         return true;
     }
 }
+
+bool FilePathValidator::TransferToWindow()
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
+    filePickerCtrl->SetPath(mPath);
+    return true;
+};
+
+bool FilePathValidator::TransferFromWindow()
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
+    mPath = filePickerCtrl->GetPath();
+    return true;
+};

@@ -29,7 +29,7 @@ public:
     OpenFileDialog(OpenFileDialog&& src) = default;
     OpenFileDialog& operator=(OpenFileDialog&& rhs) = default;
 
-    wxString GetPath() const { return mFilePickerCtrl->GetPath(); };
+    wxString GetPath() const { return mPath; };
 
 private:
     void OnRadioButton(wxCommandEvent& event);
@@ -37,12 +37,18 @@ private:
     wxFilePickerCtrl* mFilePickerCtrl { nullptr };
     int mSeparatorID { ID_Comma };
     wxTextCtrl* mTextCtrl { nullptr };
+    wxString mPath { wxEmptyString };
 };
 
 class FilePathValidator : public wxValidator {
 public:
+    FilePathValidator(wxString& path);
+    FilePathValidator(const FilePathValidator& src) = default;
     virtual bool Validate(wxWindow* parent) override;
-    virtual bool TransferToWindow() override { return true; };
-    virtual bool TransferFromWindow() override { return true; };
+    virtual bool TransferToWindow() override;
+    virtual bool TransferFromWindow() override;
     virtual wxObject* Clone() const override { return new FilePathValidator(*this); }
+
+private:
+    wxString& mPath;
 };
