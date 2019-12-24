@@ -10,7 +10,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     auto separatorSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Separator character");
     wxSizerFlags sizerFlags(0);
-    sizerFlags.Border().CenterVertical();
+    sizerFlags.Border().Center();
 
     auto radioButton = new wxRadioButton();
     radioButton->Create(this, ID_Comma, "Comma");
@@ -35,7 +35,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     topSizer->Add(separatorSizer, wxSizerFlags(0).Border().Expand());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
-    topSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
+    topSizer->Add(buttonSizer, sizerFlags);
 
     SetSizerAndFit(topSizer); // use the sizer for layout and set size and hints
 
