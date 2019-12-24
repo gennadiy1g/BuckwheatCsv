@@ -139,7 +139,12 @@ bool SeparatorValidator::Validate(wxWindow* parent)
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
     if (mSeparatorId == ID_Other) {
-        return !textCtrl->GetValue().IsEmpty();
+        if (textCtrl->GetValue().IsEmpty()) {
+            wxMessageBox("Please enter separator character.", "Open file", wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
+            return false;
+        } else {
+            return true;
+        }
     } else {
         return true;
     }
