@@ -46,10 +46,10 @@ void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
     mTextCtrl->Enable(mSeparatorId == ID_Other);
 }
 
-wchar_t OpenFileDialog::GetSeparator() const
+wxChar OpenFileDialog::GetSeparator() const
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    wchar_t separator { L'?' };
+    wxChar separator { L'?' };
     switch (mSeparatorId) {
     case ID_Comma:
         separator = L',';
