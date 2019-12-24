@@ -20,12 +20,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlags);
     separatorSizer->Add(new wxRadioButton(this, ID_Other, "Other", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlags);
 
-    mTextCtrl = new wxTextCtrl();
-    /* A window can be created initially disabled by calling wxWindow::Enable() on it before calling wxWindow::Create()
-     * to create the actual underlying window.
-     * See https://docs.wxwidgets.org/3.1.3/classwx_window.html#a4e933aa891f42fbb3b87438057c573af for the example */
-    mTextCtrl->Enable(false);
-    mTextCtrl->Create(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1));
+    mTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
     mTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mTextCtrl, sizerFlags);
 
@@ -67,7 +62,8 @@ wxChar OpenFileDialog::GetSeparator() const
         separator = L' ';
         break;
     case ID_Other:
-        separator = mTextCtrl->GetValue()[0];
+        wxASSERT(mSeparator.length() == 1);
+        separator = mSeparator[0];
         break;
     }
     return separator;
@@ -97,7 +93,7 @@ bool FilePathValidator::TransferToWindow()
     auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
     filePickerCtrl->SetPath(mPath);
     return true;
-};
+}
 
 bool FilePathValidator::TransferFromWindow()
 {
@@ -105,7 +101,7 @@ bool FilePathValidator::TransferFromWindow()
     auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
     mPath = filePickerCtrl->GetPath();
     return true;
-};
+}
 
 SeparatorIdValidator::SeparatorIdValidator(int& separatorId)
     : mSeparatorId(separatorId)
@@ -118,7 +114,7 @@ bool SeparatorIdValidator::TransferToWindow()
     auto radioButton = static_cast<wxRadioButton*>(GetWindow());
     radioButton->SetValue(radioButton->GetId() == mSeparatorId);
     return true;
-};
+}
 
 bool SeparatorIdValidator::TransferFromWindow()
 {
@@ -128,4 +124,49 @@ bool SeparatorIdValidator::TransferFromWindow()
         mSeparatorId = radioButton->GetId();
     }
     return true;
-};
+}
+
+SeparatorValidator::SeparatorValidator(const int& separatorId, wxString& separator)
+    : mSeparatorId(separatorId)
+    , mSeparator(separator)
+{
+}
+
+bool SeparatorValidator::Validate(wxWindow* parent)
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
+    if (mSeparatorId == ID_Other) {
+        return !textCtrl->GetValue().IsEmpty();
+    } else {
+        return true;
+    }
+}
+
+bool SeparatorValidator::TransferToWindow()
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
+    if (mSeparatorId == ID_Other) {
+        wxASSERT(mSeparator.length() == 1);
+        textCtrl->SetValue(mSeparator[0]);
+        textCtrl->Enable(true);
+    } else {
+        textCtrl->SetValue(L"");
+        textCtrl->Enable(false);
+    }
+    return true;
+}
+
+bool SeparatorValidator::TransferFromWindow()
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
+    if (mSeparatorId == ID_Other) {
+        wxASSERT(!textCtrl->GetValue().IsEmpty());
+        mSeparator = textCtrl->GetValue()[0];
+    } else {
+        mSeparator = L"";
+    }
+    return true;
+}

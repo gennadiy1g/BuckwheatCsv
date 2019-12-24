@@ -35,14 +35,16 @@ public:
 private:
     void OnRadioButton(wxCommandEvent& event);
 
-    int mSeparatorId { ID_Comma };
     wxTextCtrl* mTextCtrl { nullptr };
+
+    int mSeparatorId { ID_Comma };
+    wxString mSeparator { wxEmptyString };
     wxString mPath { wxEmptyString };
 };
 
 class FilePathValidator : public wxValidator {
 public:
-    FilePathValidator(wxString& path);
+    explicit FilePathValidator(wxString& path);
     FilePathValidator(const FilePathValidator& src) = default;
     virtual bool Validate(wxWindow* parent) override;
     virtual bool TransferToWindow() override;
@@ -57,11 +59,25 @@ class SeparatorIdValidator : public wxValidator {
 public:
     explicit SeparatorIdValidator(int& separatorId);
     SeparatorIdValidator(const SeparatorIdValidator& src) = default;
-    virtual bool Validate(wxWindow* parent) override  { return true; };
+    virtual bool Validate(wxWindow* parent) override { return true; };
     virtual bool TransferToWindow() override;
     virtual bool TransferFromWindow() override;
     virtual wxObject* Clone() const override { return new SeparatorIdValidator(*this); }
 
 private:
     int& mSeparatorId;
+};
+
+class SeparatorValidator : public wxValidator {
+public:
+    explicit SeparatorValidator(const int& separatorId, wxString& separator);
+    SeparatorValidator(const SeparatorValidator& src) = default;
+    virtual bool Validate(wxWindow* parent) override;
+    virtual bool TransferToWindow() override;
+    virtual bool TransferFromWindow() override;
+    virtual wxObject* Clone() const override { return new SeparatorValidator(*this); }
+
+private:
+    const int& mSeparatorId;
+    wxString& mSeparator;
 };
