@@ -64,8 +64,7 @@ wxChar OpenFileDialog::GetSeparator() const
         separator = L' ';
         break;
     case ID_Other:
-        wxASSERT(mSeparator.length() == 1);
-        separator = mSeparator[0];
+        separator = mSeparator;
         break;
     }
     return separator;
@@ -128,7 +127,7 @@ bool SeparatorIdValidator::TransferFromWindow()
     return true;
 }
 
-SeparatorValidator::SeparatorValidator(const int& separatorId, wxString& separator)
+SeparatorValidator::SeparatorValidator(const int& separatorId, wxChar& separator)
     : mSeparatorId(separatorId)
     , mSeparator(separator)
 {
@@ -155,8 +154,7 @@ bool SeparatorValidator::TransferToWindow()
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
     if (mSeparatorId == ID_Other) {
-        wxASSERT(mSeparator.length() == 1);
-        textCtrl->SetValue(mSeparator[0]);
+        textCtrl->SetValue(mSeparator);
         textCtrl->Enable(true);
     } else {
         textCtrl->SetValue(L"");
@@ -173,7 +171,7 @@ bool SeparatorValidator::TransferFromWindow()
         wxASSERT(!textCtrl->GetValue().IsEmpty());
         mSeparator = textCtrl->GetValue()[0];
     } else {
-        mSeparator = L"";
+        mSeparator = L'\0';
     }
     return true;
 }

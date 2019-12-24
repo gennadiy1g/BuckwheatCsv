@@ -38,7 +38,7 @@ private:
     wxTextCtrl* mTextCtrl { nullptr };
 
     int mSeparatorId { ID_Comma };
-    wxString mSeparator { wxEmptyString };
+    wxChar mSeparator { L'\0' };
     wxString mPath { wxEmptyString };
 };
 
@@ -70,7 +70,7 @@ private:
 
 class SeparatorValidator : public wxValidator {
 public:
-    explicit SeparatorValidator(const int& separatorId, wxString& separator);
+    explicit SeparatorValidator(const int& separatorId, wxChar& separator);
     SeparatorValidator(const SeparatorValidator& src) = default;
     virtual bool Validate(wxWindow* parent) override;
     virtual bool TransferToWindow() override;
@@ -79,5 +79,5 @@ public:
 
 private:
     const int& mSeparatorId;
-    wxString& mSeparator;
+    wxChar& mSeparator;
 };
