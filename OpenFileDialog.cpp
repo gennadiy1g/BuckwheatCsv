@@ -49,6 +49,32 @@ void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
     mTextCtrl->Enable(mSeparatorID == ID_Other);
 }
 
+wchar_t OpenFileDialog::GetSeparator() const
+{
+    wchar_t separator { L'?' };
+    switch (mSeparatorID) {
+    case ID_Comma:
+        separator = L',';
+        break;
+    case ID_Tab:
+        separator = L'\t';
+        break;
+    case ID_Semicolon:
+        separator = L';';
+        break;
+    case ID_VerticalBar:
+        separator = L'|';
+        break;
+    case ID_Space:
+        separator = L' ';
+        break;
+    case ID_Other:
+        separator = mTextCtrl->GetValue()[0];
+        break;
+    }
+    return separator;
+}
+
 FilePathValidator::FilePathValidator(wxString& path)
     : mPath(path)
 {

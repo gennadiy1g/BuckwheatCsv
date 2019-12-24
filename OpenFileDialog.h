@@ -30,6 +30,8 @@ public:
     OpenFileDialog& operator=(OpenFileDialog&& rhs) = default;
 
     wxString GetPath() const { return mPath; };
+    wchar_t GetSeparator() const;
+
 
 private:
     void OnRadioButton(wxCommandEvent& event);
