@@ -3,6 +3,7 @@
 OpenFileDialog::OpenFileDialog(wxWindow* parent)
     : wxDialog(parent, wxID_ANY, "Open file")
 {
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto topSizer = new wxBoxSizer(wxVERTICAL);
     topSizer->Add(new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)",
                       wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE, FilePathValidator(mPath)),
@@ -12,16 +13,12 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     wxSizerFlags sizerFlags(0);
     sizerFlags.Border().Center();
 
-    auto radioButton = new wxRadioButton();
-    radioButton->Create(this, ID_Comma, "Comma");
-    radioButton->SetValue(true);
-    separatorSizer->Add(radioButton, sizerFlags);
-
-    separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab"), sizerFlags);
-    separatorSizer->Add(new wxRadioButton(this, ID_Semicolon, "Semicolon"), sizerFlags);
-    separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar"), sizerFlags);
-    separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space"), sizerFlags);
-    separatorSizer->Add(new wxRadioButton(this, ID_Other, "Other"), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Comma, "Comma", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Semicolon, "Semicolon", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlags);
+    separatorSizer->Add(new wxRadioButton(this, ID_Other, "Other", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlags);
 
     mTextCtrl = new wxTextCtrl();
     /* A window can be created initially disabled by calling wxWindow::Enable() on it before calling wxWindow::Create()
@@ -51,6 +48,7 @@ void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
 
 wchar_t OpenFileDialog::GetSeparator() const
 {
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     wchar_t separator { L'?' };
     switch (mSeparatorId) {
     case ID_Comma:
@@ -106,5 +104,28 @@ bool FilePathValidator::TransferFromWindow()
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
     mPath = filePickerCtrl->GetPath();
+    return true;
+};
+
+SeparatorIdValidator::SeparatorIdValidator(int& separatorId)
+    : mSeparatorId(separatorId)
+{
+}
+
+bool SeparatorIdValidator::TransferToWindow()
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto radioButton = static_cast<wxRadioButton*>(GetWindow());
+    radioButton->SetValue(radioButton->GetId() == mSeparatorId);
+    return true;
+};
+
+bool SeparatorIdValidator::TransferFromWindow()
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto radioButton = static_cast<wxRadioButton*>(GetWindow());
+    if (radioButton->GetValue()) {
+        mSeparatorId = radioButton->GetId();
+    }
     return true;
 };

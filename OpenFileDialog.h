@@ -32,7 +32,6 @@ public:
     wxString GetPath() const { return mPath; };
     wchar_t GetSeparator() const;
 
-
 private:
     void OnRadioButton(wxCommandEvent& event);
 
@@ -52,4 +51,17 @@ public:
 
 private:
     wxString& mPath;
+};
+
+class SeparatorIdValidator : public wxValidator {
+public:
+    explicit SeparatorIdValidator(int& separatorId);
+    SeparatorIdValidator(const SeparatorIdValidator& src) = default;
+    virtual bool Validate(wxWindow* parent) override  { return true; };
+    virtual bool TransferToWindow() override;
+    virtual bool TransferFromWindow() override;
+    virtual wxObject* Clone() const override { return new SeparatorIdValidator(*this); }
+
+private:
+    int& mSeparatorId;
 };
