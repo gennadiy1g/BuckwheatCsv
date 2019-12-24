@@ -36,7 +36,7 @@ public:
 private:
     void OnRadioButton(wxCommandEvent& event);
 
-    int mSeparatorID { ID_Comma };
+    int mSeparatorId { ID_Comma };
     wxTextCtrl* mTextCtrl { nullptr };
     wxString mPath { wxEmptyString };
 };

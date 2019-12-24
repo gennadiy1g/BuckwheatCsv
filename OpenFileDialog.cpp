@@ -45,14 +45,14 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
 {
     wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
-    mSeparatorID = event.GetId();
-    mTextCtrl->Enable(mSeparatorID == ID_Other);
+    mSeparatorId = event.GetId();
+    mTextCtrl->Enable(mSeparatorId == ID_Other);
 }
 
 wchar_t OpenFileDialog::GetSeparator() const
 {
     wchar_t separator { L'?' };
-    switch (mSeparatorID) {
+    switch (mSeparatorId) {
     case ID_Comma:
         separator = L',';
         break;
