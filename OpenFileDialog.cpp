@@ -14,6 +14,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     wxSizerFlags sizerFlagsCenter(0);
     sizerFlagsCenter.Border().Center();
+
     auto separatorSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Separator character");
     separatorSizer->Add(new wxRadioButton(this, ID_Comma, "Comma", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
     separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
@@ -21,12 +22,15 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
     separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
     separatorSizer->Add(new wxRadioButton(this, ID_Other, "Other", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
-
     mTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
     mTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mTextCtrl, sizerFlagsCenter);
-
     topSizer->Add(separatorSizer, sizerFlagsExpand);
+
+    auto quoteSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Quote character");
+    quoteSizer->Add(new wxRadioButton(this, ID_Comma, "Double quote", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
+    quoteSizer->Add(new wxRadioButton(this, ID_Tab, "Single quote", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
+    topSizer->Add(quoteSizer, sizerFlagsExpand);
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     topSizer->Add(buttonSizer, sizerFlagsCenter);
