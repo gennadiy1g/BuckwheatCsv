@@ -17,9 +17,9 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     separatorSizer->Add(new wxRadioButton(this, ID_OtherSeparator, "Other", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
-    mTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
-    mTextCtrl->SetMaxLength(1);
-    separatorSizer->Add(mTextCtrl, wxSizerFlags(0).Border().Center());
+    mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
+    mSeparatorTextCtrl->SetMaxLength(1);
+    separatorSizer->Add(mSeparatorTextCtrl, wxSizerFlags(0).Border().Center());
     dialogSizer->Add(separatorSizer, wxSizerFlags(0).Expand().Border());
 
     auto quoteEscapeSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -40,14 +40,14 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
-    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnRadioButton, this, ID_Comma, ID_OtherSeparator);
+    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnSeparatorRadioButton, this, ID_Comma, ID_OtherSeparator);
 }
 
-void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
+void OpenFileDialog::OnSeparatorRadioButton(wxCommandEvent& event)
 {
     wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
     mSeparatorId = event.GetId();
-    mTextCtrl->Enable(mSeparatorId == ID_OtherSeparator);
+    mSeparatorTextCtrl->Enable(mSeparatorId == ID_OtherSeparator);
 }
 
 wxChar OpenFileDialog::GetSeparator() const
