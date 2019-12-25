@@ -13,7 +13,7 @@ enum {
     ID_Semicolon,
     ID_VerticalBar,
     ID_Space,
-    ID_Other
+    ID_OtherSeparator
 };
 
 class OpenFileDialog : public wxDialog {
