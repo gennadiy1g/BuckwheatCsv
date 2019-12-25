@@ -7,9 +7,9 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     wxSizerFlags sizerFlagsExpand(0);
     sizerFlagsExpand.Border().Expand();
-    auto topSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)",
-                      wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE, FilePathValidator(mPath)),
+    auto dialogSizer = new wxBoxSizer(wxVERTICAL);
+    dialogSizer->Add(new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)",
+                         wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE, FilePathValidator(mPath)),
         sizerFlagsExpand);
 
     wxSizerFlags sizerFlagsCenter(0);
@@ -25,24 +25,24 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     mTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
     mTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mTextCtrl, sizerFlagsCenter);
-    topSizer->Add(separatorSizer, sizerFlagsExpand);
+    dialogSizer->Add(separatorSizer, sizerFlagsExpand);
 
-    auto bottomSizer = new wxBoxSizer(wxHORIZONTAL);
+    auto quoteEscapeSizer = new wxBoxSizer(wxHORIZONTAL);
     auto quoteSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Quote character");
     quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Double quote", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
     quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Single quote", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
-    bottomSizer->Add(quoteSizer, sizerFlagsExpand);
+    quoteEscapeSizer->Add(quoteSizer, sizerFlagsExpand);
 
     auto escapeSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Escape character");
     escapeSizer->Add(new wxCheckBox(this, wxID_ANY, "Backslash (C style \\)", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
-    bottomSizer->Add(escapeSizer, sizerFlagsExpand);
+    quoteEscapeSizer->Add(escapeSizer, sizerFlagsExpand);
 
-    topSizer->Add(bottomSizer, sizerFlagsExpand);
+    dialogSizer->Add(quoteEscapeSizer, sizerFlagsExpand);
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
-    topSizer->Add(buttonSizer, sizerFlagsCenter);
+    dialogSizer->Add(buttonSizer, sizerFlagsCenter);
 
-    SetSizerAndFit(topSizer); // use the sizer for layout and set size and hints
+    SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnRadioButton, this, wxID_ANY);
 }
