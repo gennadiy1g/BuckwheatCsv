@@ -46,8 +46,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 void OpenFileDialog::OnSeparatorRadioButton(wxCommandEvent& event)
 {
     wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
-    mSeparatorId = event.GetId();
-    mSeparatorTextCtrl->Enable(mSeparatorId == ID_OtherSeparator);
+    mSeparatorTextCtrl->Enable(event.GetId() == ID_OtherSeparator);
 }
 
 wxChar OpenFileDialog::GetSeparator() const
@@ -144,7 +143,7 @@ bool SeparatorValidator::Validate(wxWindow* parent)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
-    if (mSeparatorId == ID_OtherSeparator) {
+    if (textCtrl->IsEnabled()) {
         if (textCtrl->GetValue().IsEmpty()) {
             wxMessageBox("Please enter separator character.", "Open file", wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
             return false;
@@ -174,7 +173,7 @@ bool SeparatorValidator::TransferFromWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
-    if (mSeparatorId == ID_OtherSeparator) {
+    if (textCtrl->IsEnabled()) {
         wxASSERT(!textCtrl->GetValue().IsEmpty());
         mSeparator = textCtrl->GetValue()[0];
     } else {
