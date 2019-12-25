@@ -31,12 +31,12 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     auto quoteSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Quote character");
     quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Double", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), sizerFlagsCenter);
     quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Single", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
-    quoteEscapeSizer->Add(quoteSizer, sizerFlagsExpand);
+    quoteEscapeSizer->Add(quoteSizer, wxSizerFlags(1).Center().Border());
 
     auto escapeSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Escape character");
     escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), sizerFlagsCenter);
     escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Other", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
-    quoteEscapeSizer->Add(escapeSizer, sizerFlagsExpand);
+    quoteEscapeSizer->Add(escapeSizer, wxSizerFlags(1).Center().Border());
 
     dialogSizer->Add(quoteEscapeSizer, sizerFlagsExpand);
 
