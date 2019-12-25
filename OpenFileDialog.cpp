@@ -19,7 +19,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     separatorSizer->Add(new wxRadioButton(this, ID_OtherSeparator, "Other", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
     mSeparatorTextCtrl->SetMaxLength(1);
-    separatorSizer->Add(mSeparatorTextCtrl, wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(mSeparatorTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
     dialogSizer->Add(separatorSizer, wxSizerFlags(0).Expand().Border());
 
     auto quoteEscapeSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -33,10 +33,8 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     escapeSizer->Add(new wxRadioButton(this, ID_OtherEscape, "Other", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), wxSizerFlags(0).Border().Center());
     mEscapeTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, wxDefaultValidator);
     mEscapeTextCtrl->SetMaxLength(1);
-    escapeSizer->Add(mEscapeTextCtrl, wxSizerFlags(0).Border().Center());
-
+    escapeSizer->Add(mEscapeTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
     quoteEscapeSizer->Add(escapeSizer, wxSizerFlags(1).Border().Center());
-
     dialogSizer->Add(quoteEscapeSizer, wxSizerFlags(0).Expand());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
