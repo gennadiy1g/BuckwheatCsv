@@ -29,12 +29,13 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     auto quoteEscapeSizer = new wxBoxSizer(wxHORIZONTAL);
     auto quoteSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Quote character");
-    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Double quote", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
-    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Single quote", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
+    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Double", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
+    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Single", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
     quoteEscapeSizer->Add(quoteSizer, sizerFlagsExpand);
 
     auto escapeSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Escape character");
-    escapeSizer->Add(new wxCheckBox(this, wxID_ANY, "Backslash (C style \\)", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
+    escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
+    escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Other", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
     quoteEscapeSizer->Add(escapeSizer, sizerFlagsExpand);
 
     dialogSizer->Add(quoteEscapeSizer, sizerFlagsExpand);
