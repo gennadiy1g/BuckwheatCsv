@@ -29,8 +29,8 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     quoteEscapeSizer->Add(quoteSizer, wxSizerFlags(1).Border().Center());
 
     auto escapeSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Escape character");
-    escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), wxSizerFlags(0).Border().Center());
-    escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Other", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), wxSizerFlags(0).Border().Center());
+    escapeSizer->Add(new wxRadioButton(this, ID_Backslash, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), wxSizerFlags(0).Border().Center());
+    escapeSizer->Add(new wxRadioButton(this, ID_OtherEscape, "Other", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), wxSizerFlags(0).Border().Center());
     mEscapeTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, wxDefaultValidator);
     mEscapeTextCtrl->SetMaxLength(1);
     escapeSizer->Add(mEscapeTextCtrl, wxSizerFlags(0).Border().Center());
@@ -45,12 +45,19 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnSeparatorRadioButton, this, ID_Comma, ID_OtherSeparator);
+    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_Backslash, ID_OtherEscape);
 }
 
 void OpenFileDialog::OnSeparatorRadioButton(wxCommandEvent& event)
 {
     wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
     mSeparatorTextCtrl->Enable(event.GetId() == ID_OtherSeparator);
+}
+
+void OpenFileDialog::OnEscapeRadioButton(wxCommandEvent& event)
+{
+    wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
+    mEscapeTextCtrl->Enable(event.GetId() == ID_OtherEscape);
 }
 
 wxChar OpenFileDialog::GetSeparator() const

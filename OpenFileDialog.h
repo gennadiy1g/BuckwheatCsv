@@ -13,7 +13,10 @@ enum {
     ID_Semicolon,
     ID_VerticalBar,
     ID_Space,
-    ID_OtherSeparator
+    ID_OtherSeparator,
+
+    ID_Backslash,
+    ID_OtherEscape
 };
 
 class OpenFileDialog : public wxDialog {
@@ -34,6 +37,7 @@ public:
 
 private:
     void OnSeparatorRadioButton(wxCommandEvent& event);
+    void OnEscapeRadioButton(wxCommandEvent& event);
 
     wxTextCtrl* mSeparatorTextCtrl { nullptr };
     wxTextCtrl* mEscapeTextCtrl { nullptr };
