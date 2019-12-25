@@ -40,7 +40,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
-    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnRadioButton, this, wxID_ANY);
+    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnRadioButton, this, ID_Comma, ID_Other);
 }
 
 void OpenFileDialog::OnRadioButton(wxCommandEvent& event)
