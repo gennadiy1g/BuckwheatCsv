@@ -5,43 +5,38 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
-    wxSizerFlags sizerFlagsExpand(0);
-    sizerFlagsExpand.Border().Expand();
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
     dialogSizer->Add(new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)",
                          wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE, FilePathValidator(mPath)),
-        sizerFlagsExpand);
-
-    wxSizerFlags sizerFlagsCenter(0);
-    sizerFlagsCenter.Border().Center();
+        wxSizerFlags(0).Expand().Border());
 
     auto separatorSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Separator character");
-    separatorSizer->Add(new wxRadioButton(this, ID_Comma, "Comma", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
-    separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
-    separatorSizer->Add(new wxRadioButton(this, ID_Semicolon, "Semicolon", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
-    separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
-    separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
-    separatorSizer->Add(new wxRadioButton(this, ID_Other, "Other", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), sizerFlagsCenter);
+    separatorSizer->Add(new wxRadioButton(this, ID_Comma, "Comma", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_Semicolon, "Semicolon", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_Other, "Other", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     mTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
     mTextCtrl->SetMaxLength(1);
-    separatorSizer->Add(mTextCtrl, sizerFlagsCenter);
-    dialogSizer->Add(separatorSizer, sizerFlagsExpand);
+    separatorSizer->Add(mTextCtrl, wxSizerFlags(0).Border().Center());
+    dialogSizer->Add(separatorSizer, wxSizerFlags(0).Expand().Border());
 
     auto quoteEscapeSizer = new wxBoxSizer(wxHORIZONTAL);
     auto quoteSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Quote character");
-    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Double", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), sizerFlagsCenter);
-    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Single", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
-    quoteEscapeSizer->Add(quoteSizer, wxSizerFlags(1).Center().Border());
+    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Double", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), wxSizerFlags(0).Border().Center());
+    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Single", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), wxSizerFlags(0).Border().Center());
+    quoteEscapeSizer->Add(quoteSizer, wxSizerFlags(1).Border().Center());
 
     auto escapeSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Escape character");
-    escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), sizerFlagsCenter);
-    escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Other", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), sizerFlagsCenter);
-    quoteEscapeSizer->Add(escapeSizer, wxSizerFlags(1).Center().Border());
+    escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), wxSizerFlags(0).Border().Center());
+    escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Other", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), wxSizerFlags(0).Border().Center());
+    quoteEscapeSizer->Add(escapeSizer, wxSizerFlags(1).Border().Center());
 
-    dialogSizer->Add(quoteEscapeSizer, sizerFlagsExpand);
+    dialogSizer->Add(quoteEscapeSizer, wxSizerFlags(0).Expand());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
-    dialogSizer->Add(buttonSizer, sizerFlagsCenter);
+    dialogSizer->Add(buttonSizer, wxSizerFlags(0).Border().Center());
 
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
