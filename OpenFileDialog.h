@@ -36,6 +36,7 @@ private:
     void OnSeparatorRadioButton(wxCommandEvent& event);
 
     wxTextCtrl* mSeparatorTextCtrl { nullptr };
+    wxTextCtrl* mEscapeTextCtrl { nullptr };
 
     int mSeparatorId { ID_Comma };
     wxChar mSeparator { L'\0' };

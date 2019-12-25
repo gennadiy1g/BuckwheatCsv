@@ -31,6 +31,10 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     auto escapeSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Escape character");
     escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator), wxSizerFlags(0).Border().Center());
     escapeSizer->Add(new wxRadioButton(this, wxID_ANY, "Other", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator), wxSizerFlags(0).Border().Center());
+    mEscapeTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, wxDefaultValidator);
+    mEscapeTextCtrl->SetMaxLength(1);
+    escapeSizer->Add(mEscapeTextCtrl, wxSizerFlags(0).Border().Center());
+
     quoteEscapeSizer->Add(escapeSizer, wxSizerFlags(1).Border().Center());
 
     dialogSizer->Add(quoteEscapeSizer, wxSizerFlags(0).Expand());
