@@ -56,10 +56,7 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
 }
 
-void MainFrame::OnExit(wxCommandEvent& event)
-{
-    Close(true);
-}
+void MainFrame::OnExit(wxCommandEvent& event) { Close(true); }
 
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
