@@ -11,12 +11,12 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
         wxSizerFlags(0).Expand().Border());
 
     auto separatorSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Separator character");
-    separatorSizer->Add(new wxRadioButton(this, ID_Comma, "Comma", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
-    separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
-    separatorSizer->Add(new wxRadioButton(this, ID_Semicolon, "Semicolon", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
-    separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
-    separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
-    separatorSizer->Add(new wxRadioButton(this, ID_OtherSeparator, "Other", wxDefaultPosition, wxDefaultSize, 0, SeparatorIdValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_Comma, "Comma", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_Semicolon, "Semicolon", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_OtherSeparator, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
     mSeparatorTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mSeparatorTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
@@ -119,12 +119,12 @@ bool FilePathValidator::TransferFromWindow()
     return true;
 }
 
-SeparatorIdValidator::SeparatorIdValidator(int& separatorId)
+RadioButtonValidator::RadioButtonValidator(int& separatorId)
     : mSeparatorId(separatorId)
 {
 }
 
-bool SeparatorIdValidator::TransferToWindow()
+bool RadioButtonValidator::TransferToWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto radioButton = static_cast<wxRadioButton*>(GetWindow());
@@ -132,7 +132,7 @@ bool SeparatorIdValidator::TransferToWindow()
     return true;
 }
 
-bool SeparatorIdValidator::TransferFromWindow()
+bool RadioButtonValidator::TransferFromWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto radioButton = static_cast<wxRadioButton*>(GetWindow());

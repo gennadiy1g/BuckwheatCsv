@@ -60,14 +60,14 @@ private:
     wxString& mPath;
 };
 
-class SeparatorIdValidator : public wxValidator {
+class RadioButtonValidator : public wxValidator {
 public:
-    explicit SeparatorIdValidator(int& separatorId);
-    SeparatorIdValidator(const SeparatorIdValidator& src) = default;
+    explicit RadioButtonValidator(int& separatorId);
+    RadioButtonValidator(const RadioButtonValidator& src) = default;
     virtual bool Validate(wxWindow* parent) override { return true; };
     virtual bool TransferToWindow() override;
     virtual bool TransferFromWindow() override;
-    virtual wxObject* Clone() const override { return new SeparatorIdValidator(*this); }
+    virtual wxObject* Clone() const override { return new RadioButtonValidator(*this); }
 
 private:
     int& mSeparatorId;
