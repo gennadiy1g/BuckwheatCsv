@@ -42,9 +42,11 @@ private:
     wxTextCtrl* mSeparatorTextCtrl { nullptr };
     wxTextCtrl* mEscapeTextCtrl { nullptr };
 
+    wxString mPath { wxEmptyString };
     int mSeparatorId { ID_Comma };
     wxChar mSeparator { L'\0' };
-    wxString mPath { wxEmptyString };
+    int mEscapeId { ID_Backslash };
+    wxChar mEscape { L'\0' };
 };
 
 class FilePathValidator : public wxValidator {
