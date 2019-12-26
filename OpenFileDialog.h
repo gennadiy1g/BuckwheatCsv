@@ -62,7 +62,7 @@ private:
 
 class RadioButtonValidator : public wxValidator {
 public:
-    explicit RadioButtonValidator(int& separatorId);
+    explicit RadioButtonValidator(int& radioButtonId);
     RadioButtonValidator(const RadioButtonValidator& src) = default;
     virtual bool Validate(wxWindow* parent) override { return true; };
     virtual bool TransferToWindow() override;
@@ -75,7 +75,7 @@ private:
 
 class TextCtrlValidator : public wxValidator {
 public:
-    explicit TextCtrlValidator(const int& separatorId, wxChar& separator);
+    explicit TextCtrlValidator(const int& radioButtonId, wxChar& separator);
     TextCtrlValidator(const TextCtrlValidator& src) = default;
     virtual bool Validate(wxWindow* parent) override;
     virtual bool TransferToWindow() override;

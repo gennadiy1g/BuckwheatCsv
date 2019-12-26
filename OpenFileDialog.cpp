@@ -119,8 +119,8 @@ bool FilePathValidator::TransferFromWindow()
     return true;
 }
 
-RadioButtonValidator::RadioButtonValidator(int& separatorId)
-    : mRadioButtonId(separatorId)
+RadioButtonValidator::RadioButtonValidator(int& radioButtonId)
+    : mRadioButtonId(radioButtonId)
 {
 }
 
@@ -142,8 +142,8 @@ bool RadioButtonValidator::TransferFromWindow()
     return true;
 }
 
-TextCtrlValidator::TextCtrlValidator(const int& separatorId, wxChar& separator)
-    : mRadioButtonId(separatorId)
+TextCtrlValidator::TextCtrlValidator(const int& radioButtonId, wxChar& separator)
+    : mRadioButtonId(radioButtonId)
     , mChar(separator)
 {
 }
