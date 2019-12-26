@@ -84,5 +84,5 @@ public:
 
 private:
     const int& mRadioButtonId;
-    wxChar& mSeparator;
+    wxChar& mChar;
 };

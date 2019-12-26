@@ -144,7 +144,7 @@ bool RadioButtonValidator::TransferFromWindow()
 
 TextCtrlValidator::TextCtrlValidator(const int& separatorId, wxChar& separator)
     : mRadioButtonId(separatorId)
-    , mSeparator(separator)
+    , mChar(separator)
 {
 }
 
@@ -169,7 +169,7 @@ bool TextCtrlValidator::TransferToWindow()
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
     if (mRadioButtonId == ID_OtherSeparator) {
-        textCtrl->SetValue(mSeparator);
+        textCtrl->SetValue(mChar);
         textCtrl->Enable(true);
     } else {
         textCtrl->SetValue(L"");
@@ -184,9 +184,9 @@ bool TextCtrlValidator::TransferFromWindow()
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
     if (textCtrl->IsEnabled()) {
         wxASSERT(!textCtrl->GetValue().IsEmpty());
-        mSeparator = textCtrl->GetValue()[0];
+        mChar = textCtrl->GetValue()[0];
     } else {
-        mSeparator = L'\0';
+        mChar = L'\0';
     }
     return true;
 }
