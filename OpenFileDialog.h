@@ -73,14 +73,14 @@ private:
     int& mSeparatorId;
 };
 
-class SeparatorValidator : public wxValidator {
+class TextCtrlValidator : public wxValidator {
 public:
-    explicit SeparatorValidator(const int& separatorId, wxChar& separator);
-    SeparatorValidator(const SeparatorValidator& src) = default;
+    explicit TextCtrlValidator(const int& separatorId, wxChar& separator);
+    TextCtrlValidator(const TextCtrlValidator& src) = default;
     virtual bool Validate(wxWindow* parent) override;
     virtual bool TransferToWindow() override;
     virtual bool TransferFromWindow() override;
-    virtual wxObject* Clone() const override { return new SeparatorValidator(*this); }
+    virtual wxObject* Clone() const override { return new TextCtrlValidator(*this); }
 
 private:
     const int& mSeparatorId;

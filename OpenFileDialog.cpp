@@ -17,7 +17,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     separatorSizer->Add(new wxRadioButton(this, ID_OtherSeparator, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
-    mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, SeparatorValidator(mSeparatorId, mSeparator));
+    mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, TextCtrlValidator(mSeparatorId, mSeparator));
     mSeparatorTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mSeparatorTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
     dialogSizer->Add(separatorSizer, wxSizerFlags(0).Expand().Border());
@@ -142,13 +142,13 @@ bool RadioButtonValidator::TransferFromWindow()
     return true;
 }
 
-SeparatorValidator::SeparatorValidator(const int& separatorId, wxChar& separator)
+TextCtrlValidator::TextCtrlValidator(const int& separatorId, wxChar& separator)
     : mSeparatorId(separatorId)
     , mSeparator(separator)
 {
 }
 
-bool SeparatorValidator::Validate(wxWindow* parent)
+bool TextCtrlValidator::Validate(wxWindow* parent)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
@@ -164,7 +164,7 @@ bool SeparatorValidator::Validate(wxWindow* parent)
     }
 }
 
-bool SeparatorValidator::TransferToWindow()
+bool TextCtrlValidator::TransferToWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
@@ -178,7 +178,7 @@ bool SeparatorValidator::TransferToWindow()
     return true;
 }
 
-bool SeparatorValidator::TransferFromWindow()
+bool TextCtrlValidator::TransferFromWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
