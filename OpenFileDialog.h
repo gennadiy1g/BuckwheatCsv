@@ -16,7 +16,10 @@ enum {
     ID_OtherSeparator,
 
     ID_Backslash,
-    ID_OtherEscape
+    ID_OtherEscape,
+
+    ID_Double,
+    ID_Single
 };
 
 class OpenFileDialog : public wxDialog {
@@ -47,6 +50,7 @@ private:
     wxChar mSeparator { L'\0' };
     int mEscapeId { ID_Backslash };
     wxChar mEscape { L'\0' };
+    int mQuoteId { ID_Double };
 };
 
 class FilePathValidator : public wxValidator {

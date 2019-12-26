@@ -36,9 +36,10 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
 
     auto quoteEscapeSizer = new wxBoxSizer(wxHORIZONTAL);
     auto quoteSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Quote character");
-    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Double", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, wxDefaultValidator),
+    quoteSizer->Add(
+        new wxRadioButton(this, ID_Double, "Double", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, RadioButtonValidator(mQuoteId)),
         wxSizerFlags(0).Border().Center());
-    quoteSizer->Add(new wxRadioButton(this, wxID_ANY, "Single", wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator),
+    quoteSizer->Add(new wxRadioButton(this, ID_Single, "Single", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mQuoteId)),
         wxSizerFlags(0).Border().Center());
     quoteEscapeSizer->Add(quoteSizer, wxSizerFlags(1).Border().Center());
 
