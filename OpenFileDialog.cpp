@@ -120,7 +120,7 @@ bool FilePathValidator::TransferFromWindow()
 }
 
 RadioButtonValidator::RadioButtonValidator(int& separatorId)
-    : mSeparatorId(separatorId)
+    : mRadioButtonId(separatorId)
 {
 }
 
@@ -128,7 +128,7 @@ bool RadioButtonValidator::TransferToWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto radioButton = static_cast<wxRadioButton*>(GetWindow());
-    radioButton->SetValue(radioButton->GetId() == mSeparatorId);
+    radioButton->SetValue(radioButton->GetId() == mRadioButtonId);
     return true;
 }
 
@@ -137,13 +137,13 @@ bool RadioButtonValidator::TransferFromWindow()
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto radioButton = static_cast<wxRadioButton*>(GetWindow());
     if (radioButton->GetValue()) {
-        mSeparatorId = radioButton->GetId();
+        mRadioButtonId = radioButton->GetId();
     }
     return true;
 }
 
 TextCtrlValidator::TextCtrlValidator(const int& separatorId, wxChar& separator)
-    : mSeparatorId(separatorId)
+    : mRadioButtonId(separatorId)
     , mSeparator(separator)
 {
 }
@@ -168,7 +168,7 @@ bool TextCtrlValidator::TransferToWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
-    if (mSeparatorId == ID_OtherSeparator) {
+    if (mRadioButtonId == ID_OtherSeparator) {
         textCtrl->SetValue(mSeparator);
         textCtrl->Enable(true);
     } else {

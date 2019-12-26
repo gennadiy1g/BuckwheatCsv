@@ -70,7 +70,7 @@ public:
     virtual wxObject* Clone() const override { return new RadioButtonValidator(*this); }
 
 private:
-    int& mSeparatorId;
+    int& mRadioButtonId;
 };
 
 class TextCtrlValidator : public wxValidator {
@@ -83,6 +83,6 @@ public:
     virtual wxObject* Clone() const override { return new TextCtrlValidator(*this); }
 
 private:
-    const int& mSeparatorId;
+    const int& mRadioButtonId;
     wxChar& mSeparator;
 };
