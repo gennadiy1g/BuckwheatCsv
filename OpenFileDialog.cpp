@@ -17,7 +17,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent)
     separatorSizer->Add(new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
     separatorSizer->Add(new wxRadioButton(this, ID_OtherSeparator, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)), wxSizerFlags(0).Border().Center());
-    mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, TextCtrlValidator(mSeparatorId, mSeparator));
+    mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0, TextCtrlValidator(mSeparatorId, mSeparator, "separator"));
     mSeparatorTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mSeparatorTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
     dialogSizer->Add(separatorSizer, wxSizerFlags(0).Expand().Border());
@@ -142,9 +142,10 @@ bool RadioButtonValidator::TransferFromWindow()
     return true;
 }
 
-TextCtrlValidator::TextCtrlValidator(const int& radioButtonId, wxChar& text)
+TextCtrlValidator::TextCtrlValidator(const int& radioButtonId, wxChar& text, wxString description)
     : mRadioButtonId(radioButtonId)
     , mChar(text)
+    , mDescription(description)
 {
 }
 
@@ -154,7 +155,7 @@ bool TextCtrlValidator::Validate(wxWindow* parent)
     auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
     if (textCtrl->IsEnabled()) {
         if (textCtrl->GetValue().IsEmpty()) {
-            wxMessageBox("Please enter separator character.", "Open file", wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
+            wxMessageBox("Please enter " + mDescription + " character.", "Open file", wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
             return false;
         } else {
             return true;
