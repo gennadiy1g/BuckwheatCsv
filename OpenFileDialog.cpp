@@ -142,9 +142,9 @@ bool RadioButtonValidator::TransferFromWindow()
     return true;
 }
 
-TextCtrlValidator::TextCtrlValidator(const int& radioButtonId, wxChar& separator)
+TextCtrlValidator::TextCtrlValidator(const int& radioButtonId, wxChar& text)
     : mRadioButtonId(radioButtonId)
-    , mChar(separator)
+    , mChar(text)
 {
 }
 
