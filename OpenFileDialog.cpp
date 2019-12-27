@@ -112,7 +112,8 @@ FilePathValidator::FilePathValidator(wxString& path)
 bool FilePathValidator::Validate(wxWindow* parent)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
+    auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
+    wxASSERT(filePickerCtrl);
     if (!wxFile::Exists(filePickerCtrl->GetPath())) {
         wxMessageBox(filePickerCtrl->GetPath() + "\nFile not found.\nCheck the file name and try again.", "Open file",
             wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
@@ -125,7 +126,8 @@ bool FilePathValidator::Validate(wxWindow* parent)
 bool FilePathValidator::TransferToWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
+    auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
+    wxASSERT(filePickerCtrl);
     filePickerCtrl->SetPath(mPath);
     return true;
 }
@@ -133,7 +135,8 @@ bool FilePathValidator::TransferToWindow()
 bool FilePathValidator::TransferFromWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto filePickerCtrl = static_cast<wxFilePickerCtrl*>(GetWindow());
+    auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
+    wxASSERT(filePickerCtrl);
     mPath = filePickerCtrl->GetPath();
     return true;
 }
@@ -146,7 +149,8 @@ RadioButtonValidator::RadioButtonValidator(int& radioButtonId)
 bool RadioButtonValidator::TransferToWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto radioButton = static_cast<wxRadioButton*>(GetWindow());
+    auto radioButton = dynamic_cast<wxRadioButton*>(GetWindow());
+    wxASSERT(radioButton);
     radioButton->SetValue(radioButton->GetId() == mRadioButtonId);
     return true;
 }
@@ -154,7 +158,8 @@ bool RadioButtonValidator::TransferToWindow()
 bool RadioButtonValidator::TransferFromWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto radioButton = static_cast<wxRadioButton*>(GetWindow());
+    auto radioButton = dynamic_cast<wxRadioButton*>(GetWindow());
+    wxASSERT(radioButton);
     if (radioButton->GetValue()) {
         mRadioButtonId = radioButton->GetId();
     }
@@ -172,7 +177,8 @@ TextCtrlValidator::TextCtrlValidator(int radioButtonId, int otherButtonId, wxCha
 bool TextCtrlValidator::Validate(wxWindow* parent)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
+    auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
+    wxASSERT(textCtrl);
     if (textCtrl->IsEnabled()) {
         if (textCtrl->GetValue().IsEmpty()) {
             wxMessageBox("Please enter " + mDescription + " character.", "Open file", wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
@@ -188,7 +194,8 @@ bool TextCtrlValidator::Validate(wxWindow* parent)
 bool TextCtrlValidator::TransferToWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
+    auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
+    wxASSERT(textCtrl);
     if (mRadioButtonId == mOtherButtonId) {
         textCtrl->SetValue(mChar);
         textCtrl->Enable(true);
@@ -202,7 +209,8 @@ bool TextCtrlValidator::TransferToWindow()
 bool TextCtrlValidator::TransferFromWindow()
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto textCtrl = static_cast<wxTextCtrl*>(GetWindow());
+    auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
+    wxASSERT(textCtrl);
     if (textCtrl->IsEnabled()) {
         wxASSERT(!textCtrl->GetValue().IsEmpty());
         mChar = textCtrl->GetValue()[0];
