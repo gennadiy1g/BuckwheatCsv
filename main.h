@@ -28,6 +28,6 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 
-    wxGrid* mGrid;
-    wxGridTableBase* mGridTable;
+    wxGrid* mGrid { nullptr };
+    wxGridTableBase* mGridTable { nullptr };
 };
