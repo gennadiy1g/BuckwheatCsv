@@ -36,7 +36,11 @@ public:
     OpenFileDialog& operator=(OpenFileDialog&& rhs) = default;
 
     wxString getPath() const { return mPath; };
+    int getSeparatorId() const { return mSeparatorId; };
     wxChar getSeparator() const;
+    int getQuoteId() const { return mQuoteId; };
+    int getEscaptId() const { return mEscapeId; };
+    wxChar getEscape() const;
 
 private:
     void OnSeparatorRadioButton(wxCommandEvent& event);
