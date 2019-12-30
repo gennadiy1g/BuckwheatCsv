@@ -78,7 +78,9 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     mQuoteId = openFileDialog.getQuoteId();
     mQuote = openFileDialog.getQuote();
 
-    mGridTable = new CsvFileGridTable(bfs::path(openFileDialog.getPath()));
+    mTokenizedFileLines = std::make_unique<TokenizedFileLines>(bfs::path(mPath));
+
+    mGridTable = new CsvFileGridTable(*mTokenizedFileLines);
     wxGridUpdateLocker gridUpdateLocker(mGrid);
     mGrid->SetTable(mGridTable, true);
 }

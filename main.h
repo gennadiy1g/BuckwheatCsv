@@ -36,6 +36,8 @@ private:
     int mQuoteId { ID_Double };
     wxChar mQuote { L'\0' };
 
+    std::unique_ptr<TokenizedFileLines> mTokenizedFileLines { nullptr };
+
     wxGrid* mGrid { nullptr };
     wxGridTableBase* mGridTable { nullptr };
 };
