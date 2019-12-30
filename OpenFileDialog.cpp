@@ -77,7 +77,7 @@ void OpenFileDialog::OnEscapeRadioButton(wxCommandEvent& event)
     mEscapeTextCtrl->Enable(event.GetId() == ID_OtherEscape);
 }
 
-wxChar OpenFileDialog::GetSeparator() const
+wxChar OpenFileDialog::getSeparator() const
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     wxChar separator { L'?' };
