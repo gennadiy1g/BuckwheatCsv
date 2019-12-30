@@ -1,9 +1,22 @@
 #include "OpenFileDialog.h"
 
-OpenFileDialog::OpenFileDialog(wxWindow* parent)
+OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, int separatorId, wxChar separator, int escapeId, wxChar escape, int quoteId)
     : wxDialog(parent, wxID_ANY, "Open file")
+    , mPath(path)
+    , mSeparatorId(separatorId)
+    , mSeparator(separator)
+    , mEscapeId(escapeId)
+    , mEscape(escape)
+    , mQuoteId(quoteId)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+
+    if (mSeparatorId == ID_OtherSeparator) {
+        mSeparator = L'\0';
+    }
+    if (mEscapeId == ID_OtherEscape) {
+        mEscape = L'\0';
+    }
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
     dialogSizer->Add(
