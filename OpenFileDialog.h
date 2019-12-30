@@ -41,7 +41,7 @@ public:
     wxChar getSeparator() const;
     int getQuoteId() const { return mQuoteId; };
     wxChar getQuote() const;
-    int getEscaptId() const { return mEscapeId; };
+    int getEscapeId() const { return mEscapeId; };
     wxChar getEscape() const;
 
 private:
