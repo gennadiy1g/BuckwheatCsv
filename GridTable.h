@@ -28,7 +28,7 @@ public:
 
 class CsvFileGridTable : public wxGridTableBase {
 public:
-    explicit CsvFileGridTable(const bfs::path& filePath);
+    explicit CsvFileGridTable(TokenizedFileLines& tokenizedFileLines);
 
     virtual ~CsvFileGridTable() = default; // Defaulted virtual destructor
 
@@ -53,7 +53,7 @@ public:
     virtual wxString GetColLabelValue(int col) override;
 
 private:
-    TokenizedFileLines mTokenizedFileLines;
+    TokenizedFileLines& mTokenizedFileLines;
     int mRow { -1 };
     bool mHeadersInFirstRow { true };
     const std::vector<std::wstring>* mTokenizedFileLine { nullptr };

@@ -1,7 +1,7 @@
 #include "GridTable.h"
 
-CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath)
-    : mTokenizedFileLines(filePath)
+CsvFileGridTable::CsvFileGridTable(TokenizedFileLines& tokenizedFileLines)
+    : mTokenizedFileLines(tokenizedFileLines)
 {
 }
 
