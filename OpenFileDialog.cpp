@@ -104,6 +104,36 @@ wxChar OpenFileDialog::getSeparator() const
     return separator;
 }
 
+wxChar OpenFileDialog::getEscape() const
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxChar escape { L'?' };
+    switch (mEscapeId) {
+    case ID_Backslash:
+        escape = L'\\';
+        break;
+    case ID_OtherEscape:
+        escape = mEscape;
+        break;
+    }
+    return escape;
+}
+
+wxChar OpenFileDialog::getQuote() const
+{
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxChar quote { L'?' };
+    switch (mQuoteId) {
+    case ID_Double:
+        quote = L'"';
+        break;
+    case ID_Single:
+        quote = L'\'';
+        break;
+    }
+    return quote;
+}
+
 FilePathValidator::FilePathValidator(wxString& path)
     : mPath(path)
 {
