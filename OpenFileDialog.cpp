@@ -11,10 +11,10 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, int separatorId,
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
-    if (mSeparatorId == ID_OtherSeparator) {
+    if (mSeparatorId != ID_OtherSeparator) {
         mSeparator = L'\0';
     }
-    if (mEscapeId == ID_OtherEscape) {
+    if (mEscapeId != ID_OtherEscape) {
         mEscape = L'\0';
     }
 
