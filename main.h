@@ -28,6 +28,14 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 
+    wxString mPath { wxEmptyString };
+    int mSeparatorId { ID_Comma };
+    wxChar mSeparator { L'\0' };
+    int mEscapeId { ID_Backslash };
+    wxChar mEscape { L'\0' };
+    int mQuoteId { ID_Double };
+    wxChar mQuote { L'\0' };
+
     wxGrid* mGrid { nullptr };
     wxGridTableBase* mGridTable { nullptr };
 };

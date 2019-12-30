@@ -65,10 +65,18 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    OpenFileDialog openFileDialog(this);
+    OpenFileDialog openFileDialog(this, mPath, mSeparatorId, mSeparator, mEscapeId, mEscape, mQuoteId);
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
     }
+
+    mPath = openFileDialog.getPath();
+    mSeparatorId = openFileDialog.getSeparatorId();
+    mSeparator = openFileDialog.getSeparator();
+    mEscapeId = openFileDialog.getEscapeId();
+    mEscape = openFileDialog.getEscape();
+    mQuoteId = openFileDialog.getQuoteId();
+    mQuote = openFileDialog.getQuote();
 
     mGridTable = new CsvFileGridTable(bfs::path(openFileDialog.getPath()));
     wxGridUpdateLocker gridUpdateLocker(mGrid);
