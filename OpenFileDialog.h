@@ -49,9 +49,9 @@ private:
 
     wxString mPath { wxEmptyString };
     int mSeparatorId { ID_Comma };
-    wxChar mSeparator { L'\0' };
+    wxChar mSeparator { L',' };
     int mEscapeId { ID_Backslash };
-    wxChar mEscape { L'\0' };
+    wxChar mEscape { L'\\' };
     int mQuoteId { ID_Double };
 };
 
