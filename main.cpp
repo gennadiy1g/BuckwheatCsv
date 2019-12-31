@@ -65,17 +65,32 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     OpenFileDialog openFileDialog(this, mPath, mSeparator, mQuote, mEscape);
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
     }
 
-    mPath = openFileDialog.getPath();
-    mSeparator = openFileDialog.getSeparator();
-    mEscape = openFileDialog.getEscape();
-    mQuote = openFileDialog.getQuote();
+    auto path = openFileDialog.getPath();
+    auto separator = openFileDialog.getSeparator();
+    auto quote = openFileDialog.getQuote();
+    auto escape = openFileDialog.getEscape();
 
-    mTokenizedFileLines = std::make_unique<TokenizedFileLines>(bfs::path(mPath));
+    if (path != mPath) {
+        wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        mTokenizedFileLines = std::make_unique<TokenizedFileLines>(bfs::path(path));
+        mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
+    } else {
+        if (separator != mSeparator || escape != mEscape || quote != mQuote) {
+            wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+            mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
+        }
+    }
+
+    mPath = path;
+    mSeparator = separator;
+    mQuote = quote;
+    mEscape = escape;
 
     mGridTable = new CsvFileGridTable(*mTokenizedFileLines);
     wxGridUpdateLocker gridUpdateLocker(mGrid);
