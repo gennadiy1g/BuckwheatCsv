@@ -29,11 +29,8 @@ private:
     void OnAbout(wxCommandEvent& event);
 
     wxString mPath { wxEmptyString };
-    int mSeparatorId { ID_Comma };
     wxChar mSeparator { L'\0' };
-    int mEscapeId { ID_Backslash };
     wxChar mEscape { L'\0' };
-    int mQuoteId { ID_Double };
     wxChar mQuote { L'\0' };
 
     std::unique_ptr<TokenizedFileLines> mTokenizedFileLines { nullptr };

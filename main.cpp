@@ -71,11 +71,8 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     }
 
     mPath = openFileDialog.getPath();
-    mSeparatorId = openFileDialog.getSeparatorId();
     mSeparator = openFileDialog.getSeparator();
-    mEscapeId = openFileDialog.getEscapeId();
     mEscape = openFileDialog.getEscape();
-    mQuoteId = openFileDialog.getQuoteId();
     mQuote = openFileDialog.getQuote();
 
     mTokenizedFileLines = std::make_unique<TokenizedFileLines>(bfs::path(mPath));
