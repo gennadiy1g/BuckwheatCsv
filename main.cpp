@@ -65,7 +65,7 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    OpenFileDialog openFileDialog(this, mPath, mSeparatorId, mSeparator, mEscapeId, mEscape, mQuoteId);
+    OpenFileDialog openFileDialog(this, mPath, mSeparator, mQuote, mEscape);
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
     }

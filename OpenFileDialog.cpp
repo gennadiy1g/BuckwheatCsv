@@ -1,21 +1,53 @@
 #include "OpenFileDialog.h"
 
-OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, int separatorId, wxChar separator, int escapeId, wxChar escape, int quoteId)
+OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator, wxChar quote, wxChar escape)
     : wxDialog(parent, wxID_ANY, "Open file")
     , mPath(path)
-    , mSeparatorId(separatorId)
     , mSeparator(separator)
-    , mEscapeId(escapeId)
     , mEscape(escape)
-    , mQuoteId(quoteId)
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
-    if (mSeparatorId != ID_OtherSeparator) {
-        mSeparator = L'\0';
+    switch (mSeparator) {
+    case L',':
+        mSeparatorId = ID_Comma;
+        break;
+    case L'\t':
+        mSeparatorId = ID_Tab;
+        break;
+    case L';':
+        mSeparatorId = ID_Semicolon;
+        break;
+    case L'|':
+        mSeparatorId = ID_VerticalBar;
+        break;
+    case L' ':
+        mSeparatorId = ID_Space;
+        break;
+    default:
+        mSeparatorId = ID_OtherSeparator;
+        break;
     }
-    if (mEscapeId != ID_OtherEscape) {
-        mEscape = L'\0';
+
+    switch (quote) {
+    case L'"':
+        mQuoteId = ID_Double;
+        break;
+    case L'\'':
+        mQuoteId = ID_Single;
+        break;
+    default:
+        wxASSERT(false);
+        break;
+    }
+
+    switch (mEscape) {
+    case L'\\':
+        mEscapeId = ID_Backslash;
+        break;
+    default:
+        mEscapeId = ID_OtherEscape;
+        break;
     }
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);

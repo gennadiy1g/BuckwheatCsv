@@ -24,8 +24,7 @@ enum {
 
 class OpenFileDialog : public wxDialog {
 public:
-    OpenFileDialog(
-        wxWindow* parent, wxString path, int separatorId, wxChar separator, int escapeId, wxChar escape, int quoteId); // Constructor
+    OpenFileDialog(wxWindow* parent, wxString path, wxChar separator, wxChar quote, wxChar escape); // Constructor
     virtual ~OpenFileDialog() = default; // Defaulted virtual destructor
 
     // Disallow assignment and pass-by-value.
