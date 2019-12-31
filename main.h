@@ -32,7 +32,6 @@ private:
     wxChar mSeparator { L',' };
     wxChar mEscape { L'\\' };
     wxChar mQuote { L'"' };
-
     std::unique_ptr<TokenizedFileLines> mTokenizedFileLines { nullptr };
 
     wxGrid* mGrid { nullptr };

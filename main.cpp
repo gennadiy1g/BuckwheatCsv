@@ -81,7 +81,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         mTokenizedFileLines = std::make_unique<TokenizedFileLines>(bfs::path(path));
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
     } else {
-        if (separator != mSeparator || escape != mEscape || quote != mQuote) {
+        if (separator != mSeparator || quote != mQuote || escape != mEscape) {
             wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
             mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
         }
