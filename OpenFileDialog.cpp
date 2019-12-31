@@ -93,7 +93,7 @@ void OpenFileDialog::OnEscapeRadioButton(wxCommandEvent& event)
 wxChar OpenFileDialog::getSeparator() const
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    wxChar separator { L'?' };
+    wxChar separator { L'\0' };
     switch (mSeparatorId) {
     case ID_Comma:
         separator = L',';
@@ -113,6 +113,9 @@ wxChar OpenFileDialog::getSeparator() const
     case ID_OtherSeparator:
         separator = mSeparator;
         break;
+    default:
+        wxASSERT(false);
+        break;
     }
     return separator;
 }
@@ -120,13 +123,16 @@ wxChar OpenFileDialog::getSeparator() const
 wxChar OpenFileDialog::getEscape() const
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    wxChar escape { L'?' };
+    wxChar escape { L'\0' };
     switch (mEscapeId) {
     case ID_Backslash:
         escape = L'\\';
         break;
     case ID_OtherEscape:
         escape = mEscape;
+        break;
+    default:
+        wxASSERT(false);
         break;
     }
     return escape;
@@ -135,13 +141,16 @@ wxChar OpenFileDialog::getEscape() const
 wxChar OpenFileDialog::getQuote() const
 {
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    wxChar quote { L'?' };
+    wxChar quote { L'\0' };
     switch (mQuoteId) {
     case ID_Double:
         quote = L'"';
         break;
     case ID_Single:
         quote = L'\'';
+        break;
+    default:
+        wxASSERT(false);
         break;
     }
     return quote;
