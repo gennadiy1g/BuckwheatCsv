@@ -36,11 +36,8 @@ public:
     OpenFileDialog& operator=(OpenFileDialog&& rhs) = default;
 
     wxString getPath() const { return mPath; };
-    int getSeparatorId() const { return mSeparatorId; };
     wxChar getSeparator() const;
-    int getQuoteId() const { return mQuoteId; };
     wxChar getQuote() const;
-    int getEscapeId() const { return mEscapeId; };
     wxChar getEscape() const;
 
 private:
