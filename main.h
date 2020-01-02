@@ -10,6 +10,7 @@
 
 #include <wx/grid.h>
 #include <wx/log.h>
+#include <wx/thread.h>
 
 class App : public wxApp {
 public:
@@ -19,9 +20,10 @@ private:
     std::unique_ptr<wxLogWindow> mLogWindow;
 };
 
-class MainFrame : public wxFrame {
+class MainFrame : public wxFrame, public wxThreadHelper {
 public:
     MainFrame();
+    virtual wxThread::ExitCode Entry();
 
 private:
     void OnOpen(wxCommandEvent& event);

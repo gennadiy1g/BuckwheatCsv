@@ -96,3 +96,8 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     wxGridUpdateLocker gridUpdateLocker(mGrid);
     mGrid->SetTable(mGridTable, true);
 }
+
+wxThread::ExitCode MainFrame::Entry()
+{
+    return (wxThread::ExitCode)0; // success
+}
