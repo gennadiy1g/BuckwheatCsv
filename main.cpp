@@ -80,6 +80,16 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     if (path != mPath) {
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
         mPath = path;
+
+        auto threadError = CreateThread(wxTHREAD_JOINABLE);
+        wxASSERT(threadError == wxTHREAD_NO_ERROR);
+
+        threadError = GetThread()->Run();
+        wxASSERT(threadError == wxTHREAD_NO_ERROR);
+
+        auto exitCode = GetThread()->Wait();
+        wxASSERT(exitCode == (wxThread::ExitCode)0);
+
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
     } else {
         if (separator != mSeparator || quote != mQuote || escape != mEscape) {
