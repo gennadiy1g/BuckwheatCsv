@@ -54,6 +54,7 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
+    Bind(wxEVT_THREAD, &MainFrame::OnThreadUpdate, this);
 }
 
 void MainFrame::OnExit(wxCommandEvent& event) { Close(true); }
@@ -101,3 +102,5 @@ wxThread::ExitCode MainFrame::Entry()
 {
     return (wxThread::ExitCode)0; // success
 }
+
+void MainFrame::OnThreadUpdate(wxThreadEvent& evt) {};

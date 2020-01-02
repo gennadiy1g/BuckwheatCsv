@@ -8,6 +8,7 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/event.h>
 #include <wx/grid.h>
 #include <wx/log.h>
 #include <wx/thread.h>
@@ -29,6 +30,7 @@ private:
     void OnOpen(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
+    void OnThreadUpdate(wxThreadEvent& evt);
 
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };
