@@ -79,7 +79,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
     if (path != mPath) {
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-        mTokenizedFileLines = std::make_unique<TokenizedFileLines>(bfs::path(path));
+        mPath = path;
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
     } else {
         if (separator != mSeparator || quote != mQuote || escape != mEscape) {
@@ -88,7 +88,6 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         }
     }
 
-    mPath = path;
     mSeparator = separator;
     mQuote = quote;
     mEscape = escape;
@@ -100,6 +99,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
 wxThread::ExitCode MainFrame::Entry()
 {
+    mTokenizedFileLines = std::make_unique<TokenizedFileLines>(bfs::path(mPath));
     return (wxThread::ExitCode)0; // success
 }
 
