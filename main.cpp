@@ -109,8 +109,16 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
 wxThread::ExitCode MainFrame::Entry()
 {
-    mTokenizedFileLines = std::make_unique<TokenizedFileLines>(bfs::path(mPath));
+    mTokenizedFileLines
+        = std::make_unique<TokenizedFileLines>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
     return (wxThread::ExitCode)0; // success
 }
 
 void MainFrame::OnThreadUpdate(wxThreadEvent& evt) {}
+
+void MainFrame::OnProgress(long percent)
+{
+    wxThreadEvent event;
+    event.SetInt(percent);
+    wxQueueEvent(GetEventHandler(), event.Clone());
+}

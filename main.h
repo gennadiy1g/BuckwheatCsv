@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 
 #include <wx/wxprec.h>
@@ -31,6 +32,7 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
     void OnThreadUpdate(wxThreadEvent& evt);
+    void OnProgress(long percent);
 
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };
