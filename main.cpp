@@ -116,7 +116,7 @@ wxThread::ExitCode MainFrame::Entry()
 
 void MainFrame::OnThreadUpdate(wxThreadEvent& event) { wxLogDebug("(%i %s %s:%i)", event.GetInt(), __FUNCTION__, __FILE__, __LINE__); }
 
-void MainFrame::OnProgress(long percent)
+void MainFrame::OnProgress(int percent)
 {
     wxThreadEvent event;
     event.SetInt(percent);

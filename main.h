@@ -32,7 +32,7 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
     void OnThreadUpdate(wxThreadEvent& event);
-    void OnProgress(long percent);
+    void OnProgress(int percent);
 
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };
