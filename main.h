@@ -31,7 +31,7 @@ private:
     void OnOpen(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
-    void OnThreadUpdate(wxThreadEvent& evt);
+    void OnThreadUpdate(wxThreadEvent& event);
     void OnProgress(long percent);
 
     wxString mPath { wxEmptyString };

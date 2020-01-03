@@ -114,7 +114,7 @@ wxThread::ExitCode MainFrame::Entry()
     return (wxThread::ExitCode)0; // success
 }
 
-void MainFrame::OnThreadUpdate(wxThreadEvent& evt) {}
+void MainFrame::OnThreadUpdate(wxThreadEvent& event) { wxLogDebug("(%i %s %s:%i)", event.GetInt(), __FUNCTION__, __FILE__, __LINE__); }
 
 void MainFrame::OnProgress(long percent)
 {
