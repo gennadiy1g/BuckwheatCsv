@@ -1,6 +1,5 @@
 #pragma once
 
-#include <functional>
 #include <memory>
 
 #include <wx/wxprec.h>
@@ -12,6 +11,7 @@
 #include <wx/event.h>
 #include <wx/grid.h>
 #include <wx/log.h>
+#include <wx/progdlg.h>
 #include <wx/thread.h>
 
 class App : public wxApp {
@@ -42,4 +42,6 @@ private:
 
     wxGrid* mGrid { nullptr };
     wxGridTableBase* mGridTable { nullptr };
+
+    wxProgressDialog* mProgressDialog { nullptr };
 };

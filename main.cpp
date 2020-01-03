@@ -1,3 +1,5 @@
+#include <functional>
+
 #include <wx/filedlg.h>
 
 #include "CsvTable/utilities.h"
@@ -81,14 +83,23 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
         mPath = path;
 
+        wxProgressDialog progressDialog("Scanning", path, 100, this);
+        mProgressDialog = &progressDialog;
+
         auto threadError = CreateThread(wxTHREAD_JOINABLE);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
         threadError = GetThread()->Run();
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
-        auto exitCode = GetThread()->Wait();
-        wxASSERT(exitCode == (wxThread::ExitCode)0);
+        wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        do {
+            wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+            wxSafeYield();
+        } while (GetThread() && GetThread()->IsRunning() /*|| progressDialog.GetValue() < 100*/);
+        wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+
+        mProgressDialog = nullptr;
 
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
     } else {
@@ -114,7 +125,12 @@ wxThread::ExitCode MainFrame::Entry()
     return (wxThread::ExitCode)0; // success
 }
 
-void MainFrame::OnThreadUpdate(wxThreadEvent& event) { wxLogDebug("(%i %s %s:%i)", event.GetInt(), __FUNCTION__, __FILE__, __LINE__); }
+void MainFrame::OnThreadUpdate(wxThreadEvent& event)
+{
+    wxLogDebug("(%i %s %s:%i)", event.GetInt(), __FUNCTION__, __FILE__, __LINE__);
+    wxASSERT(mProgressDialog);
+    mProgressDialog->Update(event.GetInt());
+}
 
 void MainFrame::OnProgress(int percent)
 {
