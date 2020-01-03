@@ -113,4 +113,4 @@ wxThread::ExitCode MainFrame::Entry()
     return (wxThread::ExitCode)0; // success
 }
 
-void MainFrame::OnThreadUpdate(wxThreadEvent& evt) {};
+void MainFrame::OnThreadUpdate(wxThreadEvent& evt) {}
