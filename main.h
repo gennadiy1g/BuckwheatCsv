@@ -43,4 +43,6 @@ private:
 
     wxCriticalSection mPercentCriticalSection;
     int mPercent { 0 };
+    wxCriticalSection mThreadIsDoneCriticalSection;
+    int mThreadIsDone { false };
 };

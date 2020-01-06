@@ -85,14 +85,16 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         wxProgressDialog progressDialog(
             "Scanning file", path, 100, this, wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
 
-        auto threadError = CreateThread(wxTHREAD_JOINABLE);
+        auto threadError = CreateThread(wxTHREAD_DETACHED);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
+        mThreadIsDone = false;
         mPercent = 0;
         threadError = GetThread()->Run();
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        bool threadIsDone { false };
         int prevPercent { -1 }, percent { 0 };
         while (true) {
             {
@@ -107,12 +109,15 @@ void MainFrame::OnOpen(wxCommandEvent& event)
                 wxTheApp->SafeYieldFor(NULL, wxEVT_CATEGORY_UI);
             }
 
-            wxASSERT(GetThread());
-            if (GetThread()->IsRunning()) {
-                //                wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);  /*happens too frequently*/
-                wxThread::Sleep(100);
-            } else {
+            {
+                wxCriticalSectionLocker lock(mThreadIsDoneCriticalSection);
+                threadIsDone = mThreadIsDone;
+            }
+
+            if (threadIsDone) {
                 break;
+            } else {
+                wxThread::Sleep(100);
             }
         }
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
@@ -140,6 +145,8 @@ wxThread::ExitCode MainFrame::Entry()
 {
     mTokenizedFileLines
         = std::make_unique<TokenizedFileLines>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
+    wxCriticalSectionLocker lock(mThreadIsDoneCriticalSection);
+    mThreadIsDone = true;
     return (wxThread::ExitCode)0; // success
 }
 
