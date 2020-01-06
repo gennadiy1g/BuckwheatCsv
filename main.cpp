@@ -91,10 +91,28 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        int prevPercent { -1 }, percent { 0 };
         do {
-            wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-            wxSafeYield();
-        } while (GetThread() && GetThread()->IsRunning());
+            {
+                wxCriticalSectionLocker lock(mPercentCriticalSection);
+                percent = mPercent;
+            }
+
+            if (percent - prevPercent >= 1) {
+                progressDialog.Update(percent);
+                prevPercent = percent;
+            } else {
+                wxTheApp->SafeYieldFor(NULL, wxEVT_CATEGORY_UI);
+            }
+
+            wxASSERT(GetThread());
+            if (GetThread()->IsRunning()) {
+//                wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);  /*happens too frequently*/
+                wxThread::Sleep(100);
+            } else {
+                break;
+            }
+        } while (true);
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
