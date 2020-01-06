@@ -82,7 +82,8 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
         mPath = path;
 
-        wxProgressDialog progressDialog("Scanning", path, 100, this);
+        wxProgressDialog progressDialog(
+            "Scanning", path, 100, this, wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
 
         auto threadError = CreateThread(wxTHREAD_JOINABLE);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
@@ -107,7 +108,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
             wxASSERT(GetThread());
             if (GetThread()->IsRunning()) {
-//                wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);  /*happens too frequently*/
+                //                wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);  /*happens too frequently*/
                 wxThread::Sleep(100);
             } else {
                 break;
