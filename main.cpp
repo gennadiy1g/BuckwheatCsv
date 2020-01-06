@@ -84,6 +84,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
         wxProgressDialog progressDialog("Scanning file", path, 100, this,
             wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
+        progressDialog.Update(0);
 
         auto threadError = CreateThread(wxTHREAD_DETACHED);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
@@ -115,6 +116,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             }
 
             if (threadIsDone) {
+                wxASSERT(!GetThread());
                 break;
             } else {
                 wxThread::Sleep(100);
