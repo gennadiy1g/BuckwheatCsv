@@ -86,7 +86,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
         progressDialog.Update(0);
 
-        auto threadError = CreateThread(wxTHREAD_DETACHED);
+        auto threadError = CreateThread(wxTHREAD_JOINABLE);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
         mThreadIsDone = false;
@@ -116,7 +116,8 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             }
 
             if (threadIsDone) {
-                wxASSERT(!GetThread());
+                wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+                GetThread()->Wait();
                 break;
             } else {
                 wxThread::Sleep(100);
@@ -125,6 +126,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
+        wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     } else {
         if (separator != mSeparator || quote != mQuote || escape != mEscape) {
             wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
@@ -138,18 +140,17 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     mEscape = escape;
 
     mGridTable = new CsvFileGridTable(*mTokenizedFileLines);
-    {
-        wxGridUpdateLocker gridUpdateLocker(mGrid);
-        mGrid->SetTable(mGridTable, true);
-    }
+    wxGridUpdateLocker gridUpdateLocker(mGrid);
+    mGrid->SetTable(mGridTable, true);
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 }
 
 wxThread::ExitCode MainFrame::Entry()
 {
-    mTokenizedFileLines
+    auto tokenizedFileLines
         = std::make_unique<TokenizedFileLines>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
     wxCriticalSectionLocker lock(mThreadIsDoneCriticalSection);
+    mTokenizedFileLines = std::move(tokenizedFileLines);
     mThreadIsDone = true;
     return (wxThread::ExitCode)0; // success
 }
