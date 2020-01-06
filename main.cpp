@@ -123,6 +123,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
         }
     }
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
     mSeparator = separator;
     mQuote = quote;
@@ -131,6 +132,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     mGridTable = new CsvFileGridTable(*mTokenizedFileLines);
     wxGridUpdateLocker gridUpdateLocker(mGrid);
     mGrid->SetTable(mGridTable, true);
+    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 }
 
 wxThread::ExitCode MainFrame::Entry()
