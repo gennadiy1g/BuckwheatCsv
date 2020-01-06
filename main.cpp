@@ -138,8 +138,10 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     mEscape = escape;
 
     mGridTable = new CsvFileGridTable(*mTokenizedFileLines);
-    wxGridUpdateLocker gridUpdateLocker(mGrid);
-    mGrid->SetTable(mGridTable, true);
+    {
+        wxGridUpdateLocker gridUpdateLocker(mGrid);
+        mGrid->SetTable(mGridTable, true);
+    }
     wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 }
 
