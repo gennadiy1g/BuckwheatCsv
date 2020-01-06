@@ -93,7 +93,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
         int prevPercent { -1 }, percent { 0 };
-        do {
+        while (true) {
             {
                 wxCriticalSectionLocker lock(mPercentCriticalSection);
                 percent = mPercent;
@@ -113,7 +113,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             } else {
                 break;
             }
-        } while (true);
+        }
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
