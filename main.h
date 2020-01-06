@@ -8,7 +8,6 @@
 #include <wx/wx.h>
 #endif
 
-#include <wx/event.h>
 #include <wx/grid.h>
 #include <wx/log.h>
 #include <wx/progdlg.h>
@@ -31,7 +30,6 @@ private:
     void OnOpen(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
-    void OnThreadUpdate(wxThreadEvent& event);
     void OnProgress(int percent);
 
     wxString mPath { wxEmptyString };
@@ -43,5 +41,6 @@ private:
     wxGrid* mGrid { nullptr };
     wxGridTableBase* mGridTable { nullptr };
 
-    wxProgressDialog* mProgressDialog { nullptr };
+    wxCriticalSection mPercentCriticalSection;
+    int mPercent;
 };

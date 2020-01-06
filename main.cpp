@@ -56,7 +56,6 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
-    Bind(wxEVT_THREAD, &MainFrame::OnThreadUpdate, this);
 }
 
 void MainFrame::OnExit(wxCommandEvent& event) { Close(true); }
@@ -84,7 +83,6 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         mPath = path;
 
         wxProgressDialog progressDialog("Scanning", path, 100, this);
-        mProgressDialog = &progressDialog;
 
         auto threadError = CreateThread(wxTHREAD_JOINABLE);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
@@ -96,10 +94,8 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         do {
             wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
             wxSafeYield();
-        } while (GetThread() && GetThread()->IsRunning() /*|| progressDialog.GetValue() < 100*/);
+        } while (GetThread() && GetThread()->IsRunning());
         wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-
-        mProgressDialog = nullptr;
 
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
     } else {
@@ -125,16 +121,8 @@ wxThread::ExitCode MainFrame::Entry()
     return (wxThread::ExitCode)0; // success
 }
 
-void MainFrame::OnThreadUpdate(wxThreadEvent& event)
-{
-    wxLogDebug("(%i %s %s:%i)", event.GetInt(), __FUNCTION__, __FILE__, __LINE__);
-    wxASSERT(mProgressDialog);
-    mProgressDialog->Update(event.GetInt());
-}
-
 void MainFrame::OnProgress(int percent)
 {
-    wxThreadEvent event;
-    event.SetInt(percent);
-    wxQueueEvent(GetEventHandler(), event.Clone());
+    wxCriticalSectionLocker lock(mPercentCriticalSection);
+    mPercent = percent;
 }
