@@ -42,5 +42,5 @@ private:
     wxGridTableBase* mGridTable { nullptr };
 
     wxCriticalSection mPercentCriticalSection;
-    int mPercent;
+    int mPercent { 0 };
 };

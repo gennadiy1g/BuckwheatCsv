@@ -88,6 +88,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         auto threadError = CreateThread(wxTHREAD_JOINABLE);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
+        mPercent = 0;
         threadError = GetThread()->Run();
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
