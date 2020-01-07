@@ -150,11 +150,12 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
 wxThread::ExitCode MainFrame::Entry()
 {
-    auto tokenizedFileLines
-        = std::make_unique<TokenizedFileLines>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
-    wxCriticalSectionLocker lock(mThreadIsDoneCS);
-    mTokenizedFileLines = std::move(tokenizedFileLines);
-    mThreadIsDone = true;
+    auto tokenizedFileLines = new TokenizedFileLines(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
+    {
+        wxCriticalSectionLocker lock(mThreadIsDoneCS);
+        mTokenizedFileLines.reset(tokenizedFileLines);
+        mThreadIsDone = true;
+    }
     return (wxThread::ExitCode)0; // success
 }
 
