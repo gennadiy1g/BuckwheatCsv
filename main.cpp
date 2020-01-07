@@ -150,7 +150,9 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
 wxThread::ExitCode MainFrame::Entry()
 {
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto tokenizedFileLines = new TokenizedFileLines(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     {
         wxCriticalSectionLocker lock(mThreadIsDoneCS);
         mTokenizedFileLines.reset(tokenizedFileLines);
@@ -161,6 +163,10 @@ wxThread::ExitCode MainFrame::Entry()
 
 void MainFrame::OnProgress(int percent)
 {
-    wxCriticalSectionLocker lock(mPercentCS);
-    mPercent = percent;
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    {
+        wxCriticalSectionLocker lock(mPercentCS);
+        mPercent = percent;
+    }
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 }
