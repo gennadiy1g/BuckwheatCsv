@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <memory>
 
 #include <wx/wxprec.h>
@@ -18,7 +19,8 @@ public:
     virtual bool OnInit();
 
 private:
-    std::unique_ptr<wxLogWindow> mLogWindow;
+    std::unique_ptr<std::ofstream> mFileStream;
+    std::unique_ptr<wxLogStream> mLogStream;
 };
 
 class MainFrame : public wxFrame, public wxThreadHelper {

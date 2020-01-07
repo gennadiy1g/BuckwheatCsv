@@ -6,7 +6,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     , mSeparator(separator)
     , mEscape(escape)
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
     switch (mSeparator) {
     case L',':
@@ -112,19 +112,19 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
 
 void OpenFileDialog::OnSeparatorRadioButton(wxCommandEvent& event)
 {
-    wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
     mSeparatorTextCtrl->Enable(event.GetId() == ID_OtherSeparator);
 }
 
 void OpenFileDialog::OnEscapeRadioButton(wxCommandEvent& event)
 {
-    wxLogDebug("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
     mEscapeTextCtrl->Enable(event.GetId() == ID_OtherEscape);
 }
 
 wxChar OpenFileDialog::getSeparator() const
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     wxChar separator { L'\0' };
     switch (mSeparatorId) {
     case ID_Comma:
@@ -154,7 +154,7 @@ wxChar OpenFileDialog::getSeparator() const
 
 wxChar OpenFileDialog::getEscape() const
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     wxChar escape { L'\0' };
     switch (mEscapeId) {
     case ID_Backslash:
@@ -172,7 +172,7 @@ wxChar OpenFileDialog::getEscape() const
 
 wxChar OpenFileDialog::getQuote() const
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     wxChar quote { L'\0' };
     switch (mQuoteId) {
     case ID_Double:
@@ -195,7 +195,7 @@ FilePathValidator::FilePathValidator(wxString& path)
 
 bool FilePathValidator::Validate(wxWindow* parent)
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
     wxASSERT(filePickerCtrl);
     if (!wxFile::Exists(filePickerCtrl->GetPath())) {
@@ -209,7 +209,7 @@ bool FilePathValidator::Validate(wxWindow* parent)
 
 bool FilePathValidator::TransferToWindow()
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
     wxASSERT(filePickerCtrl);
     filePickerCtrl->SetPath(mPath);
@@ -218,7 +218,7 @@ bool FilePathValidator::TransferToWindow()
 
 bool FilePathValidator::TransferFromWindow()
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
     wxASSERT(filePickerCtrl);
     mPath = filePickerCtrl->GetPath();
@@ -232,7 +232,7 @@ RadioButtonValidator::RadioButtonValidator(int& radioButtonId)
 
 bool RadioButtonValidator::TransferToWindow()
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto radioButton = dynamic_cast<wxRadioButton*>(GetWindow());
     wxASSERT(radioButton);
     radioButton->SetValue(radioButton->GetId() == mRadioButtonId);
@@ -241,7 +241,7 @@ bool RadioButtonValidator::TransferToWindow()
 
 bool RadioButtonValidator::TransferFromWindow()
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto radioButton = dynamic_cast<wxRadioButton*>(GetWindow());
     wxASSERT(radioButton);
     if (radioButton->GetValue()) {
@@ -260,7 +260,7 @@ TextCtrlValidator::TextCtrlValidator(int radioButtonId, int otherButtonId, wxCha
 
 bool TextCtrlValidator::Validate(wxWindow* parent)
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
     wxASSERT(textCtrl);
     if (textCtrl->IsEnabled()) {
@@ -277,7 +277,7 @@ bool TextCtrlValidator::Validate(wxWindow* parent)
 
 bool TextCtrlValidator::TransferToWindow()
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
     wxASSERT(textCtrl);
     if (mRadioButtonId == mOtherButtonId) {
@@ -292,7 +292,7 @@ bool TextCtrlValidator::TransferToWindow()
 
 bool TextCtrlValidator::TransferFromWindow()
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
     wxASSERT(textCtrl);
     if (textCtrl->IsEnabled()) {

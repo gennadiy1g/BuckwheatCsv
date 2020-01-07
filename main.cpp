@@ -17,9 +17,11 @@ bool App::OnInit()
 #ifdef NDEBUG
     wxLog::EnableLogging(false);
 #else
-    mLogWindow = std::make_unique<wxLogWindow>(frame, "Log", true, false);
+    mFileStream = std::make_unique<std::ofstream>("wxtrace.log");
+    mLogStream = std::make_unique<wxLogStream>(mFileStream.get());
+    wxLog::SetActiveTarget(mLogStream.get());
 #endif
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     frame->Show(true);
 
     initLocalization();
@@ -67,7 +69,7 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     OpenFileDialog openFileDialog(this, mPath, mSeparator, mQuote, mEscape);
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
@@ -79,7 +81,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     auto escape = openFileDialog.getEscape();
 
     if (path != mPath) {
-        wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
         mPath = path;
 
         wxProgressDialog progressDialog("Scanning file", path, 100, this,
@@ -94,7 +96,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         threadError = GetThread()->Run();
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
-        wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
         bool threadIsDone { false };
         int prevPercent { -1 }, percent { 0 };
         while (true) {
@@ -116,7 +118,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             }
 
             if (threadIsDone) {
-                wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+                wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
                 auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
                 wxASSERT(exitCode == (wxThread::ExitCode)0);
                 break;
@@ -124,17 +126,17 @@ void MainFrame::OnOpen(wxCommandEvent& event)
                 wxThread::Sleep(100);
             }
         }
-        wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
         mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
-        wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     } else {
         if (separator != mSeparator || quote != mQuote || escape != mEscape) {
-            wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+            wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
             mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
         }
     }
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
     mSeparator = separator;
     mQuote = quote;
@@ -143,7 +145,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     mGridTable = new CsvFileGridTable(*mTokenizedFileLines);
     wxGridUpdateLocker gridUpdateLocker(mGrid);
     mGrid->SetTable(mGridTable, true);
-    wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 }
 
 wxThread::ExitCode MainFrame::Entry()
