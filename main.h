@@ -43,8 +43,8 @@ private:
     wxGrid* mGrid { nullptr };
     wxGridTableBase* mGridTable { nullptr };
 
-    wxCriticalSection mPercentCriticalSection;
+    wxCriticalSection mPercentCS;
     int mPercent { 0 };
-    wxCriticalSection mThreadIsDoneCriticalSection;
+    wxCriticalSection mThreadIsDoneCS;
     int mThreadIsDone { false };
 };
