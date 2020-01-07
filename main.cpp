@@ -117,7 +117,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
 
             if (threadIsDone) {
                 wxLogDebug("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-                auto exitCode = GetThread()->Wait();
+                auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
                 wxASSERT(exitCode == (wxThread::ExitCode)0);
                 break;
             } else {
