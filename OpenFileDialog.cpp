@@ -1,3 +1,4 @@
+#include "CsvTable/log.h"
 #include "OpenFileDialog.h"
 
 OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator, wxChar quote, wxChar escape)
@@ -6,7 +7,8 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     , mSeparator(separator)
     , mEscape(escape)
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     switch (mSeparator) {
     case L',':
@@ -108,23 +110,29 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
 
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnSeparatorRadioButton, this, ID_Comma, ID_OtherSeparator);
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_Backslash, ID_OtherEscape);
+
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
 void OpenFileDialog::OnSeparatorRadioButton(wxCommandEvent& event)
 {
-    wxLogMessage("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "event.GetId()=" << event.GetId() << FUNCTION_FILE_LINE;
     mSeparatorTextCtrl->Enable(event.GetId() == ID_OtherSeparator);
 }
 
 void OpenFileDialog::OnEscapeRadioButton(wxCommandEvent& event)
 {
-    wxLogMessage("%i (%s %s:%i)", event.GetId(), __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "event.GetId()=" << event.GetId() << FUNCTION_FILE_LINE;
     mEscapeTextCtrl->Enable(event.GetId() == ID_OtherEscape);
 }
 
 wxChar OpenFileDialog::getSeparator() const
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     wxChar separator { L'\0' };
     switch (mSeparatorId) {
     case ID_Comma:
@@ -154,7 +162,9 @@ wxChar OpenFileDialog::getSeparator() const
 
 wxChar OpenFileDialog::getEscape() const
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     wxChar escape { L'\0' };
     switch (mEscapeId) {
     case ID_Backslash:
@@ -172,7 +182,9 @@ wxChar OpenFileDialog::getEscape() const
 
 wxChar OpenFileDialog::getQuote() const
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     wxChar quote { L'\0' };
     switch (mQuoteId) {
     case ID_Double:
@@ -195,7 +207,9 @@ FilePathValidator::FilePathValidator(wxString& path)
 
 bool FilePathValidator::Validate(wxWindow* parent)
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
     wxASSERT(filePickerCtrl);
     if (!wxFile::Exists(filePickerCtrl->GetPath())) {
@@ -209,7 +223,9 @@ bool FilePathValidator::Validate(wxWindow* parent)
 
 bool FilePathValidator::TransferToWindow()
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
     wxASSERT(filePickerCtrl);
     filePickerCtrl->SetPath(mPath);
@@ -218,7 +234,9 @@ bool FilePathValidator::TransferToWindow()
 
 bool FilePathValidator::TransferFromWindow()
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     auto filePickerCtrl = dynamic_cast<wxFilePickerCtrl*>(GetWindow());
     wxASSERT(filePickerCtrl);
     mPath = filePickerCtrl->GetPath();
@@ -232,7 +250,9 @@ RadioButtonValidator::RadioButtonValidator(int& radioButtonId)
 
 bool RadioButtonValidator::TransferToWindow()
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     auto radioButton = dynamic_cast<wxRadioButton*>(GetWindow());
     wxASSERT(radioButton);
     radioButton->SetValue(radioButton->GetId() == mRadioButtonId);
@@ -241,7 +261,9 @@ bool RadioButtonValidator::TransferToWindow()
 
 bool RadioButtonValidator::TransferFromWindow()
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     auto radioButton = dynamic_cast<wxRadioButton*>(GetWindow());
     wxASSERT(radioButton);
     if (radioButton->GetValue()) {
@@ -260,7 +282,9 @@ TextCtrlValidator::TextCtrlValidator(int radioButtonId, int otherButtonId, wxCha
 
 bool TextCtrlValidator::Validate(wxWindow* parent)
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
     wxASSERT(textCtrl);
     if (textCtrl->IsEnabled()) {
@@ -277,7 +301,9 @@ bool TextCtrlValidator::Validate(wxWindow* parent)
 
 bool TextCtrlValidator::TransferToWindow()
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
     wxASSERT(textCtrl);
     if (mRadioButtonId == mOtherButtonId) {
@@ -292,7 +318,9 @@ bool TextCtrlValidator::TransferToWindow()
 
 bool TextCtrlValidator::TransferFromWindow()
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
     wxASSERT(textCtrl);
     if (textCtrl->IsEnabled()) {

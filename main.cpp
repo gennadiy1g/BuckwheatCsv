@@ -2,6 +2,7 @@
 
 #include <wx/filedlg.h>
 
+#include "CsvTable/log.h"
 #include "CsvTable/utilities.h"
 #include "GridTable.h"
 #include "OpenFileDialog.h"
@@ -13,26 +14,25 @@ wxIMPLEMENT_APP(App);
 
 bool App::OnInit()
 {
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     MainFrame* frame = new MainFrame();
-#ifdef NDEBUG
-    wxLog::EnableLogging(false);
-#else
-    mFileStream = std::make_unique<std::ofstream>("wxtrace.log");
-    mLogStream = std::make_unique<wxLogStream>(mFileStream.get());
-    wxLog::SetActiveTarget(mLogStream.get());
-#endif
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     frame->Show(true);
 
     initLocalization();
     initLogging();
 
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     return true;
 }
 
 MainFrame::MainFrame()
     : wxFrame(NULL, wxID_ANY, "Buckwheat CSV")
 {
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     wxMenu* menuFile = new wxMenu;
     menuFile->Append(wxID_OPEN, "&Open...\tCtrl-O", "Open file");
     menuFile->AppendSeparator();
@@ -58,6 +58,8 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
+
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
 void MainFrame::OnExit(wxCommandEvent& event) { Close(true); }
@@ -69,7 +71,9 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& event)
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     OpenFileDialog openFileDialog(this, mPath, mSeparator, mQuote, mEscape);
     if (openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
@@ -81,7 +85,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     auto escape = openFileDialog.getEscape();
 
     if (path != mPath) {
-        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         mPath = path;
         mThreadIsDone = false;
         mPercent = 0;
@@ -96,7 +100,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         threadError = GetThread()->Run();
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
-        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         bool threadIsDone { false };
         int prevPercent { -1 }, percent { 0 };
         while (true) {
@@ -118,55 +122,57 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             }
 
             if (threadIsDone) {
-                wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                 auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
-                wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                 wxASSERT(exitCode == (wxThread::ExitCode)0);
                 break;
             } else {
-                dynamic_cast<App*>(wxTheApp)->mLogStream->Flush();
                 wxThread::Sleep(100);
             }
         }
-        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
         wxGridUpdateLocker gridUpdateLocker(mGrid);
         mGrid->SetTable(mGridTable2.get());
         mGridTable = std::move(mGridTable2);
-        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         dynamic_cast<CsvFileGridTable*>(mGridTable.get())->setTokenizerParams(escape, separator, quote);
     } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
-        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         wxGridUpdateLocker gridUpdateLocker(mGrid);
         dynamic_cast<CsvFileGridTable*>(mGridTable.get())->setTokenizerParams(escape, separator, quote);
     }
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    dynamic_cast<App*>(wxTheApp)->mLogStream->Flush();
 
     mSeparator = separator;
     mQuote = quote;
     mEscape = escape;
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
 wxThread::ExitCode MainFrame::Entry()
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     mGridTable2 = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     {
         wxCriticalSectionLocker lock(mThreadIsDoneCS);
         mThreadIsDone = true;
     }
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     return (wxThread::ExitCode)0; // success
 }
 
 void MainFrame::OnProgress(int percent)
 {
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
     {
         wxCriticalSectionLocker lock(mPercentCS);
         mPercent = percent;
     }
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }

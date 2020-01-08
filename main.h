@@ -1,6 +1,5 @@
 #pragma once
 
-#include <fstream>
 #include <memory>
 
 #include <wx/wxprec.h>
@@ -10,16 +9,12 @@
 #endif
 
 #include <wx/grid.h>
-#include <wx/log.h>
 #include <wx/progdlg.h>
 #include <wx/thread.h>
 
 class App : public wxApp {
 public:
     virtual bool OnInit();
-
-    std::unique_ptr<std::ofstream> mFileStream;
-    std::unique_ptr<wxLogStream> mLogStream;
 };
 
 class MainFrame : public wxFrame, public wxThreadHelper {
