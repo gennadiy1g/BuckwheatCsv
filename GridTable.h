@@ -16,14 +16,11 @@ public:
     virtual ~EmptyGridTable() = default; // Defaulted virtual destructor
 
     int GetNumberRows() override { return 100; }
-
     int GetNumberCols() override { return 26; }
-
     wxString GetValue(int row, int col) override { return L""; }
-
     void SetValue(int, int, const wxString&) override {}
-
     bool IsEmptyCell(int, int) override { return false; }
+    virtual void Clear() override {};
 };
 
 class CsvFileGridTable : public wxGridTableBase {
@@ -45,6 +42,7 @@ public:
     void SetValue(int, int, const wxString&) override {}
     bool IsEmptyCell(int, int) override { return false; }
     virtual wxString GetColLabelValue(int col) override;
+    virtual void Clear() override { mTokenizedFileLines.Clear(); };
 
     void setTokenizerParams(wchar_t escape = L'\\', wchar_t fieldSeparator = L',', wchar_t quote = L'\"');
 
