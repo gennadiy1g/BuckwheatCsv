@@ -124,6 +124,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
                 wxASSERT(exitCode == (wxThread::ExitCode)0);
                 break;
             } else {
+                dynamic_cast<App*>(wxTheApp)->mLogStream->Flush();
                 wxThread::Sleep(100);
             }
         }
@@ -140,6 +141,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         dynamic_cast<CsvFileGridTable*>(mGridTable.get())->setTokenizerParams(escape, separator, quote);
     }
     wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+    dynamic_cast<App*>(wxTheApp)->mLogStream->Flush();
 
     mSeparator = separator;
     mQuote = quote;

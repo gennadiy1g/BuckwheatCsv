@@ -18,7 +18,6 @@ class App : public wxApp {
 public:
     virtual bool OnInit();
 
-private:
     std::unique_ptr<std::ofstream> mFileStream;
     std::unique_ptr<wxLogStream> mLogStream;
 };
