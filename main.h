@@ -38,10 +38,10 @@ private:
     wxChar mSeparator { L',' };
     wxChar mEscape { L'\\' };
     wxChar mQuote { L'"' };
-    std::unique_ptr<TokenizedFileLines> mTokenizedFileLines { nullptr };
 
     wxGrid* mGrid { nullptr };
-    wxGridTableBase* mGridTable { nullptr };
+    std::unique_ptr<wxGridTableBase> mGridTable { nullptr };
+    std::unique_ptr<wxGridTableBase> mGridTable2 { nullptr };
 
     wxCriticalSection mPercentCS;
     int mPercent { 0 };

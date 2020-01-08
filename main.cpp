@@ -49,8 +49,8 @@ MainFrame::MainFrame()
 
     mGrid = new wxGrid(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
     mGrid->EnableEditing(false);
-    mGridTable = new EmptyGridTable();
-    mGrid->SetTable(mGridTable, true);
+    mGridTable = std::make_unique<EmptyGridTable>();
+    mGrid->SetTable(mGridTable.get());
 
     CreateStatusBar();
     SetStatusText("Welcome to wxWidgets!");
@@ -120,6 +120,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             if (threadIsDone) {
                 wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
                 auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
+                wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
                 wxASSERT(exitCode == (wxThread::ExitCode)0);
                 break;
             } else {
@@ -128,36 +129,33 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         }
         wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
-        mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
+        wxGridUpdateLocker gridUpdateLocker(mGrid);
+        mGrid->SetTable(mGridTable2.get());
+        mGridTable = std::move(mGridTable2);
         wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    } else {
-        if (separator != mSeparator || quote != mQuote || escape != mEscape) {
-            wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-            mTokenizedFileLines->setTokenizerParams(escape, separator, quote);
-        }
+        dynamic_cast<CsvFileGridTable*>(mGridTable.get())->setTokenizerParams(escape, separator, quote);
+    } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
+        wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
+        wxGridUpdateLocker gridUpdateLocker(mGrid);
+        dynamic_cast<CsvFileGridTable*>(mGridTable.get())->setTokenizerParams(escape, separator, quote);
     }
     wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 
     mSeparator = separator;
     mQuote = quote;
     mEscape = escape;
-
-    mGridTable = new CsvFileGridTable(*mTokenizedFileLines);
-    wxGridUpdateLocker gridUpdateLocker(mGrid);
-    mGrid->SetTable(mGridTable, true);
-    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
 }
 
 wxThread::ExitCode MainFrame::Entry()
 {
     wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
-    auto tokenizedFileLines = new TokenizedFileLines(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
+    mGridTable2 = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
     wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     {
         wxCriticalSectionLocker lock(mThreadIsDoneCS);
-        mTokenizedFileLines.reset(tokenizedFileLines);
         mThreadIsDone = true;
     }
+    wxLogMessage("(%s %s:%i)", __FUNCTION__, __FILE__, __LINE__);
     return (wxThread::ExitCode)0; // success
 }
 
