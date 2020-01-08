@@ -94,6 +94,9 @@ void MainFrame::OnOpen(wxCommandEvent& event)
             wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
         progressDialog.Update(0);
 
+        wxGridUpdateLocker gridUpdateLocker(mGrid);
+        mGrid->ClearGrid();
+
         auto threadError = CreateThread(wxTHREAD_JOINABLE);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
@@ -133,7 +136,6 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         }
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
-        wxGridUpdateLocker gridUpdateLocker(mGrid);
         mGrid->SetTable(mGridTable2.get());
         mGridTable = std::move(mGridTable2);
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
