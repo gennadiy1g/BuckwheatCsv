@@ -1,7 +1,7 @@
 #include "GridTable.h"
 
-CsvFileGridTable::CsvFileGridTable(TokenizedFileLines& tokenizedFileLines)
-    : mTokenizedFileLines(tokenizedFileLines)
+CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath, OnProgress onProgress)
+    : mTokenizedFileLines(filePath, onProgress)
 {
 }
 
@@ -34,4 +34,9 @@ int CsvFileGridTable::GetNumberRows()
     } else {
         return mTokenizedFileLines.numLines();
     }
+}
+
+void CsvFileGridTable::setTokenizerParams(wchar_t escape, wchar_t fieldSeparator, wchar_t quote)
+{
+    mTokenizedFileLines.setTokenizerParams(escape, fieldSeparator, quote);
 }

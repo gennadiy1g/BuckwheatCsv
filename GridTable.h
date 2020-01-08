@@ -28,8 +28,7 @@ public:
 
 class CsvFileGridTable : public wxGridTableBase {
 public:
-    explicit CsvFileGridTable(TokenizedFileLines& tokenizedFileLines);
-
+    explicit CsvFileGridTable(const bfs::path& filePath, OnProgress onProgress = OnProgress());
     virtual ~CsvFileGridTable() = default; // Defaulted virtual destructor
 
     // Disallow assignment and pass-by-value.
@@ -41,19 +40,16 @@ public:
     CsvFileGridTable& operator=(CsvFileGridTable&& rhs) = default;
 
     int GetNumberRows() override;
-
     int GetNumberCols() override { return mTokenizedFileLines.numColumns(); }
-
     wxString GetValue(int row, int col) override;
-
     void SetValue(int, int, const wxString&) override {}
-
     bool IsEmptyCell(int, int) override { return false; }
-
     virtual wxString GetColLabelValue(int col) override;
 
+    void setTokenizerParams(wchar_t escape = L'\\', wchar_t fieldSeparator = L',', wchar_t quote = L'\"');
+
 private:
-    TokenizedFileLines& mTokenizedFileLines;
+    TokenizedFileLines mTokenizedFileLines;
     int mRow { -1 };
     bool mHeadersInFirstRow { true };
     const std::vector<std::wstring>* mTokenizedFileLine { nullptr };
