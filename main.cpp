@@ -156,7 +156,6 @@ wxThread::ExitCode MainFrame::Entry()
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-
     mGridTable2 = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     {
@@ -171,7 +170,6 @@ void MainFrame::OnProgress(int percent)
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-
     {
         wxCriticalSectionLocker lock(mPercentCS);
         mPercent = percent;
