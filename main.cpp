@@ -128,7 +128,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
                 BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                 auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
                 BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-                wxASSERT(exitCode == (wxThread::ExitCode)0);
+                wxASSERT(exitCode == static_cast<wxThread::ExitCode>(0));
                 break;
             } else {
                 wxThread::Sleep(100);
@@ -163,7 +163,7 @@ wxThread::ExitCode MainFrame::Entry()
         mThreadIsDone = true;
     }
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-    return (wxThread::ExitCode)0; // success
+    return static_cast<wxThread::ExitCode>(0); // success
 }
 
 void MainFrame::OnProgress(int percent)
