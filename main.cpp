@@ -89,6 +89,8 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         mPath = path;
         mThreadIsDone = false;
         mPercent = 0;
+        mScanFailed = false;
+        mErrorMessage = "";
 
         wxProgressDialog progressDialog("Scanning file", path, 100, this,
             wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
@@ -156,7 +158,13 @@ wxThread::ExitCode MainFrame::Entry()
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-    mGridTable2 = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
+    try {
+        mGridTable2 = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
+    } catch (const std::runtime_error& e) {
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+        mScanFailed = true;
+        mErrorMessage = e.what();
+    }
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     {
         wxCriticalSectionLocker lock(mThreadIsDoneCS);
