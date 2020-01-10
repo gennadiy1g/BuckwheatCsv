@@ -138,10 +138,15 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         }
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
-        mGrid->SetTable(mGridTable2.get());
-        mGridTable = std::move(mGridTable2);
-        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-        dynamic_cast<CsvFileGridTable*>(mGridTable.get())->setTokenizerParams(escape, separator, quote);
+        if (mScanFailed) {
+            mGridTable = std::make_unique<EmptyGridTable>();
+            mGrid->SetTable(mGridTable.get());
+        } else {
+            mGrid->SetTable(mGridTable2.get());
+            mGridTable = std::move(mGridTable2);
+            BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+            dynamic_cast<CsvFileGridTable*>(mGridTable.get())->setTokenizerParams(escape, separator, quote);
+        }
     } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         wxGridUpdateLocker gridUpdateLocker(mGrid);
