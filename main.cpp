@@ -148,7 +148,10 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         wxGridUpdateLocker gridUpdateLocker(mGrid);
-        dynamic_cast<CsvFileGridTable*>(mGridTable.get())->setTokenizerParams(escape, separator, quote);
+        auto ptr = dynamic_cast<CsvFileGridTable*>(mGridTable.get());
+        if (ptr) {
+            ptr->setTokenizerParams(escape, separator, quote);
+        }
     }
 
     mSeparator = separator;
