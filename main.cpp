@@ -157,7 +157,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     if (mScanFailed) {
-        wxMessageDialog messageDialog(this, mErrorMessage, "Attention", wxOK | wxICON_ERROR | wxCENTRE);
+        wxMessageDialog messageDialog(this, mErrorMessage, "Attention", wxOK | wxICON_WARNING | wxCENTRE);
         messageDialog.ShowModal();
     }
 }
