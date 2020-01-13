@@ -1,5 +1,7 @@
 #pragma once
 
+#include <locale>
+
 #include <wx/wxprec.h>
 
 #ifndef WX_PRECOMP
@@ -16,6 +18,7 @@ public:
     virtual ~GridTableBase() = default; // Defaulted virtual destructor
 
     virtual void setTokenizerParams(wchar_t escape, wchar_t fieldSeparator, wchar_t quote) {};
+    virtual wxString getStatusText() { return ""; };
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -53,10 +56,17 @@ public:
     virtual void Clear() override { mTokenizedFileLines.Clear(); };
 
     virtual void setTokenizerParams(wchar_t escape = L'\\', wchar_t fieldSeparator = L',', wchar_t quote = L'\"') override;
+    virtual wxString getStatusText() override;
 
 private:
     TokenizedFileLines mTokenizedFileLines;
     int mRow { -1 };
     bool mHeadersInFirstRow { true };
     const std::vector<std::wstring>* mTokenizedFileLine { nullptr };
+    std::locale mLocale;
+};
+
+struct thousand_sep_numpunct : std::numpunct<char> {
+    char do_thousands_sep() const { return ','; } // separate with comma
+    std::string do_grouping() const { return "\3"; } // groups of 3 digit
 };

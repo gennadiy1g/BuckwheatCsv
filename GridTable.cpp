@@ -1,7 +1,10 @@
+#include <sstream>
+
 #include "GridTable.h"
 
 CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath, OnProgress onProgress)
     : mTokenizedFileLines(filePath, onProgress)
+    , mLocale(std::locale("C"), new thousand_sep_numpunct())
 {
 }
 
@@ -40,3 +43,11 @@ void CsvFileGridTable::setTokenizerParams(wchar_t escape, wchar_t fieldSeparator
 {
     mTokenizedFileLines.setTokenizerParams(escape, fieldSeparator, quote);
 }
+
+wxString CsvFileGridTable::getStatusText()
+{
+    std::ostringstream stringStream;
+    stringStream.imbue(mLocale);
+    stringStream << "Rows: " << GetNumberRows() << "  Columns: " << GetNumberCols();
+    return stringStream.str();
+};

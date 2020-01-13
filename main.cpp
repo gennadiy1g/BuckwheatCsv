@@ -53,7 +53,6 @@ MainFrame::MainFrame()
     mGrid->SetTable(mGridTable.get());
 
     CreateStatusBar();
-    SetStatusText("Welcome to wxWidgets!");
 
     Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
@@ -147,6 +146,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         wxGridUpdateLocker gridUpdateLocker(mGrid);
         mGridTable->setTokenizerParams(escape, separator, quote);
     }
+    SetStatusText(mGridTable->getStatusText());
 
     mSeparator = separator;
     mQuote = quote;
