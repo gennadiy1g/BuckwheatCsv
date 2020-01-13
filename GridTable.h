@@ -15,7 +15,7 @@ public:
     GridTableBase() {};
     virtual ~GridTableBase() = default; // Defaulted virtual destructor
 
-    void setTokenizerParams(wchar_t escape, wchar_t fieldSeparator, wchar_t quote) {};
+    virtual void setTokenizerParams(wchar_t escape, wchar_t fieldSeparator, wchar_t quote) {};
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -52,7 +52,7 @@ public:
     virtual wxString GetColLabelValue(int col) override;
     virtual void Clear() override { mTokenizedFileLines.Clear(); };
 
-    void setTokenizerParams(wchar_t escape = L'\\', wchar_t fieldSeparator = L',', wchar_t quote = L'\"');
+    virtual void setTokenizerParams(wchar_t escape = L'\\', wchar_t fieldSeparator = L',', wchar_t quote = L'\"') override;
 
 private:
     TokenizedFileLines mTokenizedFileLines;
