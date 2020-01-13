@@ -34,8 +34,8 @@ private:
     wxChar mQuote { L'"' };
 
     wxGrid* mGrid { nullptr };
-    std::unique_ptr<wxGridTableBase> mGridTable { nullptr };
-    std::unique_ptr<wxGridTableBase> mGridTable2 { nullptr };
+    std::unique_ptr<GridTableBase> mGridTable { nullptr };
+    std::unique_ptr<GridTableBase> mGridTable2 { nullptr };
 
     wxCriticalSection mPercentCS;
     int mPercent { 0 };
