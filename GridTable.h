@@ -10,7 +10,15 @@
 
 #include "CsvTable/CsvTable.h"
 
-class EmptyGridTable : public wxGridTableBase {
+class GridTableBase : public wxGridTableBase {
+public:
+    GridTableBase() {};
+    virtual ~GridTableBase() = default; // Defaulted virtual destructor
+
+    void setTokenizerParams(wchar_t escape, wchar_t fieldSeparator, wchar_t quote) {};
+};
+
+class EmptyGridTable : public GridTableBase {
 public:
     EmptyGridTable() {};
     virtual ~EmptyGridTable() = default; // Defaulted virtual destructor
@@ -23,7 +31,7 @@ public:
     virtual void Clear() override {};
 };
 
-class CsvFileGridTable : public wxGridTableBase {
+class CsvFileGridTable : public GridTableBase {
 public:
     explicit CsvFileGridTable(const bfs::path& filePath, OnProgress onProgress = OnProgress());
     virtual ~CsvFileGridTable() = default; // Defaulted virtual destructor
