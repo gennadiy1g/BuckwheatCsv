@@ -15,6 +15,7 @@
 class App : public wxApp {
 public:
     virtual bool OnInit();
+    static inline const char* kAppName { "Buckwheat CSV" };
 };
 
 class MainFrame : public wxFrame, public wxThreadHelper {

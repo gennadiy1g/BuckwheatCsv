@@ -28,7 +28,7 @@ bool App::OnInit()
 }
 
 MainFrame::MainFrame()
-    : wxFrame(NULL, wxID_ANY, "Buckwheat CSV")
+    : wxFrame(NULL, wxID_ANY, App::kAppName)
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
@@ -147,7 +147,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         mGridTable->setTokenizerParams(escape, separator, quote);
     }
     SetStatusText(mGridTable->getStatusText());
-    SetTitle(mGridTable->getTitle());
+    SetTitle(mGridTable->getTitle() + App::kAppName);
 
     mSeparator = separator;
     mQuote = quote;
