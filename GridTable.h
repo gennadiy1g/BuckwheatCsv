@@ -1,6 +1,7 @@
 #pragma once
 
 #include <locale>
+#include <memory>
 
 #include <wx/wxprec.h>
 
@@ -63,7 +64,7 @@ private:
     int mRow { -1 };
     bool mHeadersInFirstRow { true };
     const std::vector<std::wstring>* mTokenizedFileLine { nullptr };
-    std::locale mLocale;
+    static inline std::unique_ptr<std::locale> sLocale { nullptr };
 };
 
 struct thousand_sep_numpunct : std::numpunct<char> {
