@@ -147,6 +147,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         mGridTable->setTokenizerParams(escape, separator, quote);
     }
     SetStatusText(mGridTable->getStatusText());
+    SetTitle(mGridTable->getTitle());
 
     mSeparator = separator;
     mQuote = quote;

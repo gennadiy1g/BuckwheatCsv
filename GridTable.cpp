@@ -4,6 +4,7 @@
 
 CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath, OnProgress onProgress)
     : mTokenizedFileLines(filePath, onProgress)
+    , mFilePath(filePath)
 {
     if (!sLocale) {
         sLocale = std::make_unique<std::locale>(std::locale("C"), new thousand_sep_numpunct());
@@ -53,3 +54,10 @@ wxString CsvFileGridTable::getStatusText()
     stringStream << "Rows: " << GetNumberRows() << "  Columns: " << GetNumberCols();
     return stringStream.str();
 };
+
+wxString CsvFileGridTable::getTitle()
+{
+    std::ostringstream stringStream;
+    stringStream << mFilePath.filename() << " - " << mFilePath.parent_path();
+    return stringStream.str();
+}

@@ -20,6 +20,7 @@ public:
 
     virtual void setTokenizerParams(wchar_t escape, wchar_t fieldSeparator, wchar_t quote) {};
     virtual wxString getStatusText() { return ""; };
+    virtual wxString getTitle() { return ""; };
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -58,12 +59,15 @@ public:
 
     virtual void setTokenizerParams(wchar_t escape = L'\\', wchar_t fieldSeparator = L',', wchar_t quote = L'\"') override;
     virtual wxString getStatusText() override;
+    virtual wxString getTitle() override;
 
 private:
     TokenizedFileLines mTokenizedFileLines;
     int mRow { -1 };
     bool mHeadersInFirstRow { true };
     const std::vector<std::wstring>* mTokenizedFileLine { nullptr };
+    bfs::path mFilePath;
+
     static inline std::unique_ptr<std::locale> sLocale { nullptr };
 };
 
