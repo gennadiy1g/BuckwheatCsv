@@ -53,7 +53,7 @@ wxString CsvFileGridTable::getStatusText()
     stringStream.imbue(*sLocale);
     stringStream << "Rows: " << GetNumberRows() << "  Columns: " << GetNumberCols();
     return stringStream.str();
-};
+}
 
 wxString CsvFileGridTable::getTitle()
 {
