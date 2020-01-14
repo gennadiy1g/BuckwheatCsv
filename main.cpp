@@ -33,6 +33,9 @@ MainFrame::MainFrame()
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
+    // set the frame icon
+    SetIcon(wxICON(table));
+
     wxMenu* menuFile = new wxMenu;
     menuFile->Append(wxID_OPEN, "&Open...\tCtrl-O", "Open file");
     menuFile->AppendSeparator();

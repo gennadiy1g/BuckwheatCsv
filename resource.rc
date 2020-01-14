@@ -1,3 +1,4 @@
 aaaaaaaa ICON "table.ico"
+table ICON "table.ico"
 
 #include "wx/msw/wx.rc"
