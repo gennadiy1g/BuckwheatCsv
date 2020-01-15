@@ -106,6 +106,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Border().Center());
 
+    SetIcon(wxICON(folder_table));
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnSeparatorRadioButton, this, ID_Comma, ID_OtherSeparator);

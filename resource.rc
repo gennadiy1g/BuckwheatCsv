@@ -4,7 +4,8 @@
 // starting with "a"
 aaaaaaaa ICON "table.ico"
 
-// this icon is used with wxFrame::SetIcon()
+// these icons are used with wxTopLevelWindow::SetIcon()
 table ICON "table.ico"
+folder_table ICON "folder_table.ico"
 
 #include "wx/msw/wx.rc"
