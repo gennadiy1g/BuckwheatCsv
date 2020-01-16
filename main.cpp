@@ -77,11 +77,9 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     OpenFileDialog openFileDialog(this, mPath, mSeparator, mQuote, mEscape);
-    if (openFileDialog.ShowModal() == wxID_CANCEL) {
-        return;
+    if (openFileDialog.ShowModal() != wxID_CANCEL) {
+        showFile(openFileDialog.getPath(), openFileDialog.getSeparator(), openFileDialog.getEscape(), openFileDialog.getQuote());
     }
-
-    showFile(openFileDialog.getPath(), openFileDialog.getSeparator(), openFileDialog.getEscape(), openFileDialog.getQuote());
 }
 
 void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote)
