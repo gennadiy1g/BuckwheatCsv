@@ -81,10 +81,13 @@ void MainFrame::OnOpen(wxCommandEvent& event)
         return;
     }
 
-    auto path = openFileDialog.getPath();
-    auto separator = openFileDialog.getSeparator();
-    auto quote = openFileDialog.getQuote();
-    auto escape = openFileDialog.getEscape();
+    showFile(openFileDialog.getPath(), openFileDialog.getSeparator(), openFileDialog.getEscape(), openFileDialog.getQuote());
+}
+
+void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote)
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     if (path != mPath) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
