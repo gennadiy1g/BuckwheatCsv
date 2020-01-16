@@ -61,6 +61,12 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
 
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "argc=" << wxTheApp->argc << FUNCTION_FILE_LINE;
+    if (wxTheApp->argc > 1) {
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << "argv[1]=" << wxTheApp->argv[1] << FUNCTION_FILE_LINE;
+        showFile(wxTheApp->argv[1]);
+    }
+
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
