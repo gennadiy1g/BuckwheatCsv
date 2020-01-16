@@ -28,7 +28,7 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
     void OnProgress(int percent);
-    void showFile(wxString path, wxChar separator, wxChar escape, wxChar quote);
+    void showFile(wxString path, wxChar separator = L',', wxChar escape = L'\\', wxChar quote = L'"');
 
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };
