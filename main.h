@@ -23,12 +23,13 @@ public:
     MainFrame();
     virtual wxThread::ExitCode Entry();
 
+    void showFile(wxString path, wxChar separator = L',', wxChar escape = L'\\', wxChar quote = L'"');
+
 private:
     void OnOpen(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
     void OnProgress(int percent);
-    void showFile(wxString path, wxChar separator = L',', wxChar escape = L'\\', wxChar quote = L'"');
 
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };
