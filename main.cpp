@@ -14,14 +14,14 @@ wxIMPLEMENT_APP(App);
 
 bool App::OnInit()
 {
+    initLocalization();
+    initLogging();
+
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     MainFrame* frame = new MainFrame();
     frame->Show(true);
-
-    initLocalization();
-    initLogging();
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     return true;
