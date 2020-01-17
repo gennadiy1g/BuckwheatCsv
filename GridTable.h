@@ -55,7 +55,7 @@ public:
     void SetValue(int, int, const wxString&) override {}
     bool IsEmptyCell(int, int) override { return false; }
     virtual wxString GetColLabelValue(int col) override;
-    virtual void Clear() override { mTokenizedFileLines.Clear(); };
+    virtual void Clear() override { mTokenizedFileLines.clear(); };
 
     virtual void setTokenizerParams(wchar_t escape = L'\\', wchar_t fieldSeparator = L',', wchar_t quote = L'\"') override;
     virtual wxString getStatusText() override;
