@@ -107,7 +107,6 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
 
         wxGridUpdateLocker gridUpdateLocker(mGrid);
         mGrid->ClearGrid();
-
         auto threadError = CreateThread(wxTHREAD_JOINABLE);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
@@ -154,6 +153,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
     } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         wxGridUpdateLocker gridUpdateLocker(mGrid);
+        mGrid->ClearGrid();
         mGridTable->setTokenizerParams(escape, separator, quote);
     }
     SetStatusText(mGridTable->getStatusText());
