@@ -55,7 +55,10 @@ public:
     bool IsEmptyCell(int, int) override { return false; }
     virtual wxString GetColLabelValue(int col) override;
 
-    virtual void setTokenizerParams(wchar_t escape = L'\\', wchar_t separator = L',', wchar_t quote = L'\"') override;
+    virtual void setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote) override
+    {
+        mTokenizedFileLines.setTokenizerParams(escape, separator, quote);
+    };
     virtual wxString getStatusText() override;
     virtual wxString getTitle() override;
 

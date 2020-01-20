@@ -43,11 +43,6 @@ int CsvFileGridTable::GetNumberRows()
     }
 }
 
-void CsvFileGridTable::setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote)
-{
-    mTokenizedFileLines.setTokenizerParams(escape, separator, quote);
-}
-
 wxString CsvFileGridTable::getStatusText()
 {
     std::ostringstream stringStream;
