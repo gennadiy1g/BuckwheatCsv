@@ -106,7 +106,8 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
         progressDialog.Update(0);
 
         wxGridUpdateLocker gridUpdateLocker(mGrid);
-        mGrid->ClearGrid();
+        mGrid->SetTable(nullptr);
+        mGridTable.reset(nullptr);
         auto threadError = CreateThread(wxTHREAD_JOINABLE);
         wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
@@ -146,10 +147,10 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
         }
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
-        mGrid->SetTable(mGridTable2.get());
-        mGridTable = std::move(mGridTable2);
-        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+        wxASSERT(mGridTable);
         mGridTable->setTokenizerParams(escape, separator, quote);
+        mGrid->SetTable(mGridTable.get());
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         wxGridUpdateLocker gridUpdateLocker(mGrid);
@@ -175,10 +176,10 @@ wxThread::ExitCode MainFrame::Entry()
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     try {
-        mGridTable2 = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
+        mGridTable = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
     } catch (const std::runtime_error& e) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-        mGridTable2 = std::make_unique<EmptyGridTable>();
+        mGridTable = std::make_unique<EmptyGridTable>();
         mScanFailed = true;
         mErrorMessage = e.what();
     }
