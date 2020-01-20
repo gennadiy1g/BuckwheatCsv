@@ -150,7 +150,6 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
         wxASSERT(mGridTable);
         mGridTable->setTokenizerParams(escape, separator, quote);
         mGrid->SetTable(mGridTable.get());
-        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         wxGridUpdateLocker gridUpdateLocker(mGrid);
