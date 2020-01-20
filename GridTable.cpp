@@ -62,10 +62,3 @@ wxString CsvFileGridTable::getTitle()
     stringStream << mFilePath.filename().string() << " - " << mFilePath.parent_path().string() << " - ";
     return stringStream.str();
 }
-
-void CsvFileGridTable::Clear()
-{
-    auto& gLogger = GlobalLogger::get();
-    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-    mTokenizedFileLines.clear();
-}

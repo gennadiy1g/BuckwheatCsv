@@ -33,7 +33,6 @@ public:
     wxString GetValue(int row, int col) override { return L""; }
     void SetValue(int, int, const wxString&) override {}
     bool IsEmptyCell(int, int) override { return false; }
-    virtual void Clear() override {};
 };
 
 class CsvFileGridTable : public GridTableBase {
@@ -55,7 +54,6 @@ public:
     void SetValue(int, int, const wxString&) override {}
     bool IsEmptyCell(int, int) override { return false; }
     virtual wxString GetColLabelValue(int col) override;
-    virtual void Clear() override;
 
     virtual void setTokenizerParams(wchar_t escape = L'\\', wchar_t separator = L',', wchar_t quote = L'\"') override;
     virtual wxString getStatusText() override;
