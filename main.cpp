@@ -154,8 +154,9 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
     } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         wxGridUpdateLocker gridUpdateLocker(mGrid);
-        mGrid->ClearGrid();
+        mGrid->SetTable(nullptr);
         mGridTable->setTokenizerParams(escape, separator, quote);
+        mGrid->SetTable(mGridTable.get());
     }
     SetStatusText(mGridTable->getStatusText());
     SetTitle(mGridTable->getTitle() + App::kAppName);
