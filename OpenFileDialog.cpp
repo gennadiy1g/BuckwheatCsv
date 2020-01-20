@@ -32,7 +32,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     }
 
     switch (quote) {
-    case L'"':
+    case L'\"':
         mQuoteId = ID_Double;
         break;
     case L'\'':
@@ -189,7 +189,7 @@ wxChar OpenFileDialog::getQuote() const
     wxChar quote { L'\0' };
     switch (mQuoteId) {
     case ID_Double:
-        quote = L'"';
+        quote = L'\"';
         break;
     case ID_Single:
         quote = L'\'';

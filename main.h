@@ -23,7 +23,7 @@ public:
     MainFrame();
     virtual wxThread::ExitCode Entry();
 
-    void showFile(wxString path, wxChar separator = L',', wxChar escape = L'\\', wxChar quote = L'"');
+    void showFile(wxString path, wxChar separator = L',', wxChar escape = L'\\', wxChar quote = L'\"');
 
 private:
     void OnOpen(wxCommandEvent& event);
@@ -34,7 +34,7 @@ private:
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };
     wxChar mEscape { L'\\' };
-    wxChar mQuote { L'"' };
+    wxChar mQuote { L'\"' };
 
     wxGrid* mGrid { nullptr };
     std::unique_ptr<GridTableBase> mGridTable { nullptr };
