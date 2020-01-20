@@ -18,7 +18,7 @@ public:
     GridTableBase() {};
     virtual ~GridTableBase() = default; // Defaulted virtual destructor
 
-    virtual void setTokenizerParams(wchar_t escape, wchar_t fieldSeparator, wchar_t quote) {};
+    virtual void setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote) {};
     virtual wxString getStatusText() { return ""; };
     virtual wxString getTitle() { return ""; };
 };
@@ -57,7 +57,7 @@ public:
     virtual wxString GetColLabelValue(int col) override;
     virtual void Clear() override;
 
-    virtual void setTokenizerParams(wchar_t escape = L'\\', wchar_t fieldSeparator = L',', wchar_t quote = L'\"') override;
+    virtual void setTokenizerParams(wchar_t escape = L'\\', wchar_t separator = L',', wchar_t quote = L'\"') override;
     virtual wxString getStatusText() override;
     virtual wxString getTitle() override;
 

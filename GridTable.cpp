@@ -43,9 +43,9 @@ int CsvFileGridTable::GetNumberRows()
     }
 }
 
-void CsvFileGridTable::setTokenizerParams(wchar_t escape, wchar_t fieldSeparator, wchar_t quote)
+void CsvFileGridTable::setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote)
 {
-    mTokenizedFileLines.setTokenizerParams(escape, fieldSeparator, quote);
+    mTokenizedFileLines.setTokenizerParams(escape, separator, quote);
 }
 
 wxString CsvFileGridTable::getStatusText()
