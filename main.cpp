@@ -144,14 +144,15 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 if (threadIsDone) {
                     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                     auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
-                    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                     wxASSERT(exitCode == static_cast<wxThread::ExitCode>(0));
                     wxASSERT(mGridTable);
+                    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                     break;
                 } else {
                     wxThread::Sleep(100);
                 }
             }
+
             SetTitle(mGridTable->getTitle() + App::kAppName);
         } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
