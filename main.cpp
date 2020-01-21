@@ -93,6 +93,12 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
+    auto magic = [this]() {
+        mGrid->SetGridCursor(-1, -1);
+        mGrid->ClearGrid();
+        mGrid->SetTable(nullptr);
+    };
+
     {
         wxGridUpdateLocker gridUpdateLocker(mGrid);
 
@@ -109,9 +115,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
             progressDialog.Update(0);
 
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-            mGrid->SetGridCursor(-1, -1);
-            mGrid->ClearGrid();
-            mGrid->SetTable(nullptr);
+            magic();
             mGridTable.reset(nullptr);
 
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
@@ -156,9 +160,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
             SetTitle(mGridTable->getTitle() + App::kAppName);
         } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-            mGrid->SetGridCursor(-1, -1);
-            mGrid->ClearGrid();
-            mGrid->SetTable(nullptr);
+            magic();
         } else {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
             return;
