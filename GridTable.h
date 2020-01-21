@@ -58,7 +58,7 @@ public:
     virtual void setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote) override
     {
         mTokenizedFileLines.setTokenizerParams(escape, separator, quote);
-    };
+    }
     virtual wxString getStatusText() override;
     virtual wxString getTitle() override;
 
