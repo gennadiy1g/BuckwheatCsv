@@ -93,72 +93,81 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
-    if (path != mPath) {
-        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-        mPath = path;
-        mThreadIsDone = false;
-        mPercent = 0;
-        mScanFailed = false;
-        mErrorMessage = "";
-
-        wxProgressDialog progressDialog("Scanning file", path, 100, this,
-            wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
-        progressDialog.Update(0);
-
+    {
         wxGridUpdateLocker gridUpdateLocker(mGrid);
-        mGrid->SetTable(nullptr);
-        mGridTable.reset(nullptr);
-        auto threadError = CreateThread(wxTHREAD_JOINABLE);
-        wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
-        threadError = GetThread()->Run();
-        wxASSERT(threadError == wxTHREAD_NO_ERROR);
+        if (path != mPath) {
+            BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+            mPath = path;
+            mThreadIsDone = false;
+            mPercent = 0;
+            mScanFailed = false;
+            mErrorMessage = "";
 
-        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-        bool threadIsDone { false };
-        int prevPercent { -1 }, percent { 0 };
-        while (true) {
-            {
-                wxCriticalSectionLocker lock(mPercentCS);
-                percent = mPercent;
+            wxProgressDialog progressDialog("Scanning file", path, 100, this,
+                wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
+            progressDialog.Update(0);
+
+            BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+            mGrid->SetGridCursor(-1, -1);
+            mGrid->ClearGrid();
+            mGrid->SetTable(nullptr);
+            mGridTable.reset(nullptr);
+
+            BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+            auto threadError = CreateThread(wxTHREAD_JOINABLE);
+            wxASSERT(threadError == wxTHREAD_NO_ERROR);
+            threadError = GetThread()->Run();
+            wxASSERT(threadError == wxTHREAD_NO_ERROR);
+
+            BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+            bool threadIsDone { false };
+            int prevPercent { -1 }, percent { 0 };
+            while (true) {
+                {
+                    wxCriticalSectionLocker lock(mPercentCS);
+                    percent = mPercent;
+                }
+
+                if (percent - prevPercent >= 1) {
+                    progressDialog.Update(percent);
+                    prevPercent = percent;
+                } else {
+                    wxTheApp->SafeYieldFor(NULL, wxEVT_CATEGORY_UI);
+                }
+
+                {
+                    wxCriticalSectionLocker lock(mThreadIsDoneCS);
+                    threadIsDone = mThreadIsDone;
+                }
+
+                if (threadIsDone) {
+                    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+                    auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
+                    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+                    wxASSERT(exitCode == static_cast<wxThread::ExitCode>(0));
+                    wxASSERT(mGridTable);
+                    break;
+                } else {
+                    wxThread::Sleep(100);
+                }
             }
-
-            if (percent - prevPercent >= 1) {
-                progressDialog.Update(percent);
-                prevPercent = percent;
-            } else {
-                wxTheApp->SafeYieldFor(NULL, wxEVT_CATEGORY_UI);
-            }
-
-            {
-                wxCriticalSectionLocker lock(mThreadIsDoneCS);
-                threadIsDone = mThreadIsDone;
-            }
-
-            if (threadIsDone) {
-                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-                auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
-                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-                wxASSERT(exitCode == static_cast<wxThread::ExitCode>(0));
-                break;
-            } else {
-                wxThread::Sleep(100);
-            }
+            SetTitle(mGridTable->getTitle() + App::kAppName);
+        } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
+            BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+            mGrid->ClearGrid();
+        } else {
+            BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+            return;
         }
-        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
-        wxASSERT(mGridTable);
-        mGridTable->setTokenizerParams(escape, separator, quote);
-        mGrid->SetTable(mGridTable.get());
-    } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-        wxGridUpdateLocker gridUpdateLocker(mGrid);
-        mGrid->SetTable(nullptr);
         mGridTable->setTokenizerParams(escape, separator, quote);
         mGrid->SetTable(mGridTable.get());
+        mGrid->GoToCell(0, 0);
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     }
     SetStatusText(mGridTable->getStatusText());
-    SetTitle(mGridTable->getTitle() + App::kAppName);
 
     mSeparator = separator;
     mQuote = quote;
