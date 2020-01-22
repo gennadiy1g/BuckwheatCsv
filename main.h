@@ -23,7 +23,7 @@ public:
     MainFrame();
     virtual wxThread::ExitCode Entry();
 
-    void showFile(wxString path, wxChar separator = L',', wxChar escape = L'\\', wxChar quote = L'\"');
+    void showFile(wxString path, wxChar separator, wxChar escape, wxChar quote);
 
 private:
     void OnOpen(wxCommandEvent& event);
