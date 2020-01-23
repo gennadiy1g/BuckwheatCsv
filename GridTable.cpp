@@ -22,7 +22,9 @@ wxString CsvFileGridTable::GetValue(int row, int col)
         }
         mRow = row;
     }
-    return col < GetNumberCols() ? mTokenizedFileLine->at(col) : wxEmptyString;
+
+    // A malformed line may contain less values than the number of column headers
+    return col < static_cast<int>(mTokenizedFileLine->size()) ? mTokenizedFileLine->at(col) : wxEmptyString;
 }
 
 wxString CsvFileGridTable::GetColLabelValue(int col)
