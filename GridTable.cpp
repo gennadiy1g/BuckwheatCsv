@@ -32,6 +32,7 @@ wxString CsvFileGridTable::GetValue(int row, int col)
 
 wxString CsvFileGridTable::GetColLabelValue(int col)
 {
+    wxASSERT(col < static_cast<int>(mTokenizedFileLines.getTokenizedLine(0).size()));
     if (mHeadersInFirstRow) {
         return mTokenizedFileLines.getTokenizedLine(0).at(col);
     } else {
