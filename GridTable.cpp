@@ -64,6 +64,7 @@ void CsvFileGridTable::Clear()
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     mTokenizedFileLines.clear();
     mRow = -1;
+    mTokenizedFileLine = nullptr;
 }
 
 void CsvFileGridTable::setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote)
