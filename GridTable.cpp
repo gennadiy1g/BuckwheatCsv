@@ -14,6 +14,9 @@ CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath, OnProgress onProgr
 
 wxString CsvFileGridTable::GetValue(int row, int col)
 {
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "row=" << row << ", col=" << col << FUNCTION_FILE_LINE;
+
     if (row != mRow) {
         if (mHeadersInFirstRow) {
             mTokenizedFileLine = &mTokenizedFileLines.getTokenizedLine(row + 1);
