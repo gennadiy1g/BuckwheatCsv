@@ -94,7 +94,8 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     escapeSizer->Add(new wxRadioButton(this, ID_BACKSLASH, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP,
                          RadioButtonValidator(mEscapeId)),
         wxSizerFlags(0).Border().Center());
-    escapeSizer->Add(new wxRadioButton(this, ID_OTHER_ESCAPE, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mEscapeId)),
+    escapeSizer->Add(
+        new wxRadioButton(this, ID_OTHER_ESCAPE, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mEscapeId)),
         wxSizerFlags(0).Border().Center());
     mEscapeTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0,
         TextCtrlValidator(mEscapeId, ID_OTHER_ESCAPE, mEscape, "escape"));
