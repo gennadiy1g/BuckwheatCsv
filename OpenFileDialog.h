@@ -43,6 +43,7 @@ public:
 private:
     void OnSeparatorRadioButton(wxCommandEvent& event);
     void OnEscapeRadioButton(wxCommandEvent& event);
+    void OnFilePicker(wxFileDirPickerEvent& event);
 
     wxTextCtrl* mSeparatorTextCtrl { nullptr };
     wxTextCtrl* mEscapeTextCtrl { nullptr };

@@ -112,6 +112,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
 
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnSeparatorRadioButton, this, ID_COMMA, ID_OTHER_SEPARATOR);
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_BACKSLASH, ID_OTHER_ESCAPE);
+    Bind(wxEVT_FILEPICKER_CHANGED, &OpenFileDialog::OnFilePicker, this);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
@@ -128,6 +129,12 @@ void OpenFileDialog::OnEscapeRadioButton(wxCommandEvent& event)
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << "event.GetId()=" << event.GetId() << FUNCTION_FILE_LINE;
     mEscapeTextCtrl->Enable(event.GetId() == ID_OTHER_ESCAPE);
+}
+
+void OpenFileDialog::OnFilePicker(wxFileDirPickerEvent& event)
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "event.GetId()=" << event.GetId() << FUNCTION_FILE_LINE;
 }
 
 wxChar OpenFileDialog::getSeparator() const
