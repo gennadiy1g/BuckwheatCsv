@@ -1,4 +1,5 @@
 #include "CsvTable/log.h"
+#include "CsvTable/utilities.h"
 #include "OpenFileDialog.h"
 
 OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator, wxChar quote, wxChar escape)
@@ -135,6 +136,19 @@ void OpenFileDialog::OnFilePicker(wxFileDirPickerEvent& event)
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << "event.GetId()=" << event.GetId() << FUNCTION_FILE_LINE;
+
+    std::optional<wchar_t> separator;
+    std::optional<wchar_t> quote;
+    bool failed { false };
+
+    try {
+        detectSeparatorAndQuote(bfs::path(event.GetPath()), separator, quote);
+    } catch (const std::exception& e) {
+        failed = true;
+    }
+
+    if (!failed) {
+    }
 }
 
 wxChar OpenFileDialog::getSeparator() const
