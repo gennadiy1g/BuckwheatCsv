@@ -12,31 +12,31 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
 
     switch (mSeparator) {
     case L',':
-        mSeparatorId = ID_Comma;
+        mSeparatorId = ID_COMMA;
         break;
     case L'\t':
-        mSeparatorId = ID_Tab;
+        mSeparatorId = ID_TAB;
         break;
     case L';':
-        mSeparatorId = ID_Semicolon;
+        mSeparatorId = ID_SEMICOLON;
         break;
     case L'|':
-        mSeparatorId = ID_VerticalBar;
+        mSeparatorId = ID_VERTICAL_BAR;
         break;
     case L' ':
-        mSeparatorId = ID_Space;
+        mSeparatorId = ID_SPACE;
         break;
     default:
-        mSeparatorId = ID_OtherSeparator;
+        mSeparatorId = ID_OTHER_SEPARATOR;
         break;
     }
 
     switch (quote) {
     case L'\"':
-        mQuoteId = ID_Double;
+        mQuoteId = ID_DOUBLE;
         break;
     case L'\'':
-        mQuoteId = ID_Single;
+        mQuoteId = ID_SINGLE;
         break;
     default:
         wxASSERT(false);
@@ -45,10 +45,10 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
 
     switch (mEscape) {
     case L'\\':
-        mEscapeId = ID_Backslash;
+        mEscapeId = ID_BACKSLASH;
         break;
     default:
-        mEscapeId = ID_OtherEscape;
+        mEscapeId = ID_OTHER_ESCAPE;
         break;
     }
 
@@ -60,23 +60,23 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
 
     auto separatorSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Separator character");
     separatorSizer->Add(
-        new wxRadioButton(this, ID_Comma, "Comma", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, RadioButtonValidator(mSeparatorId)),
+        new wxRadioButton(this, ID_COMMA, "Comma", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, RadioButtonValidator(mSeparatorId)),
         wxSizerFlags(0).Border().Center());
-    separatorSizer->Add(new wxRadioButton(this, ID_Tab, "Tab", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
-        wxSizerFlags(0).Border().Center());
-    separatorSizer->Add(
-        new wxRadioButton(this, ID_Semicolon, "Semicolon", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
+    separatorSizer->Add(new wxRadioButton(this, ID_TAB, "Tab", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
         wxSizerFlags(0).Border().Center());
     separatorSizer->Add(
-        new wxRadioButton(this, ID_VerticalBar, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
-        wxSizerFlags(0).Border().Center());
-    separatorSizer->Add(new wxRadioButton(this, ID_Space, "Space", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
+        new wxRadioButton(this, ID_SEMICOLON, "Semicolon", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
         wxSizerFlags(0).Border().Center());
     separatorSizer->Add(
-        new wxRadioButton(this, ID_OtherSeparator, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
+        new wxRadioButton(this, ID_VERTICAL_BAR, "Vertical bar", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
+        wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(new wxRadioButton(this, ID_SPACE, "Space", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
+        wxSizerFlags(0).Border().Center());
+    separatorSizer->Add(
+        new wxRadioButton(this, ID_OTHER_SEPARATOR, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
         wxSizerFlags(0).Border().Center());
     mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0,
-        TextCtrlValidator(mSeparatorId, ID_OtherSeparator, mSeparator, "separator"));
+        TextCtrlValidator(mSeparatorId, ID_OTHER_SEPARATOR, mSeparator, "separator"));
     mSeparatorTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mSeparatorTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
     dialogSizer->Add(separatorSizer, wxSizerFlags(0).Expand().Border());
@@ -84,20 +84,20 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     auto quoteEscapeSizer = new wxBoxSizer(wxHORIZONTAL);
     auto quoteSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Quote character");
     quoteSizer->Add(
-        new wxRadioButton(this, ID_Double, "Double", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, RadioButtonValidator(mQuoteId)),
+        new wxRadioButton(this, ID_DOUBLE, "Double", wxDefaultPosition, wxDefaultSize, wxRB_GROUP, RadioButtonValidator(mQuoteId)),
         wxSizerFlags(0).Border().Center());
-    quoteSizer->Add(new wxRadioButton(this, ID_Single, "Single", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mQuoteId)),
+    quoteSizer->Add(new wxRadioButton(this, ID_SINGLE, "Single", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mQuoteId)),
         wxSizerFlags(0).Border().Center());
     quoteEscapeSizer->Add(quoteSizer, wxSizerFlags(1).Border().Center());
 
     auto escapeSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Escape character");
-    escapeSizer->Add(new wxRadioButton(this, ID_Backslash, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP,
+    escapeSizer->Add(new wxRadioButton(this, ID_BACKSLASH, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP,
                          RadioButtonValidator(mEscapeId)),
         wxSizerFlags(0).Border().Center());
-    escapeSizer->Add(new wxRadioButton(this, ID_OtherEscape, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mEscapeId)),
+    escapeSizer->Add(new wxRadioButton(this, ID_OTHER_ESCAPE, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mEscapeId)),
         wxSizerFlags(0).Border().Center());
     mEscapeTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0,
-        TextCtrlValidator(mEscapeId, ID_OtherEscape, mEscape, "escape"));
+        TextCtrlValidator(mEscapeId, ID_OTHER_ESCAPE, mEscape, "escape"));
     mEscapeTextCtrl->SetMaxLength(1);
     escapeSizer->Add(mEscapeTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
     quoteEscapeSizer->Add(escapeSizer, wxSizerFlags(1).Border().Center());
@@ -109,8 +109,8 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     SetIcon(wxICON(folder_table));
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
-    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnSeparatorRadioButton, this, ID_Comma, ID_OtherSeparator);
-    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_Backslash, ID_OtherEscape);
+    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnSeparatorRadioButton, this, ID_COMMA, ID_OTHER_SEPARATOR);
+    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_BACKSLASH, ID_OTHER_ESCAPE);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
@@ -119,14 +119,14 @@ void OpenFileDialog::OnSeparatorRadioButton(wxCommandEvent& event)
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << "event.GetId()=" << event.GetId() << FUNCTION_FILE_LINE;
-    mSeparatorTextCtrl->Enable(event.GetId() == ID_OtherSeparator);
+    mSeparatorTextCtrl->Enable(event.GetId() == ID_OTHER_SEPARATOR);
 }
 
 void OpenFileDialog::OnEscapeRadioButton(wxCommandEvent& event)
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << "event.GetId()=" << event.GetId() << FUNCTION_FILE_LINE;
-    mEscapeTextCtrl->Enable(event.GetId() == ID_OtherEscape);
+    mEscapeTextCtrl->Enable(event.GetId() == ID_OTHER_ESCAPE);
 }
 
 wxChar OpenFileDialog::getSeparator() const
@@ -136,22 +136,22 @@ wxChar OpenFileDialog::getSeparator() const
 
     wxChar separator { L'\0' };
     switch (mSeparatorId) {
-    case ID_Comma:
+    case ID_COMMA:
         separator = L',';
         break;
-    case ID_Tab:
+    case ID_TAB:
         separator = L'\t';
         break;
-    case ID_Semicolon:
+    case ID_SEMICOLON:
         separator = L';';
         break;
-    case ID_VerticalBar:
+    case ID_VERTICAL_BAR:
         separator = L'|';
         break;
-    case ID_Space:
+    case ID_SPACE:
         separator = L' ';
         break;
-    case ID_OtherSeparator:
+    case ID_OTHER_SEPARATOR:
         separator = mSeparator;
         break;
     default:
@@ -168,10 +168,10 @@ wxChar OpenFileDialog::getEscape() const
 
     wxChar escape { L'\0' };
     switch (mEscapeId) {
-    case ID_Backslash:
+    case ID_BACKSLASH:
         escape = L'\\';
         break;
-    case ID_OtherEscape:
+    case ID_OTHER_ESCAPE:
         escape = mEscape;
         break;
     default:
@@ -188,10 +188,10 @@ wxChar OpenFileDialog::getQuote() const
 
     wxChar quote { L'\0' };
     switch (mQuoteId) {
-    case ID_Double:
+    case ID_DOUBLE:
         quote = L'\"';
         break;
-    case ID_Single:
+    case ID_SINGLE:
         quote = L'\'';
         break;
     default:

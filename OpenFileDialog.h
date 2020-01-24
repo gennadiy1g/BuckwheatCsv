@@ -7,19 +7,19 @@
 #include <wx/wx.h>
 #endif
 
-enum {
-    ID_Comma = wxID_HIGHEST + 1,
-    ID_Tab,
-    ID_Semicolon,
-    ID_VerticalBar,
-    ID_Space,
-    ID_OtherSeparator,
+enum WindowID {
+    ID_COMMA = wxID_HIGHEST + 1,
+    ID_TAB,
+    ID_SEMICOLON,
+    ID_VERTICAL_BAR,
+    ID_SPACE,
+    ID_OTHER_SEPARATOR,
 
-    ID_Backslash,
-    ID_OtherEscape,
+    ID_BACKSLASH,
+    ID_OTHER_ESCAPE,
 
-    ID_Double,
-    ID_Single
+    ID_DOUBLE,
+    ID_SINGLE
 };
 
 class OpenFileDialog : public wxDialog {
@@ -48,11 +48,11 @@ private:
     wxTextCtrl* mEscapeTextCtrl { nullptr };
 
     wxString mPath { wxEmptyString };
-    int mSeparatorId { ID_Comma };
+    int mSeparatorId { ID_COMMA };
     wxChar mSeparator { L',' };
-    int mEscapeId { ID_Backslash };
+    int mEscapeId { ID_BACKSLASH };
     wxChar mEscape { L'\\' };
-    int mQuoteId { ID_Double };
+    int mQuoteId { ID_DOUBLE };
 };
 
 class FilePathValidator : public wxValidator {
