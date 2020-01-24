@@ -148,6 +148,34 @@ void OpenFileDialog::OnFilePicker(wxFileDirPickerEvent& event)
     }
 
     if (!failed) {
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+        wxWindow* window { nullptr };
+        if (separator) {
+            switch (separator.value()) {
+            case L',':
+                window = FindWindow(ID_COMMA);
+                break;
+            case L'\t':
+                window = FindWindow(ID_TAB);
+                break;
+            case L';':
+                window = FindWindow(ID_SEMICOLON);
+                break;
+            case L'|':
+                window = FindWindow(ID_VERTICAL_BAR);
+                break;
+            case L' ':
+                window = FindWindow(ID_SPACE);
+                break;
+            default:
+                wxASSERT(false);
+                break;
+            }
+            wxASSERT(window);
+            auto radioButton = dynamic_cast<wxRadioButton*>(window);
+            wxASSERT(radioButton);
+            radioButton->SetValue(true);
+        }
     }
 }
 
