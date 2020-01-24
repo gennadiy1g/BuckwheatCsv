@@ -273,10 +273,10 @@ bool RadioButtonValidator::TransferFromWindow()
     return true;
 }
 
-TextCtrlValidator::TextCtrlValidator(int radioButtonId, int otherButtonId, wxChar& text, wxString description)
+TextCtrlValidator::TextCtrlValidator(int radioButtonId, int otherButtonId, wxChar& ch, wxString description)
     : mRadioButtonId(radioButtonId)
     , mOtherButtonId(otherButtonId)
-    , mChar(text)
+    , mCh(ch)
     , mDescription(description)
 {
 }
@@ -308,7 +308,7 @@ bool TextCtrlValidator::TransferToWindow()
     auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
     wxASSERT(textCtrl);
     if (mRadioButtonId == mOtherButtonId) {
-        textCtrl->SetValue(mChar);
+        textCtrl->SetValue(mCh);
         textCtrl->Enable(true);
     } else {
         textCtrl->SetValue(L"");
@@ -326,9 +326,9 @@ bool TextCtrlValidator::TransferFromWindow()
     wxASSERT(textCtrl);
     if (textCtrl->IsEnabled()) {
         wxASSERT(!textCtrl->GetValue().IsEmpty());
-        mChar = textCtrl->GetValue()[0];
+        mCh = textCtrl->GetValue()[0];
     } else {
-        mChar = L'\0';
+        mCh = L'\0';
     }
     return true;
 }
