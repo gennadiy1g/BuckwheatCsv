@@ -176,6 +176,25 @@ void OpenFileDialog::OnFilePicker(wxFileDirPickerEvent& event)
             wxASSERT(radioButton);
             radioButton->SetValue(true);
         }
+
+        window = nullptr;
+        if (quote) {
+            switch (quote.value()) {
+            case L'\"':
+                window = FindWindow(ID_DOUBLE);
+                break;
+            case L'\'':
+                window = FindWindow(ID_SINGLE);
+                break;
+            default:
+                wxASSERT(false);
+                break;
+            }
+            wxASSERT(window);
+            auto radioButton = dynamic_cast<wxRadioButton*>(window);
+            wxASSERT(radioButton);
+            radioButton->SetValue(true);
+        }
     }
 }
 
