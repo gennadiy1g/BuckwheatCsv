@@ -22,6 +22,7 @@ public:
 class FileDropTarget : public wxFileDropTarget {
 public:
     virtual bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) override;
+    virtual wxDragResult OnDragOver(wxCoord x, wxCoord y, wxDragResult defResult) override { return wxDragCopy; };
 };
 
 class MainFrame : public wxFrame, public wxThreadHelper {
