@@ -8,6 +8,7 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/dnd.h>
 #include <wx/grid.h>
 #include <wx/progdlg.h>
 #include <wx/thread.h>
@@ -16,6 +17,11 @@ class App : public wxApp {
 public:
     virtual bool OnInit();
     static inline const char* kAppName { "Buckwheat CSV" };
+};
+
+class FileDropTarget : public wxFileDropTarget {
+public:
+    virtual bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) override;
 };
 
 class MainFrame : public wxFrame, public wxThreadHelper {
