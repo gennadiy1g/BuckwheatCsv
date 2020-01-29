@@ -26,23 +26,8 @@ bool App::OnInit()
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << "argc=" << wxTheApp->argc << FUNCTION_FILE_LINE;
     if (wxTheApp->argc > 1) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << "argv[1]=" << wxTheApp->argv[1] << FUNCTION_FILE_LINE;
-        std::optional<wchar_t> separator;
-        std::optional<wchar_t> quote;
-        bool failed { false };
-
-        try {
-            detectSeparatorAndQuote(bfs::path(wxTheApp->argv[1]), separator, quote);
-        } catch (const std::exception& e) {
-            failed = true;
-            wxMessageDialog messageDialog(frame, e.what(), "Attention", wxOK | wxICON_ERROR | wxCENTRE);
-            messageDialog.ShowModal();
-        }
-
-        if (!failed) {
-            frame->showFile(wxTheApp->argv[1], separator.value_or(L','), L'\\', quote.value_or(L'\"'));
-        }
+        frame->showFile(wxTheApp->argv[1]);
     }
-
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     return true;
 }
@@ -104,7 +89,24 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     }
 }
 
-void MainFrame::showFile(wxString path) {}
+void MainFrame::showFile(wxString path)
+{
+    std::optional<wchar_t> separator;
+    std::optional<wchar_t> quote;
+    bool failed { false };
+
+    try {
+        detectSeparatorAndQuote(bfs::path(path), separator, quote);
+    } catch (const std::exception& e) {
+        failed = true;
+        wxMessageDialog messageDialog(this, e.what(), "Attention", wxOK | wxICON_ERROR | wxCENTRE);
+        messageDialog.ShowModal();
+    }
+
+    if (!failed) {
+        showFile(path, separator.value_or(L','), L'\\', quote.value_or(L'\"'));
+    }
+}
 
 void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote)
 {
