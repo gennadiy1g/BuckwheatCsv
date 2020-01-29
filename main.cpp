@@ -246,5 +246,7 @@ bool FileDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& file
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+    wxASSERT(filenames.GetCount());
+    mFrame->showFile(filenames[0]);
     return true;
 }
