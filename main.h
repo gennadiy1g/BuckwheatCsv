@@ -24,6 +24,7 @@ public:
     MainFrame();
     virtual wxThread::ExitCode Entry();
 
+    void showFile(wxString path);
     void showFile(wxString path, wxChar separator, wxChar escape, wxChar quote);
 
 private:

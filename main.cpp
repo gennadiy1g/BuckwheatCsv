@@ -104,6 +104,8 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     }
 }
 
+void MainFrame::showFile(wxString path) {}
+
 void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote)
 {
     auto& gLogger = GlobalLogger::get();
