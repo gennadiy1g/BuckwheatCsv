@@ -19,12 +19,6 @@ public:
     static inline const char* kAppName { "Buckwheat CSV" };
 };
 
-class FileDropTarget : public wxFileDropTarget {
-public:
-    virtual bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) override;
-    virtual wxDragResult OnDragOver(wxCoord x, wxCoord y, wxDragResult defResult) override { return wxDragCopy; };
-};
-
 class MainFrame : public wxFrame, public wxThreadHelper {
 public:
     MainFrame();
@@ -53,4 +47,10 @@ private:
 
     bool mScanFailed { false };
     std::string mErrorMessage {};
+};
+
+class FileDropTarget : public wxFileDropTarget {
+public:
+    virtual bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) override;
+    virtual wxDragResult OnDragOver(wxCoord x, wxCoord y, wxDragResult defResult) override { return wxDragCopy; };
 };
