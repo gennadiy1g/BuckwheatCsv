@@ -77,7 +77,7 @@ MainFrame::MainFrame()
 
     CreateStatusBar();
 
-    SetDropTarget(new FileDropTarget());
+    SetDropTarget(new FileDropTarget(this));
 
     Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
@@ -231,6 +231,11 @@ void MainFrame::OnProgress(int percent)
         mPercent = percent;
     }
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+}
+
+FileDropTarget::FileDropTarget(MainFrame* frame)
+    : mFrame(frame)
+{
 }
 
 bool FileDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames)
