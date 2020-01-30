@@ -32,6 +32,27 @@ bool App::OnInit()
     return true;
 }
 
+bool App::OnExceptionInMainLoop()
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
+    wxString error {};
+    try {
+        throw; // Rethrow the current exception.
+    } catch (const std::exception& e) {
+        error = e.what();
+    } catch (...) {
+        error = "unknown error.";
+    }
+
+    BOOST_LOG_SEV(gLogger, bltrivial::error) << "Unexpected exception has occurred: " << error << FUNCTION_FILE_LINE << std::flush;
+    wxLogError("Unexpected exception has occurred: %s. The program will terminate.", error);
+
+    // Exit the main loop and thus terminate the program.
+    return false;
+}
+
 MainFrame::MainFrame()
     : wxFrame(NULL, wxID_ANY, App::kAppName)
 {

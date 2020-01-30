@@ -16,6 +16,8 @@
 class App : public wxApp {
 public:
     virtual bool OnInit();
+    virtual bool OnExceptionInMainLoop();
+
     static inline const char* kAppName { "Buckwheat CSV" };
 };
 
