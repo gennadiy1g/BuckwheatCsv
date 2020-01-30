@@ -20,6 +20,8 @@ bool App::OnInit()
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
+    SetAppDisplayName(kAppName);
+
     MainFrame* frame = new MainFrame();
     frame->Show(true);
 
