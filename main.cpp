@@ -48,7 +48,7 @@ bool App::OnExceptionInMainLoop()
         error = "unknown error.";
     }
 
-    BOOST_LOG_SEV(gLogger, bltrivial::error) << "Unexpected exception has occurred: " << error << FUNCTION_FILE_LINE << std::flush;
+    BOOST_LOG_SEV(gLogger, bltrivial::error) << "Unexpected exception has occurred: " << error << FUNCTION_FILE_LINE;
     wxLogError("Unexpected exception has occurred: %s. The program will terminate.", error);
 
     // Exit the main loop and thus terminate the program.
