@@ -15,7 +15,7 @@ enum WindowID {
     ID_SPACE,
     ID_OTHER_SEPARATOR,
 
-    ID_BACKSLASH,
+    ID_NO_ESCAPE,
     ID_OTHER_ESCAPE,
 
     ID_DOUBLE,
@@ -51,8 +51,8 @@ private:
     wxString mPath { wxEmptyString };
     int mSeparatorId { ID_COMMA };
     wxChar mSeparator { L',' };
-    int mEscapeId { ID_BACKSLASH };
-    wxChar mEscape { L'\\' };
+    int mEscapeId { ID_NO_ESCAPE };
+    wxChar mEscape { L'\0' };
     int mQuoteId { ID_DOUBLE };
 };
 

@@ -127,7 +127,7 @@ void MainFrame::showFile(wxString path)
     }
 
     if (!failed) {
-        showFile(path, separator.value_or(L','), L'\\', quote.value_or(L'\"'));
+        showFile(path, separator.value_or(L','), L'\0', quote.value_or(L'\"'));
     }
 }
 

@@ -45,8 +45,8 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     }
 
     switch (mEscape) {
-    case L'\\':
-        mEscapeId = ID_BACKSLASH;
+    case L'\0':
+        mEscapeId = ID_NO_ESCAPE;
         break;
     default:
         mEscapeId = ID_OTHER_ESCAPE;
@@ -92,7 +92,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     quoteEscapeSizer->Add(quoteSizer, wxSizerFlags(1).Border().Center());
 
     auto escapeSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Escape character");
-    escapeSizer->Add(new wxRadioButton(this, ID_BACKSLASH, "Backslash (\\)", wxDefaultPosition, wxDefaultSize, wxRB_GROUP,
+    escapeSizer->Add(new wxRadioButton(this, ID_NO_ESCAPE, "No escape character", wxDefaultPosition, wxDefaultSize, wxRB_GROUP,
                          RadioButtonValidator(mEscapeId)),
         wxSizerFlags(0).Border().Center());
     escapeSizer->Add(
@@ -112,7 +112,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnSeparatorRadioButton, this, ID_COMMA, ID_OTHER_SEPARATOR);
-    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_BACKSLASH, ID_OTHER_ESCAPE);
+    Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_NO_ESCAPE, ID_OTHER_ESCAPE);
     Bind(wxEVT_FILEPICKER_CHANGED, &OpenFileDialog::OnFilePicker, this);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
@@ -237,8 +237,8 @@ wxChar OpenFileDialog::getEscape() const
 
     wxChar escape { L'\0' };
     switch (mEscapeId) {
-    case ID_BACKSLASH:
-        escape = L'\\';
+    case ID_NO_ESCAPE:
+        escape = L'\0';
         break;
     case ID_OTHER_ESCAPE:
         escape = mEscape;

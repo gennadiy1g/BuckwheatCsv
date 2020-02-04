@@ -37,7 +37,7 @@ private:
 
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };
-    wxChar mEscape { L'\\' };
+    wxChar mEscape { L'\0' };
     wxChar mQuote { L'\"' };
 
     wxGrid* mGrid { nullptr };
