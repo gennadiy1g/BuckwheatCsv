@@ -13,6 +13,8 @@
 #include <wx/progdlg.h>
 #include <wx/thread.h>
 
+enum EventID { ID_ON_DROP_FILES = wxID_HIGHEST + 1 };
+
 class App : public wxApp {
 public:
     virtual bool OnInit();
@@ -34,6 +36,7 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
     void OnProgress(int percent);
+    void OnDropFiles(wxThreadEvent& event);
 
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };

@@ -90,6 +90,7 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
+    Bind(wxEVT_THREAD, &MainFrame::OnDropFiles, this, ID_ON_DROP_FILES);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
@@ -260,6 +261,13 @@ void MainFrame::OnProgress(int percent)
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
+void MainFrame::OnDropFiles(wxThreadEvent& event)
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+    showFile(event.GetString());
+}
+
 FileDropTarget::FileDropTarget(MainFrame* frame)
     : mFrame(frame)
 {
@@ -270,6 +278,8 @@ bool FileDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& file
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     wxASSERT(filenames.GetCount());
-    mFrame->showFile(filenames[0]);
+    wxThreadEvent event(wxEVT_THREAD, ID_ON_DROP_FILES);
+    event.SetString(filenames[0]);
+    wxQueueEvent(mFrame, event.Clone());
     return true;
 }
