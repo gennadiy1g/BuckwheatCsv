@@ -193,6 +193,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
 
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
             mGridTableNew->setTokenizerParams(escape, separator, quote);
+            mGrid->SetGridCursor(-1, -1);
             mGrid->SetTable(mGridTableNew.get());
             SetTitle(mGridTableNew->getTitle() + App::kAppName);
             mGridTable = std::move(mGridTableNew);
