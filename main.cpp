@@ -199,11 +199,9 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
             mGridTable = std::move(mGridTableNew);
         } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-
             mGrid->SetGridCursor(-1, -1);
             mGrid->ClearGrid();
             mGrid->SetTable(nullptr);
-
             mGridTable->setTokenizerParams(escape, separator, quote);
             mGrid->SetTable(mGridTable.get());
         } else {
