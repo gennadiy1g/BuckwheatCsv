@@ -50,7 +50,7 @@ private:
     wxCriticalSection mPercentCS;
     int mPercent { 0 };
     wxCriticalSection mThreadIsDoneCS;
-    int mThreadIsDone { false };
+    int mThreadIsDone { true };
 
     bool mScanFailed { false };
     std::string mErrorMessage {};
