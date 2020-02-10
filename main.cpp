@@ -287,9 +287,15 @@ bool FileDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& file
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-    wxASSERT(filenames.GetCount());
-    wxThreadEvent event(wxEVT_THREAD, ID_ON_DROP_FILES);
-    event.SetString(filenames[0]);
-    wxQueueEvent(mFrame, event.Clone());
-    return true;
+    if (mFrame->isReadyForDragDrop()) {
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+        wxASSERT(filenames.GetCount());
+        wxThreadEvent event(wxEVT_THREAD, ID_ON_DROP_FILES);
+        event.SetString(filenames[0]);
+        wxQueueEvent(mFrame, event.Clone());
+        return true;
+    } else {
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+        return false;
+    };
 }
