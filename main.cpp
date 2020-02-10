@@ -265,6 +265,19 @@ void MainFrame::OnDropFiles(wxThreadEvent& event)
     showFile(event.GetString());
 }
 
+bool MainFrame::isReadyForDragDrop()
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+    bool threadIsDone;
+    {
+        wxCriticalSectionLocker lock(mThreadIsDoneCS);
+        threadIsDone = mThreadIsDone;
+    }
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "threadIsDone=" << threadIsDone << FUNCTION_FILE_LINE;
+    return threadIsDone;
+}
+
 FileDropTarget::FileDropTarget(MainFrame* frame)
     : mFrame(frame)
 {

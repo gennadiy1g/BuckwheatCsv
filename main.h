@@ -27,6 +27,7 @@ class MainFrame : public wxFrame, public wxThreadHelper {
 public:
     MainFrame();
     virtual wxThread::ExitCode Entry();
+    bool isReadyForDragDrop();
 
     void showFile(wxString path);
     void showFile(wxString path, wxChar separator, wxChar escape, wxChar quote);
