@@ -105,7 +105,7 @@ void MainFrame::OnAbout(wxCommandEvent& event)
     aboutInfo.SetVersion("0.8");
     aboutInfo.SetDescription("Viewer for CSV files");
     aboutInfo.SetCopyright("(C) 2019-2020");
-    aboutInfo.SetWebSite("https://github.com/gennadiy1g/BuckwheatCsv");
+    aboutInfo.SetWebSite("https://github.com/gennadiy1g/BuckwheatCsv/releases");
 
     wxAboutBox(aboutInfo);
 }
