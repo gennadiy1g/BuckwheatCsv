@@ -1,5 +1,6 @@
 #include <functional>
 
+#include <wx/aboutdlg.h>
 #include <wx/filedlg.h>
 
 #include "CsvTable/log.h"
@@ -99,7 +100,14 @@ void MainFrame::OnExit(wxCommandEvent& event) { Close(true); }
 
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
-    wxMessageBox("This is a wxWidgets Hello World example", "About Hello World", wxOK | wxICON_INFORMATION);
+    wxAboutDialogInfo aboutInfo;
+    aboutInfo.SetName(wxTheApp->GetAppDisplayName());
+    aboutInfo.SetVersion("0.8");
+    aboutInfo.SetDescription("Viewer for CSV files");
+    aboutInfo.SetCopyright("(C) 2019-2020");
+    aboutInfo.SetWebSite("https://github.com/gennadiy1g/BuckwheatCsv");
+
+    wxAboutBox(aboutInfo);
 }
 
 void MainFrame::OnOpen(wxCommandEvent& event)
