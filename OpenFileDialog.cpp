@@ -3,7 +3,7 @@
 #include "OpenFileDialog.h"
 
 OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator, wxChar quote, wxChar escape)
-    : wxDialog(parent, wxID_ANY, "Open file")
+    : wxDialog(parent, wxID_ANY, "Open UTF-8 encoded file")
     , mPath(path)
     , mSeparator(separator)
     , mEscape(escape)
