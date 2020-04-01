@@ -1,3 +1,5 @@
 /CMakeLists.txt
 /compile_flags.txt
 /*.ico
+todo.md
+.vscode/
