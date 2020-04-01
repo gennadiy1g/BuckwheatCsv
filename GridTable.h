@@ -62,11 +62,13 @@ public:
 
 private:
     TokenizedFileLines mTokenizedFileLines;
-    int mRow { -1 };
-    bool mHeadersInFirstRow { true };
-    const std::vector<std::wstring>* mTokenizedFileLine { nullptr };
-    bfs::path mFilePath;
 
+    // The intent of having "the last tokenized line" is to avoid tokenizing the same line multiple times
+    int mRow { -1 }; // row number of the last tokenized line
+    const std::vector<std::wstring>* mTokenizedFileLine { nullptr }; // pointer to the last tokenized line
+
+    bool mHeadersInFirstRow { true };
+    bfs::path mFilePath;
     static inline std::unique_ptr<std::locale> sLocale { nullptr };
 };
 
