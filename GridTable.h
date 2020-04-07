@@ -22,6 +22,11 @@ public:
     virtual wxString getStatusText() { return ""; };
     virtual wxString getTitle() { return ""; };
     void SetValue(int, int, const wxString&) override {};
+
+    /* The default implementation of this function is very slow: it takes a long time to jump between the
+      first and the last rows of the grid using Ctrl-Up/Ctrl-Down keyboard shorcuts. The implementatio below
+      is very fast, but it does not allow to search for empty cells. */
+    bool IsEmptyCell(int, int) override { return false; };
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -32,7 +37,6 @@ public:
     int GetNumberRows() override { return 100; }
     int GetNumberCols() override { return 26; }
     wxString GetValue(int row, int col) override { return L""; }
-    bool IsEmptyCell(int, int) override { return false; }
 };
 
 class CsvFileGridTable : public GridTableBase {
@@ -51,7 +55,6 @@ public:
     int GetNumberRows() override;
     int GetNumberCols() override { return mTokenizedFileLines.numColumns(); }
     wxString GetValue(int row, int col) override;
-    bool IsEmptyCell(int, int) override { return false; }
     virtual wxString GetColLabelValue(int col) override;
     virtual void Clear() override;
 
