@@ -21,6 +21,7 @@ public:
     virtual void setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote) {};
     virtual wxString getStatusText() { return ""; };
     virtual wxString getTitle() { return ""; };
+    void SetValue(int, int, const wxString&) override {};
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -31,7 +32,6 @@ public:
     int GetNumberRows() override { return 100; }
     int GetNumberCols() override { return 26; }
     wxString GetValue(int row, int col) override { return L""; }
-    void SetValue(int, int, const wxString&) override {}
     bool IsEmptyCell(int, int) override { return false; }
 };
 
@@ -51,7 +51,6 @@ public:
     int GetNumberRows() override;
     int GetNumberCols() override { return mTokenizedFileLines.numColumns(); }
     wxString GetValue(int row, int col) override;
-    void SetValue(int, int, const wxString&) override {}
     bool IsEmptyCell(int, int) override { return false; }
     virtual wxString GetColLabelValue(int col) override;
     virtual void Clear() override;
