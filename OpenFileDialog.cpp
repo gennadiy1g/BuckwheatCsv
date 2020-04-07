@@ -1,3 +1,4 @@
+// By some reason, the linker fails with error about undefined reference in boost::log when the next line is not the first one
 #include "CsvTable/log.h"
 #include "CsvTable/utilities.h"
 #include "OpenFileDialog.h"
