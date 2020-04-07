@@ -77,7 +77,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
         new wxRadioButton(this, ID_OTHER_SEPARATOR, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mSeparatorId)),
         wxSizerFlags(0).Border().Center());
     mSeparatorTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0,
-        TextCtrlValidator(mSeparatorId, ID_OTHER_SEPARATOR, mSeparator, "separator"));
+        TextCtrlValidator(mSeparatorId == ID_OTHER_SEPARATOR, mSeparator, "separator"));
     mSeparatorTextCtrl->SetMaxLength(1);
     separatorSizer->Add(mSeparatorTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
     dialogSizer->Add(separatorSizer, wxSizerFlags(0).Expand().Border());
@@ -99,7 +99,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
         new wxRadioButton(this, ID_OTHER_ESCAPE, "Other", wxDefaultPosition, wxDefaultSize, 0, RadioButtonValidator(mEscapeId)),
         wxSizerFlags(0).Border().Center());
     mEscapeTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(20, -1), 0,
-        TextCtrlValidator(mEscapeId, ID_OTHER_ESCAPE, mEscape, "escape"));
+        TextCtrlValidator(mEscapeId == ID_OTHER_ESCAPE, mEscape, "escape"));
     mEscapeTextCtrl->SetMaxLength(1);
     escapeSizer->Add(mEscapeTextCtrl, wxSizerFlags(0).Border(wxLEFT | wxRIGHT).Center());
     quoteEscapeSizer->Add(escapeSizer, wxSizerFlags(1).Border().Center());
@@ -342,9 +342,8 @@ bool RadioButtonValidator::TransferFromWindow()
     return true;
 }
 
-TextCtrlValidator::TextCtrlValidator(int radioButtonId, int otherButtonId, wxChar& ch, wxString description)
-    : mRadioButtonId(radioButtonId)
-    , mOtherButtonId(otherButtonId)
+TextCtrlValidator::TextCtrlValidator(bool textCtrlEnabled, wxChar& ch, wxString description)
+    : mTextCtrlEnabled(textCtrlEnabled)
     , mCh(ch)
     , mDescription(description)
 {
@@ -376,7 +375,7 @@ bool TextCtrlValidator::TransferToWindow()
 
     auto textCtrl = dynamic_cast<wxTextCtrl*>(GetWindow());
     wxASSERT(textCtrl);
-    if (mRadioButtonId == mOtherButtonId) {
+    if (mTextCtrlEnabled) {
         textCtrl->SetValue(mCh);
         textCtrl->Enable(true);
     } else {
