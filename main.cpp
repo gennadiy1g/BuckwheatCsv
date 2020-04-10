@@ -179,6 +179,8 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                     progressDialog.Update(percent);
                     prevPercent = percent;
                 } else {
+                    /* TODO: Remove wxTheApp->SafeYieldFor and call progressDialog.Update during each iteration of the loop.
+                     progressDialog.Update internally calls wxEventLoopBase::YieldFor. Delete variable prevPercent. */
                     wxTheApp->SafeYieldFor(NULL, wxEVT_CATEGORY_UI);
                 }
 
