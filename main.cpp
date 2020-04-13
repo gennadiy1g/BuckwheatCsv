@@ -168,22 +168,13 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
 
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
             bool threadIsDone { false };
-            int prevPercent { -1 }, percent { 0 };
+            int percent { 0 };
             while (true) {
                 {
                     wxCriticalSectionLocker lock(mPercentCS);
                     percent = mPercent;
                 }
-
-                if (percent - prevPercent >= 1) {
-                    progressDialog.Update(percent);
-                    prevPercent = percent;
-                } else {
-                    /* TODO: Remove wxTheApp->SafeYieldFor and call progressDialog.Update during each iteration of the loop.
-                     progressDialog.Update internally calls wxEventLoopBase::YieldFor. Delete variable prevPercent. */
-                    wxTheApp->SafeYieldFor(NULL, wxEVT_CATEGORY_UI);
-                }
-
+                progressDialog.Update(percent);
                 {
                     wxCriticalSectionLocker lock(mThreadIsDoneCS);
                     threadIsDone = mThreadIsDone;
