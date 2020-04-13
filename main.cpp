@@ -189,24 +189,30 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                     threadIsDone = mThreadIsDone;
                 }
 
-                if (threadIsDone) {
+                if (threadIsDone || threadIsCancelled) {
                     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                     auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
                     wxASSERT(exitCode == static_cast<wxThread::ExitCode>(0));
-                    wxASSERT(mGridTableNew);
-                    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                     break;
                 } else {
                     wxThread::Sleep(100);
                 }
             }
 
-            BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-            mGridTableNew->setTokenizerParams(escape, separator, quote);
-            mGrid->SetGridCursor(-1, -1);
-            mGrid->SetTable(mGridTableNew.get());
-            SetTitle(mGridTableNew->getTitle() + App::kAppName);
-            mGridTable = std::move(mGridTableNew);
+            if (threadIsDone) {
+                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+                wxASSERT(!threadIsCancelled);
+                wxASSERT(mGridTableNew);
+                mGridTableNew->setTokenizerParams(escape, separator, quote);
+                mGrid->SetGridCursor(-1, -1);
+                mGrid->SetTable(mGridTableNew.get());
+                SetTitle(mGridTableNew->getTitle() + App::kAppName);
+                mGridTable = std::move(mGridTableNew);
+            } else {
+                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+                wxASSERT(threadIsCancelled);
+                mGridTableNew.reset(nullptr);
+            }
         } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
             mGrid->SetGridCursor(-1, -1);
@@ -249,7 +255,7 @@ wxThread::ExitCode MainFrame::Entry()
         mErrorMessage = e.what();
     }
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-    {
+    if (!mThreadIsCancelled) {
         wxCriticalSectionLocker lock(mThreadIsDoneCS);
         mThreadIsDone = true;
     }
