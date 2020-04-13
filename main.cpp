@@ -157,7 +157,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
             mErrorMessage = "";
 
             wxProgressDialog progressDialog("Scanning file", path, 100, this,
-                wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME);
+                wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME | wxPD_CAN_ABORT);
             progressDialog.Update(0);
 
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
