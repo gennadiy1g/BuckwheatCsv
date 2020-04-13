@@ -167,14 +167,23 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
             wxASSERT(threadError == wxTHREAD_NO_ERROR);
 
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-            bool threadIsDone { false };
+            bool threadIsDone { false }, threadIsCancelled { false };
             int percent { 0 };
             while (true) {
                 {
                     wxCriticalSectionLocker lock(mPercentCS);
                     percent = mPercent;
                 }
-                progressDialog.Update(percent);
+
+                if (!progressDialog.Update(percent)) {
+                    // Cancelled by user
+                    threadIsCancelled = true;
+                    {
+                        wxCriticalSectionLocker lock(mThreadIsCancelledCS);
+                        mThreadIsCancelled = true;
+                    }
+                }
+
                 {
                     wxCriticalSectionLocker lock(mThreadIsDoneCS);
                     threadIsDone = mThreadIsDone;
