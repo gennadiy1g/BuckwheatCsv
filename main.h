@@ -52,6 +52,8 @@ private:
     int mPercent { 0 };
     wxCriticalSection mThreadIsDoneCS;
     bool mThreadIsDone { true }; // initial value must be true, otherwise drag & drop will be disabled
+    wxCriticalSection mThreadIsCancelledCS;
+    bool mThreadIsCancelled { false };
 
     bool mScanFailed { false };
     std::string mErrorMessage {};
