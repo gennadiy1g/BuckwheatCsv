@@ -247,8 +247,8 @@ wxThread::ExitCode MainFrame::Entry()
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     try {
-        mGridTableNew = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1),
-            std::bind(&MainFrame::IsCancelled, this));
+        mGridTableNew = std::make_unique<CsvFileGridTable>(
+            bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1), std::bind(&MainFrame::IsCancelled, this));
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         {
             wxCriticalSectionLocker lock(mThreadStatusCS);
