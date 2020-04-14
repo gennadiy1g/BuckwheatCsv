@@ -150,6 +150,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
 
         if (path != mPath) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+            auto oldPath { mPath };
             mPath = path;
             mThreadStatus = ThreadStatus::InProgress;
             mIsThreadCancelled = false;
@@ -203,6 +204,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
 
             if (isThreadCancelled) {
                 BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+                mPath = oldPath;
                 mGridTableNew.reset(nullptr);
                 return;
             } else if (threadStatus == ThreadStatus::Finished) {
