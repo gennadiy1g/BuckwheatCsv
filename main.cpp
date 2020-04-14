@@ -152,12 +152,12 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
             mPath = path;
             mThreadStatus = ThreadStatus::InProgress;
-            mThreadIsCancelled = false;
+            mIsThreadCancelled = false;
             mPercent = 0;
             mErrorMessage = "";
 
             auto threadStatus { mThreadStatus };
-            auto threadIsCancelled { false };
+            auto isThreadCancelled { false };
             int percent { 0 };
 
             wxProgressDialog progressDialog("Scanning file", path, 100, this,
@@ -179,10 +179,10 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
 
                 if (!progressDialog.Update(percent)) {
                     // Cancelled by user
-                    threadIsCancelled = true;
+                    isThreadCancelled = true;
                     {
-                        wxCriticalSectionLocker lock(mThreadIsCancelledCS);
-                        mThreadIsCancelled = true;
+                        wxCriticalSectionLocker lock(mIsThreadCancelledCS);
+                        mIsThreadCancelled = true;
                     }
                 }
 
@@ -191,7 +191,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                     threadStatus = mThreadStatus;
                 }
 
-                if (threadStatus == ThreadStatus::Finished || threadStatus == ThreadStatus::Failed || threadIsCancelled) {
+                if (threadStatus == ThreadStatus::Finished || threadStatus == ThreadStatus::Failed || isThreadCancelled) {
                     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                     auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
                     wxASSERT(exitCode == static_cast<wxThread::ExitCode>(0));
@@ -201,7 +201,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 }
             }
 
-            if (threadIsCancelled) {
+            if (isThreadCancelled) {
                 BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                 mGridTableNew.reset(nullptr);
                 return;
@@ -280,13 +280,13 @@ bool MainFrame::IsThreadCancelled()
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-    auto threadIsCancelled { false };
+    auto isThreadCancelled { false };
     {
-        wxCriticalSectionLocker lock(mThreadIsCancelledCS);
-        threadIsCancelled = mThreadIsCancelled;
+        wxCriticalSectionLocker lock(mIsThreadCancelledCS);
+        isThreadCancelled = mIsThreadCancelled;
     }
-    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "threadIsCancelled=" << threadIsCancelled << FUNCTION_FILE_LINE;
-    return threadIsCancelled;
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "isThreadCancelled=" << isThreadCancelled << FUNCTION_FILE_LINE;
+    return isThreadCancelled;
 }
 
 void MainFrame::OnDropFiles(wxThreadEvent& event)

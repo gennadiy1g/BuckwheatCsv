@@ -54,8 +54,8 @@ private:
     wxCriticalSection mPercentCS;
     int mPercent { 0 };
 
-    wxCriticalSection mThreadIsCancelledCS;
-    bool mThreadIsCancelled { false };
+    wxCriticalSection mIsThreadCancelledCS;
+    bool mIsThreadCancelled { false };
 
     wxCriticalSection mThreadStatusCS;
     ThreadStatus mThreadStatus { ThreadStatus::NotStarted };
