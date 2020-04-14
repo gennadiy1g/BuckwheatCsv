@@ -39,7 +39,7 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
     void OnProgress(int percent);
-    bool IsThreadCancelled();
+    bool IsCancelled();
     void OnDropFiles(wxThreadEvent& event);
 
     wxString mPath { wxEmptyString };
@@ -54,8 +54,8 @@ private:
     wxCriticalSection mPercentCS;
     int mPercent { 0 };
 
-    wxCriticalSection mIsThreadCancelledCS;
-    bool mIsThreadCancelled { false };
+    wxCriticalSection mIsCancelledCS;
+    bool mIsCancelled { false };
 
     wxCriticalSection mThreadStatusCS;
     ThreadStatus mThreadStatus { ThreadStatus::NotStarted };
