@@ -152,6 +152,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
             mPath = path;
             mThreadIsDone = false;
+            mThreadIsCancelled = false;
             mPercent = 0;
             mScanFailed = false;
             mErrorMessage = "";
