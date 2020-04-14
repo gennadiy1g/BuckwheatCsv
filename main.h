@@ -15,6 +15,8 @@
 
 enum EventID { ID_ON_DROP_FILES = wxID_HIGHEST + 1 };
 
+enum class ThreadStatus { NotStarted, InProgress, Failed, Finished };
+
 class App : public wxApp {
 public:
     virtual bool OnInit();
@@ -50,12 +52,13 @@ private:
 
     wxCriticalSection mPercentCS;
     int mPercent { 0 };
-    wxCriticalSection mThreadIsDoneCS;
-    bool mThreadIsDone { true }; // initial value must be true, otherwise drag & drop will be disabled
+
     wxCriticalSection mThreadIsCancelledCS;
     bool mThreadIsCancelled { false };
 
-    bool mScanFailed { false };
+    wxCriticalSection mThreadStatusCS;
+    ThreadStatus mThreadStatus { ThreadStatus::NotStarted };
+
     std::string mErrorMessage {};
 };
 

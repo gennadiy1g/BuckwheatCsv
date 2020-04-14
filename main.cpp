@@ -151,11 +151,14 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
         if (path != mPath) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
             mPath = path;
-            mThreadIsDone = false;
+            mThreadStatus = ThreadStatus::InProgress;
             mThreadIsCancelled = false;
             mPercent = 0;
-            mScanFailed = false;
             mErrorMessage = "";
+
+            auto threadStatus { mThreadStatus };
+            auto threadIsCancelled { false };
+            int percent { 0 };
 
             wxProgressDialog progressDialog("Scanning file", path, 100, this,
                 wxPD_AUTO_HIDE | wxPD_APP_MODAL | wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME | wxPD_CAN_ABORT);
@@ -166,10 +169,8 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
             wxASSERT(threadError == wxTHREAD_NO_ERROR);
             threadError = GetThread()->Run();
             wxASSERT(threadError == wxTHREAD_NO_ERROR);
-
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-            bool threadIsDone { false }, threadIsCancelled { false };
-            int percent { 0 };
+
             while (true) {
                 {
                     wxCriticalSectionLocker lock(mPercentCS);
@@ -186,11 +187,11 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 }
 
                 {
-                    wxCriticalSectionLocker lock(mThreadIsDoneCS);
-                    threadIsDone = mThreadIsDone;
+                    wxCriticalSectionLocker lock(mThreadStatusCS);
+                    threadStatus = mThreadStatus;
                 }
 
-                if (threadIsDone || threadIsCancelled) {
+                if (threadStatus == ThreadStatus::Finished || threadStatus == ThreadStatus::Failed || threadIsCancelled) {
                     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                     auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
                     wxASSERT(exitCode == static_cast<wxThread::ExitCode>(0));
@@ -200,19 +201,21 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 }
             }
 
-            if (threadIsDone) {
+            if (threadIsCancelled) {
                 BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-                wxASSERT(!threadIsCancelled);
+                mGridTableNew.reset(nullptr);
+                return;
+            } else if (threadStatus == ThreadStatus::Finished) {
+                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                 wxASSERT(mGridTableNew);
                 mGridTableNew->setTokenizerParams(escape, separator, quote);
                 mGrid->SetGridCursor(-1, -1);
                 mGrid->SetTable(mGridTableNew.get());
                 SetTitle(mGridTableNew->getTitle() + App::kAppName);
                 mGridTable = std::move(mGridTableNew);
-            } else {
-                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-                wxASSERT(threadIsCancelled);
-                mGridTableNew.reset(nullptr);
+            } else if (threadStatus == ThreadStatus::Failed) {
+                wxMessageDialog messageDialog(this, mErrorMessage, "Attention", wxOK | wxICON_WARNING | wxCENTRE);
+                messageDialog.ShowModal();
             }
         } else if (separator != mSeparator || quote != mQuote || escape != mEscape) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
@@ -235,11 +238,6 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
     mQuote = quote;
     mEscape = escape;
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-
-    if (mScanFailed) {
-        wxMessageDialog messageDialog(this, mErrorMessage, "Attention", wxOK | wxICON_WARNING | wxCENTRE);
-        messageDialog.ShowModal();
-    }
 }
 
 wxThread::ExitCode MainFrame::Entry()
@@ -249,16 +247,19 @@ wxThread::ExitCode MainFrame::Entry()
     try {
         mGridTableNew
             = std::make_unique<CsvFileGridTable>(bfs::path(mPath), std::bind(&MainFrame::OnProgress, this, std::placeholders::_1));
+        BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+        {
+            wxCriticalSectionLocker lock(mThreadStatusCS);
+            mThreadStatus = ThreadStatus::Finished;
+        }
     } catch (const std::runtime_error& e) {
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
         mGridTableNew = std::make_unique<EmptyGridTable>();
-        mScanFailed = true;
         mErrorMessage = e.what();
-    }
-    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-    if (!mThreadIsCancelled) {
-        wxCriticalSectionLocker lock(mThreadIsDoneCS);
-        mThreadIsDone = true;
+        {
+            wxCriticalSectionLocker lock(mThreadStatusCS);
+            mThreadStatus = ThreadStatus::Failed;
+        }
     }
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     return static_cast<wxThread::ExitCode>(0); // success
@@ -286,13 +287,13 @@ bool MainFrame::isReadyForDragDrop()
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-    bool threadIsDone;
+    ThreadStatus threadStatus;
     {
-        wxCriticalSectionLocker lock(mThreadIsDoneCS);
-        threadIsDone = mThreadIsDone;
+        wxCriticalSectionLocker lock(mThreadStatusCS);
+        threadStatus = mThreadStatus;
     }
-    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "threadIsDone=" << threadIsDone << FUNCTION_FILE_LINE;
-    return threadIsDone;
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "threadStatus=" << int(threadStatus) << FUNCTION_FILE_LINE;
+    return threadStatus != ThreadStatus::InProgress;
 }
 
 FileDropTarget::FileDropTarget(MainFrame* frame)
