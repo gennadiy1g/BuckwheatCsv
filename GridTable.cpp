@@ -3,8 +3,8 @@
 #include "CsvTable/log.h"
 #include "GridTable.h"
 
-CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath, OnProgress onProgress)
-    : mTokenizedFileLines(filePath, onProgress)
+CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath, OnProgress onProgress, IsCancelled isCancelled)
+    : mTokenizedFileLines(filePath, onProgress, isCancelled)
     , mFilePath(filePath)
 {
     if (!sLocale) {
