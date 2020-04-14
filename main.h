@@ -39,6 +39,7 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
     void OnProgress(int percent);
+    bool IsThreadCancelled();
     void OnDropFiles(wxThreadEvent& event);
 
     wxString mPath { wxEmptyString };

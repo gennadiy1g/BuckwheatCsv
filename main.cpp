@@ -276,6 +276,19 @@ void MainFrame::OnProgress(int percent)
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
+bool MainFrame::IsThreadCancelled()
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+    auto threadIsCancelled { false };
+    {
+        wxCriticalSectionLocker lock(mThreadIsCancelledCS);
+        threadIsCancelled = mThreadIsCancelled;
+    }
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "threadIsCancelled=" << threadIsCancelled << FUNCTION_FILE_LINE;
+    return threadIsCancelled;
+}
+
 void MainFrame::OnDropFiles(wxThreadEvent& event)
 {
     auto& gLogger = GlobalLogger::get();
