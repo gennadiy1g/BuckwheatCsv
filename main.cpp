@@ -181,6 +181,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 if (!progressDialog.Update(percent)) {
                     // Cancelled by user
                     isCancelled = true;
+                    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "isCancelled=" << isCancelled << FUNCTION_FILE_LINE;
                     {
                         wxCriticalSectionLocker lock(mIsCancelledCS);
                         mIsCancelled = true;
@@ -193,7 +194,8 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 }
 
                 if (threadStatus == ThreadStatus::Finished || threadStatus == ThreadStatus::Failed || isCancelled) {
-                    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+                    BOOST_LOG_SEV(gLogger, bltrivial::trace)
+                        << "threadStatus=" << int(threadStatus) << ", isCancelled=" << isCancelled << FUNCTION_FILE_LINE;
                     auto exitCode = GetThread()->Wait(wxTHREAD_WAIT_BLOCK);
                     wxASSERT(exitCode == static_cast<wxThread::ExitCode>(0));
                     break;
@@ -202,6 +204,8 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 }
             }
 
+            BOOST_LOG_SEV(gLogger, bltrivial::trace)
+                << "threadStatus=" << int(threadStatus) << ", isCancelled=" << isCancelled << FUNCTION_FILE_LINE;
             if (isCancelled) {
                 BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                 mPath = oldPath;
