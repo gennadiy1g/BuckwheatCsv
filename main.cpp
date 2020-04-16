@@ -70,11 +70,16 @@ MainFrame::MainFrame()
     menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
 
+    wxMenu* menuGoTo = new wxMenu;
+    menuGoTo->Append(ID_GOTO_ROW, "Go to &Row...\tCtrl-G", "Go to row");
+    menuGoTo->Append(ID_GOTO_COLUMN, "Go to &Column...\tCtrl-L", "Go to column");
+
     wxMenu* menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
 
     wxMenuBar* menuBar = new wxMenuBar;
     menuBar->Append(menuFile, "&File");
+    menuBar->Append(menuGoTo, "&Go to");
     menuBar->Append(menuHelp, "&Help");
 
     SetMenuBar(menuBar);
@@ -91,6 +96,8 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
     Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
+    Bind(wxEVT_MENU, &MainFrame::OnGoToRow, this, ID_GOTO_ROW);
+    Bind(wxEVT_MENU, &MainFrame::OnGoToColumn, this, ID_GOTO_COLUMN);
     Bind(wxEVT_THREAD, &MainFrame::OnDropFiles, this, ID_ON_DROP_FILES);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
@@ -314,6 +321,9 @@ bool MainFrame::isReadyForDragDrop()
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << "threadStatus=" << int(threadStatus) << FUNCTION_FILE_LINE;
     return threadStatus != ThreadStatus::InProgress;
 }
+
+void MainFrame::OnGoToColumn(wxCommandEvent& event) {}
+void MainFrame::OnGoToRow(wxCommandEvent& event) {}
 
 FileDropTarget::FileDropTarget(MainFrame* frame)
     : mFrame(frame)
