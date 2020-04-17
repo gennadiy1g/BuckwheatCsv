@@ -69,7 +69,7 @@ MainFrame::MainFrame()
     wxMenu* menuFile = new wxMenu;
     menuFile->Append(wxID_OPEN, "&Open...\tCtrl-O", "Open file");
     menuFile->AppendSeparator();
-    menuFile->Append(wxID_EXIT);
+    menuFile->Append(wxID_EXIT); // TODO: Add a keyboard shorcut to this command
 
     wxMenu* menuGoTo = new wxMenu;
     menuGoTo->Append(ID_GOTO_ROW, "Go to &Row...\tCtrl-G", "Go to row");
