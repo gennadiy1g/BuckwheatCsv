@@ -11,5 +11,6 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent)
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Border().Center());
 
+    SetIcon(wxICON(table_select_column));
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 }

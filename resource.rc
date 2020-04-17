@@ -7,5 +7,6 @@ aaaaaaaa ICON "table.ico"
 // these icons are used with wxTopLevelWindow::SetIcon()
 table ICON "table.ico"
 folder_table ICON "folder_table.ico"
+table_select_column ICON "table_select_column.ico"
 
 #include "wx/msw/wx.rc"
