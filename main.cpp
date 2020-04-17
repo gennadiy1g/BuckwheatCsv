@@ -5,6 +5,7 @@
 
 #include "CsvTable/log.h"
 #include "CsvTable/utilities.h"
+#include "GoToColumnDialog.h"
 #include "GridTable.h"
 #include "OpenFileDialog.h"
 #include "main.h"
@@ -322,7 +323,15 @@ bool MainFrame::isReadyForDragDrop()
     return threadStatus != ThreadStatus::InProgress;
 }
 
-void MainFrame::OnGoToColumn(wxCommandEvent& event) {}
+void MainFrame::OnGoToColumn(wxCommandEvent& event)
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
+    GoToColumnDialog goToColumnDialog(this);
+    if (goToColumnDialog.ShowModal() != wxID_CANCEL) {
+    }
+}
 void MainFrame::OnGoToRow(wxCommandEvent& event) {}
 
 FileDropTarget::FileDropTarget(MainFrame* frame)

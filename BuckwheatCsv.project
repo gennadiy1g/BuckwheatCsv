@@ -10,6 +10,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="GoToColumnDialog.cpp"/>
+    <File Name="GoToColumnDialog.h"/>
     <File Name="resource.rc"/>
     <File Name="OpenFileDialog.cpp"/>
     <File Name="OpenFileDialog.h"/>
