@@ -1,6 +1,6 @@
-#include <wx/combobox.h>
-
+// By some reason, the linker fails with error about undefined reference in boost::log when the next line is not the first one
 #include "CsvTable/log.h"
+#include <wx/combobox.h>
 #include "GoToColumnDialog.h"
 
 GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
@@ -10,7 +10,8 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
-    dialogSizer->Add(new wxComboBox(this, wxID_ANY), wxSizerFlags(0).Expand().Border());
+    auto comboBox = new wxComboBox(this, wxID_ANY);
+    dialogSizer->Add(comboBox, wxSizerFlags(0).Expand().Border());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Border().Center());
