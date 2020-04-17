@@ -1,8 +1,9 @@
 #include <wx/combobox.h>
 
+#include "CsvTable/log.h"
 #include "GoToColumnDialog.h"
 
-GoToColumnDialog::GoToColumnDialog(wxWindow* parent)
+GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
     : wxDialog(parent, wxID_ANY, "Go to Column")
 {
     auto& gLogger = GlobalLogger::get();

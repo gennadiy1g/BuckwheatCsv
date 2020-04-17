@@ -6,9 +6,11 @@
 #include <wx/wx.h>
 #endif
 
+#include "GridTable.h"
+
 class GoToColumnDialog : public wxDialog {
 public:
-    GoToColumnDialog(wxWindow* parent);
+    GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable);
     virtual ~GoToColumnDialog() = default;
 
     // Disallow assignment and pass-by-value.

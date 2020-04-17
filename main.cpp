@@ -328,7 +328,7 @@ void MainFrame::OnGoToColumn(wxCommandEvent& event)
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
-    GoToColumnDialog goToColumnDialog(this);
+    GoToColumnDialog goToColumnDialog(this, this->mGridTable.get());
     if (goToColumnDialog.ShowModal() != wxID_CANCEL) {
     }
 }
