@@ -11,6 +11,9 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
     auto comboBox = new wxComboBox(this, wxID_ANY);
+    for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
+        comboBox->Append(mGridTable->GetColLabelValue(i));
+    }
     dialogSizer->Add(comboBox, wxSizerFlags(0).Expand().Border());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
