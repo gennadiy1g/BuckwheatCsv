@@ -22,5 +22,6 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
     SetIcon(wxICON(table_select_column));
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
+    comboBox->SetFocus();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
