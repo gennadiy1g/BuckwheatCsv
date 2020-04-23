@@ -55,10 +55,10 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     }
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
-    dialogSizer->Add(
-        new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab",
-            wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE | wxFLP_SMALL, FilePathValidator(mPath)),
-        wxSizerFlags(0).Expand().Border());
+    auto filePickerCtrl
+        = new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab",
+            wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE | wxFLP_SMALL, FilePathValidator(mPath));
+    dialogSizer->Add(filePickerCtrl, wxSizerFlags(0).Expand().Border());
 
     auto separatorSizer = new wxStaticBoxSizer(wxHORIZONTAL, this, "Separator character");
     separatorSizer->Add(
@@ -116,6 +116,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_NO_ESCAPE, ID_OTHER_ESCAPE);
     Bind(wxEVT_FILEPICKER_CHANGED, &OpenFileDialog::OnFilePicker, this);
 
+    filePickerCtrl->GetTextCtrl()->SetFocus();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
