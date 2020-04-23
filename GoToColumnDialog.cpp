@@ -10,7 +10,7 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
-    auto comboBox = new wxComboBox(this, wxID_ANY);
+    auto comboBox = new wxComboBox(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0, ComboBoxValidator());
     for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
         comboBox->Append(mGridTable->GetColLabelValue(i));
     }
@@ -24,4 +24,18 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
 
     comboBox->SetFocus();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+}
+
+bool ComboBoxValidator::Validate(wxWindow* parent)
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
+    auto comboBox = dynamic_cast<wxComboBox*>(GetWindow());
+    wxASSERT(comboBox);
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "comboBox->GetCurrentSelection()=" << comboBox->GetCurrentSelection()
+                                             << ", comboBox->GetSelection()=" << comboBox->GetSelection()
+                                             << ", comboBox->GetStringSelection()=" << comboBox->GetStringSelection()
+                                             << ", comboBox->GetValue()=" << comboBox->GetValue() << FUNCTION_FILE_LINE;
+    return true;
 }

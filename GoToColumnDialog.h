@@ -21,3 +21,13 @@ public:
     GoToColumnDialog(GoToColumnDialog&& src) = default;
     GoToColumnDialog& operator=(GoToColumnDialog&& rhs) = default;
 };
+
+class ComboBoxValidator : public wxValidator {
+public:
+    explicit ComboBoxValidator() = default;
+    ComboBoxValidator(const ComboBoxValidator& src) = default;
+    virtual bool Validate(wxWindow* parent) override;
+    virtual bool TransferToWindow() override { return true; };
+    virtual bool TransferFromWindow() override { return true; };
+    virtual wxObject* Clone() const override { return new ComboBoxValidator(*this); }
+};
