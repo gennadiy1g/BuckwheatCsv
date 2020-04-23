@@ -56,7 +56,7 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
     dialogSizer->Add(
-        new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab)",
+        new wxFilePickerCtrl(this, wxID_ANY, wxEmptyString, "Open file", "Delimited text (*.csv;*.txt;*.tab)|*.csv;*.txt;*.tab",
             wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE, FilePathValidator(mPath)),
         wxSizerFlags(0).Expand().Border());
 
