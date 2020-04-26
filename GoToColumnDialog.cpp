@@ -10,11 +10,11 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
-    auto comboBox = new wxComboBox(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0, ComboBoxValidator());
+    mComboBox = new wxComboBox(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0, ComboBoxValidator());
     for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
-        comboBox->Append(mGridTable->GetColLabelValue(i));
+        mComboBox->Append(mGridTable->GetColLabelValue(i));
     }
-    dialogSizer->Add(comboBox, wxSizerFlags(0).Expand().Border());
+    dialogSizer->Add(mComboBox, wxSizerFlags(0).Expand().Border());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Border().Center());
@@ -22,7 +22,7 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
     SetIcon(wxICON(table_select_column));
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
-    comboBox->SetFocus();
+    mComboBox->SetFocus();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 

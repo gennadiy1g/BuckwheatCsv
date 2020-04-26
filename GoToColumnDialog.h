@@ -20,6 +20,11 @@ public:
     // Explicitly default move constructor and move assignment operator.
     GoToColumnDialog(GoToColumnDialog&& src) = default;
     GoToColumnDialog& operator=(GoToColumnDialog&& rhs) = default;
+
+    int getColumn() const { return mComboBox->GetSelection(); }
+
+private:
+    wxComboBox* mComboBox { nullptr };
 };
 
 class ComboBoxValidator : public wxValidator {
