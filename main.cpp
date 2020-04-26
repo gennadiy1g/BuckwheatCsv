@@ -330,6 +330,9 @@ void MainFrame::OnGoToColumn(wxCommandEvent& event)
 
     GoToColumnDialog goToColumnDialog(this, this->mGridTable.get());
     if (goToColumnDialog.ShowModal() != wxID_CANCEL) {
+        wxASSERT(goToColumnDialog.getColumn() != wxNOT_FOUND);
+        mGrid->GoToCell(mGrid->GetGridCursorRow(), goToColumnDialog.getColumn());
+        mGrid->SelectCol(goToColumnDialog.getColumn());
     }
 }
 void MainFrame::OnGoToRow(wxCommandEvent& event) {}
