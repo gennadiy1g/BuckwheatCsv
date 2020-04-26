@@ -33,9 +33,26 @@ bool ComboBoxValidator::Validate(wxWindow* parent)
 
     auto comboBox = dynamic_cast<wxComboBox*>(GetWindow());
     wxASSERT(comboBox);
-    BOOST_LOG_SEV(gLogger, bltrivial::trace) << "comboBox->GetCurrentSelection()=" << comboBox->GetCurrentSelection()
-                                             << ", comboBox->GetSelection()=" << comboBox->GetSelection()
-                                             << ", comboBox->GetStringSelection()=" << comboBox->GetStringSelection()
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << ", comboBox->GetSelection()=" << comboBox->GetSelection()
                                              << ", comboBox->GetValue()=" << comboBox->GetValue() << FUNCTION_FILE_LINE;
-    return true;
+    if (comboBox->GetSelection() == wxNOT_FOUND) {
+        auto userInput = comboBox->GetValue().Trim(true).Trim(false);
+        if (!userInput.IsEmpty()) {
+            auto position = comboBox->FindString(userInput, true);
+            if (position == wxNOT_FOUND) {
+                position = comboBox->FindString(userInput, false);
+            }
+            if (position != wxNOT_FOUND) {
+                comboBox->SetSelection(position);
+                return true;
+            }
+            wxMessageBox(userInput + "\nColumn not found.\nCheck the column name and try again.", "Go to Column",
+                wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
+        } else {
+            wxMessageBox("Enter column name or select it from the list.", "Go to Column", wxOK | wxICON_EXCLAMATION | wxCENTRE, parent);
+        }
+        return false;
+    } else {
+        return true;
+    }
 }
