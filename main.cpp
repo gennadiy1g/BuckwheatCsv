@@ -6,6 +6,7 @@
 #include "CsvTable/log.h"
 #include "CsvTable/utilities.h"
 #include "GoToColumnDialog.h"
+#include "GoToRowDialog.h"
 #include "GridTable.h"
 #include "OpenFileDialog.h"
 #include "main.h"
@@ -335,7 +336,18 @@ void MainFrame::OnGoToColumn(wxCommandEvent& event)
         mGrid->SelectCol(goToColumnDialog.getColumn());
     }
 }
-void MainFrame::OnGoToRow(wxCommandEvent& event) {}
+
+void MainFrame::OnGoToRow(wxCommandEvent& event)
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+
+    GoToRowDialog goToRowDialog(this, this->mGridTable.get());
+    if (goToRowDialog.ShowModal() != wxID_CANCEL) {
+        mGrid->GoToCell(goToRowDialog.getRow() - 1, mGrid->GetGridCursorCol());
+        mGrid->SelectRow(goToRowDialog.getRow() - 1);
+    }
+}
 
 FileDropTarget::FileDropTarget(MainFrame* frame)
     : mFrame(frame)
