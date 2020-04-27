@@ -21,4 +21,9 @@ public:
     // Explicitly default move constructor and move assignment operator.
     GoToRowDialog(GoToRowDialog&& src) = default;
     GoToRowDialog& operator=(GoToRowDialog&& rhs) = default;
+
+    int getRow() const { return mSpinCtrl->GetValue(); }
+
+private:
+    wxSpinCtrl* mSpinCtrl { nullptr };
 };

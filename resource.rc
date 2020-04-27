@@ -8,5 +8,6 @@ aaaaaaaa ICON "table.ico"
 table ICON "table.ico"
 folder_table ICON "folder_table.ico"
 table_select_column ICON "table_select_column.ico"
+table_select_row ICON "table_select_row.ico"
 
 #include "wx/msw/wx.rc"
