@@ -1,11 +1,13 @@
 #pragma once
 
+#include <string>
+
 #include <wx/filepicker.h>
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
-#include <wx/spinctrl.h>
+#include <wx/textctrl.h>
 
 #include "GridTable.h"
 
@@ -22,8 +24,8 @@ public:
     GoToRowDialog(GoToRowDialog&& src) = default;
     GoToRowDialog& operator=(GoToRowDialog&& rhs) = default;
 
-    int getRow() const { return mSpinCtrl->GetValue(); }
+    int getRow() const { return std::stoi(mTextCtrl->GetValue().ToStdString()); }
 
 private:
-    wxSpinCtrl* mSpinCtrl { nullptr };
+    wxTextCtrl* mTextCtrl { nullptr };
 };
