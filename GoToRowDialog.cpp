@@ -12,7 +12,7 @@ GoToRowDialog::GoToRowDialog(wxWindow* parent, GridTableBase* mGridTable)
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
-    wxIntegerValidator<unsigned int> intValidator(&mRow);
+    wxIntegerValidator<unsigned int> intValidator(&mRow, wxNUM_VAL_ZERO_AS_BLANK);
     intValidator.SetRange(1, mGridTable->GetRowsCount());
     mTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, intValidator);
     dialogSizer->Add(mTextCtrl, wxSizerFlags(0).Expand().Border());
