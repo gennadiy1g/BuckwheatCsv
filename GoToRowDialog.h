@@ -24,8 +24,9 @@ public:
     GoToRowDialog(GoToRowDialog&& src) = default;
     GoToRowDialog& operator=(GoToRowDialog&& rhs) = default;
 
-    int getRow() const { return std::stoi(mTextCtrl->GetValue().ToStdString()); }
+    int getRow() const { return mRow; }
 
 private:
     wxTextCtrl* mTextCtrl { nullptr };
+    unsigned int mRow { 0 };
 };
