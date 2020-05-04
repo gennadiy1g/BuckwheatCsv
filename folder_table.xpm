@@ -1,5 +1,5 @@
 /* XPM */
-static char * folder_table_xpm[] = {
+static char const * folder_table_xpm[] = {
 "32 32 305 2",
 "  	c None",
 ". 	c #CD9441",

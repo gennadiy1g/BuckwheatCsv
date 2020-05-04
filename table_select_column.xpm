@@ -1,5 +1,5 @@
 /* XPM */
-static char * table_select_column_xpm[] = {
+static char const * table_select_column_xpm[] = {
 "32 32 235 2",
 "  	c None",
 ". 	c #1881B5",
