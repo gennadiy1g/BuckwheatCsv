@@ -2,6 +2,7 @@
 #include "CsvTable/log.h"
 #include "CsvTable/utilities.h"
 #include "OpenFileDialog.h"
+#include "folder_table.xpm"
 
 OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator, wxChar quote, wxChar escape)
     : wxDialog(parent, wxID_ANY, "Open UTF-8 encoded file")

@@ -1,6 +1,7 @@
 // By some reason, the linker fails with error about undefined reference in boost::log when the next line is not the first one
 #include "CsvTable/log.h"
 #include "GoToRowDialog.h"
+#include "table_select_row.xpm"
 
 #include <wx/event.h>
 #include <wx/valnum.h>

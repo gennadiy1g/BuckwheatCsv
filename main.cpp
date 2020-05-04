@@ -10,6 +10,7 @@
 #include "GridTable.h"
 #include "OpenFileDialog.h"
 #include "main.h"
+#include "table.xpm"
 
 using namespace std::literals::string_literals;
 
