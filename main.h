@@ -66,7 +66,7 @@ private:
 
 class FileDropTarget : public wxFileDropTarget {
 public:
-    FileDropTarget(MainFrame* frame);
+    explicit FileDropTarget(MainFrame* frame);
     virtual bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) override;
     virtual wxDragResult OnDragOver(wxCoord x, wxCoord y, wxDragResult defResult) override;
 
