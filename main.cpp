@@ -106,6 +106,14 @@ MainFrame::MainFrame()
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
+MainFrame::~MainFrame()
+{
+    auto& gLogger = GlobalLogger::get();
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+    delete mGrid; // without this statement the program generates SIGSEGV on exit
+    BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
+}
+
 void MainFrame::OnExit(wxCommandEvent& event) { Close(true); }
 
 void MainFrame::OnAbout(wxCommandEvent& event)

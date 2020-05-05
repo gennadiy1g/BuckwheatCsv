@@ -27,6 +27,7 @@ public:
 class MainFrame : public wxFrame, public wxThreadHelper {
 public:
     MainFrame();
+    virtual ~MainFrame();
     virtual wxThread::ExitCode Entry();
     bool isReadyForDragDrop();
 
