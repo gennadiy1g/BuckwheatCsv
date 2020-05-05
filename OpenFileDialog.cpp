@@ -117,8 +117,13 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_NO_ESCAPE, ID_OTHER_ESCAPE);
     Bind(wxEVT_FILEPICKER_CHANGED, &OpenFileDialog::OnFilePicker, this);
 
+    // Set focus to the filePickerCtrl
     if (filePickerCtrl->HasTextCtrl()) {
         filePickerCtrl->GetTextCtrl()->SetFocus();
+    } else {
+        // SetFocus() does not work for the filePickerCtrl under wxGTK, but the following trick does work
+        auto window = static_cast<wxWindow*>(filePickerCtrl);
+        window->Navigate();
     }
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
