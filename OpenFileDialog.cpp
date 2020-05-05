@@ -117,7 +117,9 @@ OpenFileDialog::OpenFileDialog(wxWindow* parent, wxString path, wxChar separator
     Bind(wxEVT_RADIOBUTTON, &OpenFileDialog::OnEscapeRadioButton, this, ID_NO_ESCAPE, ID_OTHER_ESCAPE);
     Bind(wxEVT_FILEPICKER_CHANGED, &OpenFileDialog::OnFilePicker, this);
 
-    filePickerCtrl->GetTextCtrl()->SetFocus();
+    if (filePickerCtrl->HasTextCtrl()) {
+        filePickerCtrl->GetTextCtrl()->SetFocus();
+    }
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 }
 
