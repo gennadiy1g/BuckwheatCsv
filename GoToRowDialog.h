@@ -13,7 +13,7 @@
 
 class GoToRowDialog : public wxDialog {
 public:
-    GoToRowDialog(wxWindow* parent, GridTableBase* mGridTable);
+    GoToRowDialog(wxWindow* parent, GridTableBase* gridTable);
     virtual ~GoToRowDialog() = default;
 
     // Disallow assignment and pass-by-value.

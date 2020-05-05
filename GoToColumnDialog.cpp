@@ -3,7 +3,7 @@
 #include "GoToColumnDialog.h"
 #include "table_select_column.xpm"
 
-GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
+GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     : wxDialog(parent, wxID_ANY, "Go to Column")
 {
     auto& gLogger = GlobalLogger::get();
@@ -11,8 +11,8 @@ GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable)
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
     mComboBox = new wxComboBox(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0, ComboBoxValidator());
-    for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
-        mComboBox->Append(mGridTable->GetColLabelValue(i));
+    for (auto i = 0; i < gridTable->GetColsCount(); ++i) {
+        mComboBox->Append(gridTable->GetColLabelValue(i));
     }
     dialogSizer->Add(mComboBox, wxSizerFlags(0).Expand().Border());
 

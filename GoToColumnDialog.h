@@ -11,7 +11,7 @@
 
 class GoToColumnDialog : public wxDialog {
 public:
-    GoToColumnDialog(wxWindow* parent, GridTableBase* mGridTable);
+    GoToColumnDialog(wxWindow* parent, GridTableBase* gridTable);
     virtual ~GoToColumnDialog() = default;
 
     // Disallow assignment and pass-by-value.

@@ -6,7 +6,7 @@
 #include <wx/event.h>
 #include <wx/valnum.h>
 
-GoToRowDialog::GoToRowDialog(wxWindow* parent, GridTableBase* mGridTable)
+GoToRowDialog::GoToRowDialog(wxWindow* parent, GridTableBase* gridTable)
     : wxDialog(parent, wxID_ANY, "Go to Row")
 {
     auto& gLogger = GlobalLogger::get();
@@ -14,7 +14,7 @@ GoToRowDialog::GoToRowDialog(wxWindow* parent, GridTableBase* mGridTable)
 
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
     wxIntegerValidator<unsigned int> intValidator(&mRow, wxNUM_VAL_ZERO_AS_BLANK);
-    intValidator.SetRange(1, mGridTable->GetRowsCount());
+    intValidator.SetRange(1, gridTable->GetRowsCount());
     mTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, intValidator);
     dialogSizer->Add(mTextCtrl, wxSizerFlags(0).Expand().Border());
 
