@@ -17,7 +17,6 @@ This program is useful if:
 
 ## Limitations
 
-* At this time, Buckwheat CSV is available only for 64-bit Windows.
 * Maximum number of rows or columns is 2,147,483,647 (32-bit signed integer).
 * CSV files must be [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoded.
 
