@@ -1,7 +1,9 @@
 // By some reason, the linker fails with error about undefined reference in boost::log when the next line is not the first one
 #include "CsvTable/log.h"
 #include "GoToColumnDialog.h"
+#if defined(__WXGTK__)
 #include "table_select_column.xpm"
+#endif
 
 GoToColumnDialog::GoToColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     : wxDialog(parent, wxID_ANY, "Go to Column")

@@ -10,7 +10,9 @@
 #include "GridTable.h"
 #include "OpenFileDialog.h"
 #include "main.h"
+#if defined(__WXGTK__)
 #include "table.xpm"
+#endif
 
 using namespace std::literals::string_literals;
 
