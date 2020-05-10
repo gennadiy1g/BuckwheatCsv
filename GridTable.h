@@ -26,6 +26,8 @@ public:
       first and the last rows of the grid using Ctrl-Up/Ctrl-Down keyboard shorcuts. The implementatio below makes the applicaiton
       very fast, but it does not allow the applicaiton to search for empty cells. */
     bool IsEmptyCell(int, int) override { return false; };
+
+    virtual bool IsNumLinesLimitReached() { return false; }
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -61,6 +63,10 @@ public:
     virtual wxString getStatusText() override;
     virtual wxString getTitle() override;
 
+    virtual bool IsNumLinesLimitReached() override { return mTokenizedFileLines.IsNumLinesLimitReached(); }
+
+    static inline std::unique_ptr<std::locale> sLocale { nullptr };
+
 private:
     TokenizedFileLines mTokenizedFileLines;
 
@@ -70,7 +76,6 @@ private:
 
     bool mHeadersInFirstRow { true };
     bfs::path mFilePath;
-    static inline std::unique_ptr<std::locale> sLocale { nullptr };
 };
 
 struct thousand_sep_numpunct : std::numpunct<char> {
