@@ -22,9 +22,9 @@ public:
     virtual wxString getTitle() { return ""; };
     void SetValue(int, int, const wxString&) override {};
 
-    /* The default implementation of this function is very slow: it takes a long time to jump between the
-      first and the last rows of the grid using Ctrl-Up/Ctrl-Down keyboard shorcuts. The implementatio below
-      is very fast, but it does not allow to search for empty cells. */
+    /* The default implementation of this function makes the applicaiton very slow: it takes a long time to jump between the
+      first and the last rows of the grid using Ctrl-Up/Ctrl-Down keyboard shorcuts. The implementatio below makes the applicaiton
+      very fast, but it does not allow the applicaiton to search for empty cells. */
     bool IsEmptyCell(int, int) override { return false; };
 };
 
