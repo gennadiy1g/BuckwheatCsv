@@ -239,6 +239,18 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 mGrid->SetTable(mGridTableNew.get());
                 SetTitle(mGridTableNew->getTitle() + App::kAppName);
                 mGridTable = std::move(mGridTableNew);
+                SetStatusText(mGridTable->getStatusText());
+                if (mGridTable.get()->IsNumLinesLimitReached()) {
+                    auto p = dynamic_cast<CsvFileGridTable*>(mGridTable.get());
+                    wxASSERT(p);
+                    std::ostringstream stringStream;
+                    stringStream.imbue(*p->sLocale);
+                    stringStream
+                        << "Number of rows in the file exceeds the maximum number of rows that the grid is able to display. Only first "
+                        << mGridTable.get()->GetNumberRows() << " rows are displayed.";
+                    wxMessageDialog messageDialog(this, stringStream.str(), "Attention", wxOK | wxICON_WARNING | wxCENTRE);
+                    messageDialog.ShowModal();
+                }
             } else if (threadStatus == ThreadStatus::Failed) {
                 wxMessageDialog messageDialog(this, mErrorMessage, "Attention", wxOK | wxICON_WARNING | wxCENTRE);
                 messageDialog.ShowModal();
