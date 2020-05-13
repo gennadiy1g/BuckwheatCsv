@@ -268,6 +268,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
         }
 
         mGrid->GoToCell(0, 0);
+        mGrid->SetFocus();
         SetStatusText(mGridTable->getStatusText());
         BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
     }
