@@ -27,7 +27,7 @@ public:
       very fast, but it does not allow the applicaiton to search for empty cells. */
     bool IsEmptyCell(int, int) override { return false; };
 
-    virtual bool IsNumLinesLimitReached() { return false; }
+    virtual bool isNumLinesLimitReached() { return false; }
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -63,7 +63,7 @@ public:
     virtual wxString getStatusText() override;
     virtual wxString getTitle() override;
 
-    virtual bool IsNumLinesLimitReached() override { return mTokenizedFileLines.IsNumLinesLimitReached(); }
+    virtual bool isNumLinesLimitReached() override { return mTokenizedFileLines.isNumLinesLimitReached(); }
 
     static inline std::unique_ptr<std::locale> sLocale { nullptr };
 

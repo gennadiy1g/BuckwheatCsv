@@ -240,7 +240,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 SetTitle(mGridTableNew->getTitle() + App::kAppName);
                 mGridTable = std::move(mGridTableNew);
                 SetStatusText(mGridTable->getStatusText());
-                if (mGridTable.get()->IsNumLinesLimitReached()) {
+                if (mGridTable.get()->isNumLinesLimitReached()) {
                     auto p = dynamic_cast<CsvFileGridTable*>(mGridTable.get());
                     wxASSERT(p);
                     std::ostringstream stringStream;
