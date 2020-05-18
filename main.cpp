@@ -5,6 +5,7 @@
 
 #include "CsvTable/log.h"
 #include "CsvTable/utilities.h"
+#include "FindColumnDialog.h"
 #include "GoToColumnDialog.h"
 #include "GoToRowDialog.h"
 #include "GridTable.h"
@@ -104,6 +105,7 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
     Bind(wxEVT_MENU, &MainFrame::OnGoToRow, this, ID_GOTO_ROW);
     Bind(wxEVT_MENU, &MainFrame::OnGoToColumn, this, ID_GOTO_COLUMN);
+    Bind(wxEVT_MENU, &MainFrame::OnFindColumn, this, ID_FIND_COLUMN);
     Bind(wxEVT_THREAD, &MainFrame::OnDropFiles, this, ID_ON_DROP_FILES);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
@@ -374,7 +376,11 @@ void MainFrame::OnGoToRow(wxCommandEvent& event)
     }
 }
 
-void MainFrame::OnFindColumn(wxCommandEvent& event) {}
+void MainFrame::OnFindColumn(wxCommandEvent& event)
+{
+    FindColumnDialog findColumnDialog(this);
+    findColumnDialog.ShowModal();
+}
 
 FileDropTarget::FileDropTarget(MainFrame* frame)
     : mFrame(frame)
