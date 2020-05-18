@@ -1,3 +1,23 @@
-#include "FindColumnDialog.h"
+#include <wx/dataview.h>
 
-FindColumnDialog::FindColumnDialog(wxWindow* parent) {}
+#include "FindColumnDialog.h"
+#if defined(__WXGTK__)
+#include "table_select_column.xpm"
+#endif
+
+FindColumnDialog::FindColumnDialog(wxWindow* parent)
+    : wxDialog(parent, wxID_ANY, "Find Column")
+{
+    auto dialogSizer = new wxBoxSizer(wxVERTICAL);
+    auto dataViewList = new wxDataViewListCtrl(this, wxID_ANY);
+    dataViewList->AppendTextColumn("Name");
+    dialogSizer->Add(dataViewList, wxSizerFlags(0).Expand().Border());
+
+    auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
+    dialogSizer->Add(buttonSizer, wxSizerFlags(0).Border().Center());
+
+    SetIcon(wxICON(table_select_column));
+    SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
+
+    dataViewList->SetFocus();
+}
