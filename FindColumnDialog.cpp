@@ -9,8 +9,21 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
     : wxDialog(parent, wxID_ANY, "Find Column")
 {
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
-    auto dataViewList = new wxDataViewListCtrl(this, wxID_ANY);
+
+    auto dataViewList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200));
+    dataViewList->AppendTextColumn("Number", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
     dataViewList->AppendTextColumn("Name");
+
+    wxVector<wxVariant> data;
+    data.push_back(wxVariant("1"));
+    data.push_back(wxVariant("column 1"));
+    dataViewList->AppendItem(data);
+
+    data.clear();
+    data.push_back(wxVariant("2"));
+    data.push_back(wxVariant("column 2"));
+    dataViewList->AppendItem(data);
+
     dialogSizer->Add(dataViewList, wxSizerFlags(0).Expand().Border());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
