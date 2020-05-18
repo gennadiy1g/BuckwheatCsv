@@ -78,6 +78,7 @@ MainFrame::MainFrame()
     wxMenu* menuGoTo = new wxMenu;
     menuGoTo->Append(ID_GOTO_ROW, "Go to &Row...\tCtrl-G", "Go to a row by number");
     menuGoTo->Append(ID_GOTO_COLUMN, "Go to &Column...\tCtrl-Shift-G", "Go to a column by name");
+    menuGoTo->Append(ID_FIND_COLUMN, "&Find &Column...\tCtrl-Shift-F", "Find a column by name");
 
     wxMenu* menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
@@ -372,6 +373,8 @@ void MainFrame::OnGoToRow(wxCommandEvent& event)
         mGrid->SelectRow(goToRowDialog.getRow() - 1);
     }
 }
+
+void MainFrame::OnFindColumn(wxCommandEvent& event) {}
 
 FileDropTarget::FileDropTarget(MainFrame* frame)
     : mFrame(frame)

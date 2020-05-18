@@ -12,7 +12,7 @@
 #include <wx/progdlg.h>
 #include <wx/thread.h>
 
-enum EventID { ID_ON_DROP_FILES = wxID_HIGHEST + 1, ID_GOTO_ROW, ID_GOTO_COLUMN };
+enum EventID { ID_ON_DROP_FILES = wxID_HIGHEST + 1, ID_GOTO_ROW, ID_GOTO_COLUMN, ID_FIND_COLUMN };
 
 enum class ThreadStatus { NotStarted, InProgress, Failed, Finished };
 
@@ -42,6 +42,7 @@ private:
     bool IsCancelled();
     void OnDropFiles(wxThreadEvent& event);
     void OnGoToColumn(wxCommandEvent& event);
+    void OnFindColumn(wxCommandEvent& event);
     void OnGoToRow(wxCommandEvent& event);
 
     wxString mPath { wxEmptyString };
