@@ -1,6 +1,5 @@
 #pragma once
 
-#include <wx/filepicker.h>
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
