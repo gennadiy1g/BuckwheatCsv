@@ -6,7 +6,7 @@
 #endif
 
 FindColumnDialog::FindColumnDialog(wxWindow* parent)
-    : wxDialog(parent, wxID_ANY, "Find Column")
+    : wxDialog(parent, wxID_ANY, "Find Column", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -24,7 +24,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
     data.push_back(wxVariant("column 2"));
     dataViewList->AppendItem(data);
 
-    dialogSizer->Add(dataViewList, wxSizerFlags(0).Expand().Border());
+    dialogSizer->Add(dataViewList, wxSizerFlags(1).Expand().Border());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Border().Center());
