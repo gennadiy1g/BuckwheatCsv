@@ -26,11 +26,14 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
 
     dialogSizer->Add(dataViewList, wxSizerFlags(1).Expand().Border());
 
+    auto textCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
+    dialogSizer->Add(textCtrl, wxSizerFlags(0).Expand().Border());
+
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
 
     SetIcon(wxICON(table_select_column));
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
-    dataViewList->SetFocus();
+    textCtrl->SetFocus();
 }
