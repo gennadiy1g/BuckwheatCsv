@@ -26,6 +26,9 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
 
     dialogSizer->Add(dataViewList, wxSizerFlags(1).Expand().Border());
 
+    auto staticText = new wxStaticText(this, wxID_ANY, "Filter columns by name");
+    dialogSizer->Add(staticText, wxSizerFlags(0).Expand().Border(wxLEFT | wxRIGHT | wxTOP));
+
     auto textCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
     dialogSizer->Add(textCtrl, wxSizerFlags(0).Expand().Border());
 
