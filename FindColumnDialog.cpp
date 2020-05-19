@@ -11,7 +11,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
 
     auto dataViewList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200));
-    dataViewList->AppendTextColumn("Number", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
+    dataViewList->AppendTextColumn("#", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
     dataViewList->AppendTextColumn("Name");
 
     wxVector<wxVariant> data;
@@ -30,6 +30,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
     dialogSizer->Add(staticText, wxSizerFlags(0).Expand().Border(wxLEFT | wxRIGHT | wxTOP));
 
     auto textCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
+    textCtrl->SetHint("few letters of a column's name, case insensitive, anywhere in the name");
     dialogSizer->Add(textCtrl, wxSizerFlags(0).Expand().Border());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
