@@ -1,4 +1,5 @@
 #include <wx/dataview.h>
+#include <wx/srchctrl.h>
 
 #include "FindColumnDialog.h"
 #if defined(__WXGTK__)
@@ -29,9 +30,9 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
     auto staticText = new wxStaticText(this, wxID_ANY, "Filter columns by name");
     dialogSizer->Add(staticText, wxSizerFlags(0).Expand().Border(wxLEFT | wxRIGHT | wxTOP));
 
-    auto textCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
-    textCtrl->SetHint("few letters of a column's name, case insensitive, anywhere in the name");
-    dialogSizer->Add(textCtrl, wxSizerFlags(0).Expand().Border());
+    auto searchCtrl = new wxSearchCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
+    searchCtrl->SetHint("few letters of a column's name, case insensitive, anywhere in the name");
+    dialogSizer->Add(searchCtrl, wxSizerFlags(0).Expand().Border());
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
@@ -39,5 +40,5 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
     SetIcon(wxICON(table_select_column));
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
-    textCtrl->SetFocus();
+    searchCtrl->SetFocus();
 }
