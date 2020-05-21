@@ -11,9 +11,6 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
 {
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
 
-    auto staticText = new wxStaticText(this, wxID_ANY, "Filter columns by name");
-    dialogSizer->Add(staticText, wxSizerFlags(0).Expand().Border());
-
     auto searchCtrl = new wxSearchCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
     searchCtrl->SetHint("few letters of a column's name, case insensitive, anywhere in the name");
     dialogSizer->Add(searchCtrl, wxSizerFlags(0).Expand().Border());
