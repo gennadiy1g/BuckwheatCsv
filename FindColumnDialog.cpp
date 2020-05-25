@@ -21,7 +21,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     dialogSizer->Add(mDataViewList, wxSizerFlags(1).Expand().Border());
 
     mDataViewList->AppendTextColumn("Name");
-    mDataViewList->AppendTextColumn("Position", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
+    mDataViewList->AppendTextColumn("Position");
     populateColumnsListCtrl(L"");
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
