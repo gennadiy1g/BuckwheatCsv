@@ -10,6 +10,7 @@
 FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     : wxDialog(parent, wxID_ANY, "Find Column", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
     , mGridTable(gridTable)
+    , mTimer(this)
 {
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -31,6 +32,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
     Bind(wxEVT_SEARCH, &FindColumnDialog::OnSearch, this);
+    Bind(wxEVT_TIMER, &FindColumnDialog::OnTimer, this);
 
     searchCtrl->SetFocus();
 }
@@ -56,4 +58,10 @@ void FindColumnDialog::OnSearch(wxCommandEvent& event)
 {
     auto s = event.GetString();
     populateColumnsListCtrl(s);
+}
+
+void FindColumnDialog::OnTimer(wxTimerEvent& event)
+{
+    /* */
+    return;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <wx/dataview.h>
+#include <wx/timer.h>
 
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
@@ -25,7 +26,9 @@ public:
 private:
     void populateColumnsListCtrl(const wxString& partOfName);
     void OnSearch(wxCommandEvent& event);
+    void OnTimer(wxTimerEvent& event);
 
     wxDataViewListCtrl* mDataViewList { nullptr };
     GridTableBase* mGridTable { nullptr };
+    wxTimer mTimer;
 };
