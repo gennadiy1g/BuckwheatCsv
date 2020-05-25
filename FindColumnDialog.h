@@ -26,4 +26,5 @@ private:
     void populateDataViewListCtrl(const std::wstring_view partOfName);
 
     wxDataViewListCtrl* mDataViewList { nullptr };
+    GridTableBase* mGridTable { nullptr };
 };
