@@ -378,7 +378,7 @@ void MainFrame::OnGoToRow(wxCommandEvent& event)
 
 void MainFrame::OnFindColumn(wxCommandEvent& event)
 {
-    FindColumnDialog findColumnDialog(this);
+    FindColumnDialog findColumnDialog(this, this->mGridTable.get());
     findColumnDialog.ShowModal();
 }
 

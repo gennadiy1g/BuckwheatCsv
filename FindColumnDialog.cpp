@@ -7,7 +7,7 @@
 #include "table_select_column.xpm"
 #endif
 
-FindColumnDialog::FindColumnDialog(wxWindow* parent)
+FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     : wxDialog(parent, wxID_ANY, "Find Column", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
@@ -45,4 +45,5 @@ void FindColumnDialog::populateDataViewListCtrl(const std::wstring_view partOfNa
 {
     std::wstring partOfNameTrim(partOfName);
     boost::trim(partOfNameTrim);
+
 }

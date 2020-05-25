@@ -7,9 +7,11 @@
 #include <wx/wx.h>
 #endif
 
+#include "GridTable.h"
+
 class FindColumnDialog : public wxDialog {
 public:
-    explicit FindColumnDialog(wxWindow* parent);
+    explicit FindColumnDialog(wxWindow* parent, GridTableBase* gridTable);
     virtual ~FindColumnDialog() = default;
 
     // Disallow assignment and pass-by-value.
