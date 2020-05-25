@@ -44,7 +44,7 @@ void FindColumnDialog::populateDataViewListCtrl(const std::wstring_view partOfNa
 
     for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
         if (partOfNameTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i), partOfNameTrim)) {
-            data.push_back(wxVariant(std::to_string(i)));
+            data.push_back(wxVariant(std::to_string(i + 1)));
             data.push_back(wxVariant(mGridTable->GetColLabelValue(i)));
             mDataViewList->AppendItem(data);
             data.clear();
