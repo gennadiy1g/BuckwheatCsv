@@ -61,12 +61,12 @@ void FindColumnDialog::OnSearch(wxCommandEvent& event)
 
 void FindColumnDialog::OnTimer(wxTimerEvent& event)
 {
-    /* */
-    return;
+    auto s = mSearchCtrl->GetValue();
+    populateColumnsListCtrl(s);
 }
 
 void FindColumnDialog::OnTextChange(wxCommandEvent& event)
 {
-    /* */
-    return;
+    mTimer.Stop();
+    mTimer.StartOnce(500);
 }
