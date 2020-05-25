@@ -1,5 +1,3 @@
-#include <wx/srchctrl.h>
-
 #include <boost/algorithm/string.hpp>
 
 #include "FindColumnDialog.h"
@@ -14,9 +12,9 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
 {
     auto dialogSizer = new wxBoxSizer(wxVERTICAL);
 
-    auto searchCtrl = new wxSearchCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
-    searchCtrl->SetHint("few letters of a column's name, case insensitive, anywhere in the name");
-    dialogSizer->Add(searchCtrl, wxSizerFlags(0).Expand().Border());
+    mSearchCtrl = new wxSearchCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
+    mSearchCtrl->SetHint("few letters of a column's name, case insensitive, anywhere in the name");
+    dialogSizer->Add(mSearchCtrl, wxSizerFlags(0).Expand().Border());
 
     mDataViewList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(300, 200));
     dialogSizer->Add(mDataViewList, wxSizerFlags(1).Expand().Border());
@@ -35,7 +33,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     Bind(wxEVT_TEXT, &FindColumnDialog::OnTextChange, this);
     Bind(wxEVT_TIMER, &FindColumnDialog::OnTimer, this);
 
-    searchCtrl->SetFocus();
+    mSearchCtrl->SetFocus();
 }
 
 void FindColumnDialog::populateColumnsListCtrl(const wxString& partOfName)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <wx/dataview.h>
+#include <wx/srchctrl.h>
 #include <wx/timer.h>
 
 #include <wx/wxprec.h>
@@ -29,6 +30,7 @@ private:
     void OnTextChange(wxCommandEvent& event);
     void OnTimer(wxTimerEvent& event);
 
+    wxSearchCtrl* mSearchCtrl { nullptr };
     wxDataViewListCtrl* mDataViewList { nullptr };
     GridTableBase* mGridTable { nullptr };
     wxTimer mTimer;
