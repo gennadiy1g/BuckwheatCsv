@@ -20,8 +20,8 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     mDataViewList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200));
     dialogSizer->Add(mDataViewList, wxSizerFlags(1).Expand().Border());
 
-    mDataViewList->AppendTextColumn("#", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
     mDataViewList->AppendTextColumn("Name");
+    mDataViewList->AppendTextColumn("Position", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
     populateColumnsListCtrl(L"");
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
@@ -44,8 +44,8 @@ void FindColumnDialog::populateColumnsListCtrl(const wxString& partOfName)
 
     for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
         if (partOfNameTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i).ToStdWstring(), partOfNameTrim)) {
-            data.push_back(wxVariant(std::to_string(i + 1)));
             data.push_back(wxVariant(mGridTable->GetColLabelValue(i)));
+            data.push_back(wxVariant(std::to_string(i + 1)));
             mDataViewList->AppendItem(data);
             data.clear();
         }
