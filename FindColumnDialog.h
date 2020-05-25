@@ -26,6 +26,7 @@ public:
 private:
     void populateColumnsListCtrl(const wxString& partOfName);
     void OnSearch(wxCommandEvent& event);
+    void OnTextChange(wxCommandEvent& event);
     void OnTimer(wxTimerEvent& event);
 
     wxDataViewListCtrl* mDataViewList { nullptr };

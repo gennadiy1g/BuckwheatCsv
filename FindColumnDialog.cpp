@@ -32,6 +32,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
     Bind(wxEVT_SEARCH, &FindColumnDialog::OnSearch, this);
+    Bind(wxEVT_TEXT, &FindColumnDialog::OnTextChange, this);
     Bind(wxEVT_TIMER, &FindColumnDialog::OnTimer, this);
 
     searchCtrl->SetFocus();
@@ -61,6 +62,12 @@ void FindColumnDialog::OnSearch(wxCommandEvent& event)
 }
 
 void FindColumnDialog::OnTimer(wxTimerEvent& event)
+{
+    /* */
+    return;
+}
+
+void FindColumnDialog::OnTextChange(wxCommandEvent& event)
 {
     /* */
     return;
