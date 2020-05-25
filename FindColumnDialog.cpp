@@ -1,5 +1,7 @@
 #include <wx/srchctrl.h>
 
+#include <boost/algorithm/string.hpp>
+
 #include "FindColumnDialog.h"
 #if defined(__WXGTK__)
 #include "table_select_column.xpm"
@@ -37,4 +39,10 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent)
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
     searchCtrl->SetFocus();
+}
+
+void FindColumnDialog::populateDataViewListCtrl(const std::wstring_view partOfName)
+{
+    std::wstring partOfNameTrim(partOfName);
+    boost::trim(partOfNameTrim);
 }

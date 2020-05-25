@@ -21,5 +21,7 @@ public:
     FindColumnDialog& operator=(FindColumnDialog&& rhs) = default;
 
 private:
+    void populateDataViewListCtrl(const std::wstring_view partOfName);
+
     wxDataViewListCtrl* mDataViewList { nullptr };
 };
