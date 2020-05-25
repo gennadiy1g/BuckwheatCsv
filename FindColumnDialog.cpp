@@ -7,8 +7,6 @@
 #include "table_select_column.xpm"
 #endif
 
-using namespace std::literals::string_view_literals;
-
 FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     : wxDialog(parent, wxID_ANY, "Find Column", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
     , mGridTable(gridTable)
@@ -24,7 +22,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
 
     mDataViewList->AppendTextColumn("#", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
     mDataViewList->AppendTextColumn("Name");
-    populateColumnsListCtrl(L""sv);
+    populateColumnsListCtrl(L"");
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
@@ -37,10 +35,9 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     searchCtrl->SetFocus();
 }
 
-void FindColumnDialog::populateColumnsListCtrl(const std::wstring_view partOfName)
+void FindColumnDialog::populateColumnsListCtrl(const wxString& partOfName)
 {
-    std::wstring partOfNameTrim(partOfName);
-    boost::trim(partOfNameTrim);
+    auto partOfNameTrim = boost::trim_copy(partOfName);
 
     wxVector<wxVariant> data;
 
