@@ -1,5 +1,7 @@
 #pragma once
 
+#include <wx/dataview.h>
+
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
@@ -17,4 +19,7 @@ public:
     // Explicitly default move constructor and move assignment operator.
     FindColumnDialog(FindColumnDialog&& src) = default;
     FindColumnDialog& operator=(FindColumnDialog&& rhs) = default;
+
+private:
+    wxDataViewListCtrl* mDataViewList { nullptr };
 };
