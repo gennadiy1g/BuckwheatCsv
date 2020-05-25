@@ -19,7 +19,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     searchCtrl->SetHint("few letters of a column's name, case insensitive, anywhere in the name");
     dialogSizer->Add(searchCtrl, wxSizerFlags(0).Expand().Border());
 
-    auto mDataViewList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200));
+    mDataViewList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200));
     dialogSizer->Add(mDataViewList, wxSizerFlags(1).Expand().Border());
 
     mDataViewList->AppendTextColumn("#", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
