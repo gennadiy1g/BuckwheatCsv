@@ -23,7 +23,7 @@ public:
     FindColumnDialog& operator=(FindColumnDialog&& rhs) = default;
 
 private:
-    void populateDataViewListCtrl(const std::wstring_view partOfName); /* Rename this method */
+    void populateColumnsListCtrl(const std::wstring_view partOfName);
 
     wxDataViewListCtrl* mDataViewList { nullptr };
     GridTableBase* mGridTable { nullptr };

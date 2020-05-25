@@ -24,7 +24,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
 
     mDataViewList->AppendTextColumn("#", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
     mDataViewList->AppendTextColumn("Name");
-    populateDataViewListCtrl(L""sv);
+    populateColumnsListCtrl(L""sv);
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
@@ -35,7 +35,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     searchCtrl->SetFocus();
 }
 
-void FindColumnDialog::populateDataViewListCtrl(const std::wstring_view partOfName)
+void FindColumnDialog::populateColumnsListCtrl(const std::wstring_view partOfName)
 {
     std::wstring partOfNameTrim(partOfName);
     boost::trim(partOfNameTrim);
