@@ -32,6 +32,8 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     SetIcon(wxICON(table_select_column));
     SetSizerAndFit(dialogSizer); // use the sizer for layout and set size and hints
 
+    Bind(wxEVT_SEARCH, &FindColumnDialog::OnSearch, this);
+
     searchCtrl->SetFocus();
 }
 
@@ -50,4 +52,10 @@ void FindColumnDialog::populateColumnsListCtrl(const std::wstring_view partOfNam
             data.clear();
         }
     }
+}
+
+void FindColumnDialog::OnSearch(wxCommandEvent& event)
+{
+    auto s = event.GetString();
+    populateColumnsListCtrl(s);
 }

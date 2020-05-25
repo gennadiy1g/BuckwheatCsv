@@ -24,6 +24,7 @@ public:
 
 private:
     void populateColumnsListCtrl(const std::wstring_view partOfName);
+    void OnSearch(wxCommandEvent& event);
 
     wxDataViewListCtrl* mDataViewList { nullptr };
     GridTableBase* mGridTable { nullptr };
