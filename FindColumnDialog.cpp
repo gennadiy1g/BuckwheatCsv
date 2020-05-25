@@ -7,6 +7,8 @@
 #include "table_select_column.xpm"
 #endif
 
+using namespace std::literals::string_view_literals;
+
 FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     : wxDialog(parent, wxID_ANY, "Find Column", wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
     , mGridTable(gridTable)
@@ -18,20 +20,11 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     dialogSizer->Add(searchCtrl, wxSizerFlags(0).Expand().Border());
 
     auto mDataViewList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 200));
+    dialogSizer->Add(mDataViewList, wxSizerFlags(1).Expand().Border());
+
     mDataViewList->AppendTextColumn("#", wxDATAVIEW_CELL_INERT, -1, wxALIGN_RIGHT);
     mDataViewList->AppendTextColumn("Name");
-
-    wxVector<wxVariant> data;
-    data.push_back(wxVariant("1"));
-    data.push_back(wxVariant("column 1"));
-    mDataViewList->AppendItem(data);
-
-    data.clear();
-    data.push_back(wxVariant("2"));
-    data.push_back(wxVariant("column 2"));
-    mDataViewList->AppendItem(data);
-
-    dialogSizer->Add(mDataViewList, wxSizerFlags(1).Expand().Border());
+    populateDataViewListCtrl(L""sv);
 
     auto buttonSizer = CreateButtonSizer(wxOK | wxCANCEL);
     dialogSizer->Add(buttonSizer, wxSizerFlags(0).Center().Border());
@@ -46,4 +39,15 @@ void FindColumnDialog::populateDataViewListCtrl(const std::wstring_view partOfNa
 {
     std::wstring partOfNameTrim(partOfName);
     boost::trim(partOfNameTrim);
+
+    wxVector<wxVariant> data;
+
+    for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
+        if (partOfNameTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i), partOfNameTrim)) {
+            data.push_back(wxVariant(std::to_string(i)));
+            data.push_back(wxVariant(mGridTable->GetColLabelValue(i)));
+            mDataViewList->AppendItem(data);
+            data.clear();
+        }
+    }
 }
