@@ -37,12 +37,13 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
 
 void FindColumnDialog::populateColumnsListCtrl(const wxString& partOfName)
 {
-    auto partOfNameTrim = boost::trim_copy(partOfName);
+    std::wstring partOfNameTrim = boost::trim_copy(partOfName.ToStdWstring());
 
+    mDataViewList->DeleteAllItems();
     wxVector<wxVariant> data;
 
     for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
-        if (partOfNameTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i), partOfNameTrim)) {
+        if (partOfNameTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i).ToStdWstring(), partOfNameTrim)) {
             data.push_back(wxVariant(std::to_string(i + 1)));
             data.push_back(wxVariant(mGridTable->GetColLabelValue(i)));
             mDataViewList->AppendItem(data);
