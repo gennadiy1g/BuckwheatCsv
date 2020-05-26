@@ -1,3 +1,6 @@
+#include <iomanip>
+#include <sstream>
+
 #include <boost/algorithm/string.hpp>
 
 #include "FindColumnDialog.h"
@@ -43,12 +46,18 @@ void FindColumnDialog::populateColumnsListCtrl(const wxString& textToSearch)
     mDataViewList->DeleteAllItems();
     wxVector<wxVariant> data;
 
+    auto width = std::to_wstring(mGridTable->GetColsCount()).length();
+    std::wostringstream sStream;
+    sStream << std::setfill(L'0');
+
     for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
         if (textToSearchTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i).ToStdWstring(), textToSearchTrim)) {
             data.push_back(wxVariant(mGridTable->GetColLabelValue(i)));
-            data.push_back(wxVariant(std::to_wstring(i + 1)));
+            sStream << std::setw(width) << i + 1;
+            data.push_back(wxVariant(sStream.str()));
             mDataViewList->AppendItem(data);
             data.clear();
+            sStream.seekp(0);
         }
     }
 }
