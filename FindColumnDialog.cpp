@@ -46,7 +46,7 @@ void FindColumnDialog::populateColumnsListCtrl(const wxString& textToSearch)
     for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
         if (textToSearchTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i).ToStdWstring(), textToSearchTrim)) {
             data.push_back(wxVariant(mGridTable->GetColLabelValue(i)));
-            data.push_back(wxVariant(std::to_string(i + 1)));
+            data.push_back(wxVariant(std::to_wstring(i + 1)));
             mDataViewList->AppendItem(data);
             data.clear();
         }
