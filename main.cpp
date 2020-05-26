@@ -379,7 +379,13 @@ void MainFrame::OnGoToRow(wxCommandEvent& event)
 void MainFrame::OnFindColumn(wxCommandEvent& event)
 {
     FindColumnDialog findColumnDialog(this, this->mGridTable.get());
-    findColumnDialog.ShowModal();
+    if (findColumnDialog.ShowModal() != wxID_CANCEL) {
+        auto column = findColumnDialog.getColumn();
+        if (column != wxNOT_FOUND) {
+            mGrid->GoToCell(mGrid->GetGridCursorRow(), column);
+            mGrid->SelectCol(column);
+        }
+    }
 }
 
 FileDropTarget::FileDropTarget(MainFrame* frame)

@@ -82,3 +82,14 @@ void FindColumnDialog::OnTextChange(wxCommandEvent& event)
 }
 
 void FindColumnDialog::OnDataViewItemActivated(wxDataViewEvent& event) { this->EndModal(wxID_OK); }
+
+int FindColumnDialog::getColumn() const
+{
+    int column { wxNOT_FOUND };
+    if (auto row = mDataViewList->GetSelectedRow(); row != wxNOT_FOUND) {
+        auto textValue = mDataViewList->GetTextValue(row, 1);
+        column = std::stoi(textValue.ToStdString()) - 1;
+        wxASSERT(column >= 0);
+    }
+    return column;
+}

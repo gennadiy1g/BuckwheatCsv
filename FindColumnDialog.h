@@ -24,6 +24,8 @@ public:
     FindColumnDialog(FindColumnDialog&& src) = default;
     FindColumnDialog& operator=(FindColumnDialog&& rhs) = default;
 
+    int getColumn() const;
+
 private:
     void populateColumnsListCtrl(const wxString& partOfName);
     void OnSearch(wxCommandEvent& event);
