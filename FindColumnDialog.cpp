@@ -36,15 +36,15 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     mSearchCtrl->SetFocus();
 }
 
-void FindColumnDialog::populateColumnsListCtrl(const wxString& partOfName)
+void FindColumnDialog::populateColumnsListCtrl(const wxString& textToSearch)
 {
-    std::wstring partOfNameTrim = boost::trim_copy(partOfName.ToStdWstring());
+    std::wstring textToSearchTrim = boost::trim_copy(textToSearch.ToStdWstring());
 
     mDataViewList->DeleteAllItems();
     wxVector<wxVariant> data;
 
     for (auto i = 0; i < mGridTable->GetColsCount(); ++i) {
-        if (partOfNameTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i).ToStdWstring(), partOfNameTrim)) {
+        if (textToSearchTrim == L"" || boost::icontains(mGridTable->GetColLabelValue(i).ToStdWstring(), textToSearchTrim)) {
             data.push_back(wxVariant(mGridTable->GetColLabelValue(i)));
             data.push_back(wxVariant(std::to_string(i + 1)));
             mDataViewList->AppendItem(data);
@@ -55,14 +55,14 @@ void FindColumnDialog::populateColumnsListCtrl(const wxString& partOfName)
 
 void FindColumnDialog::OnSearch(wxCommandEvent& event)
 {
-    auto s = event.GetString();
-    populateColumnsListCtrl(s);
+    auto textToSearch = event.GetString();
+    populateColumnsListCtrl(textToSearch);
 }
 
 void FindColumnDialog::OnTimer(wxTimerEvent& event)
 {
-    auto s = mSearchCtrl->GetValue();
-    populateColumnsListCtrl(s);
+    auto textToSearch = mSearchCtrl->GetValue();
+    populateColumnsListCtrl(textToSearch);
 }
 
 void FindColumnDialog::OnTextChange(wxCommandEvent& event)
