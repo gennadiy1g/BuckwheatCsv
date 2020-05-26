@@ -29,6 +29,7 @@ private:
     void OnSearch(wxCommandEvent& event);
     void OnTextChange(wxCommandEvent& event);
     void OnTimer(wxTimerEvent& event);
+    void OnDataViewItemActivated(wxDataViewEvent& event);
 
     wxSearchCtrl* mSearchCtrl { nullptr };
     wxDataViewListCtrl* mDataViewList { nullptr };

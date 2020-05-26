@@ -35,6 +35,7 @@ FindColumnDialog::FindColumnDialog(wxWindow* parent, GridTableBase* gridTable)
     Bind(wxEVT_SEARCH, &FindColumnDialog::OnSearch, this);
     Bind(wxEVT_TEXT, &FindColumnDialog::OnTextChange, this);
     Bind(wxEVT_TIMER, &FindColumnDialog::OnTimer, this);
+    Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &FindColumnDialog::OnDataViewItemActivated, this);
 
     mSearchCtrl->SetFocus();
 }
@@ -79,3 +80,5 @@ void FindColumnDialog::OnTextChange(wxCommandEvent& event)
     mTimer.Stop();
     mTimer.StartOnce(500);
 }
+
+void FindColumnDialog::OnDataViewItemActivated(wxDataViewEvent& event) { this->EndModal(wxID_OK); }
