@@ -12,7 +12,7 @@ This program is useful if:
  Buckwheat CSV:
 
  * Will not load the whole file into memory.
- * Does not have a limit on the size of the file. However, there is a limit on the number of rows that can be displayd in a grid (see below).
+ * Does not have a limit on the size of the file. However, there is a limit on the number of rows that can be displayed in a grid (see below).
 
 ## Limitations
 
