@@ -111,12 +111,7 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnGoToRow, this, ID_GOTO_ROW);
     Bind(wxEVT_MENU, &MainFrame::OnGoToColumn, this, ID_GOTO_COLUMN);
     Bind(wxEVT_MENU, &MainFrame::OnFindColumn, this, ID_FIND_COLUMN);
-    Bind(wxEVT_MENU,
-        [this](wxCommandEvent&) {
-            for (auto i = 0; i < this->mGrid->GetNumberCols(); ++i)
-                this->mGrid->AutoSizeColLabelSize(i);
-        },
-        ID_AUTOSIZE_COLUMNS_FIT);
+    Bind(wxEVT_MENU, &MainFrame::OnAutosizeColumns, this, ID_AUTOSIZE_COLUMNS_FIT);
     Bind(wxEVT_THREAD, &MainFrame::OnDropFiles, this, ID_ON_DROP_FILES);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
@@ -397,6 +392,12 @@ void MainFrame::OnFindColumn(wxCommandEvent& event)
             mGrid->SelectCol(column);
         }
     }
+}
+
+void MainFrame::OnAutosizeColumns(wxCommandEvent& event)
+{
+    for (auto i = 0; i < this->mGrid->GetNumberCols(); ++i)
+        this->mGrid->AutoSizeColLabelSize(i);
 }
 
 FileDropTarget::FileDropTarget(MainFrame* frame)

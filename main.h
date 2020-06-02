@@ -51,6 +51,7 @@ private:
     void OnGoToColumn(wxCommandEvent& event);
     void OnFindColumn(wxCommandEvent& event);
     void OnGoToRow(wxCommandEvent& event);
+    void OnAutosizeColumns(wxCommandEvent& event);
 
     wxString mPath { wxEmptyString };
     wxChar mSeparator { L',' };
