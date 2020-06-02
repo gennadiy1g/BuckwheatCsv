@@ -82,8 +82,10 @@ MainFrame::MainFrame()
     menuGoTo->Append(ID_FIND_COLUMN, "&Find &Column...\tCtrl-Shift-F", "Find a column by name");
 
     wxMenu* menuView = new wxMenu;
-    menuView->Append(ID_AUTOSIZE_COLUMNS_FIT, "Adjust columns' widths\tCtrl-+", "Adjust widths of all columns to fit their labels");
-    menuView->Append(ID_AUTOSIZE_COLUMNS_DEFAULT, "Restore columns' widths\tCtrl-Enter", "Set widths of all columns to their defaults");
+    menuView->Append(
+        ID_AUTOSIZE_COLUMNS_FIT, "&Adjust widths of columns\tShift+Ctrl+A", "Adjust widths of all columns to fit their labels");
+    menuView->Append(
+        ID_AUTOSIZE_COLUMNS_DEFAULT, "&Restore widths of columns\tCtrl-Shift+Ctrl+R", "Restore widths of all columns to their defaults");
 
     wxMenu* menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
