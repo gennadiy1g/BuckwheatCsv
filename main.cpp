@@ -397,8 +397,16 @@ void MainFrame::OnFindColumn(wxCommandEvent& event)
 void MainFrame::OnAutosizeColumns(wxCommandEvent& event)
 {
     wxGridUpdateLocker updateLocker(mGrid);
-    for (auto i = 0; i < this->mGrid->GetNumberCols(); ++i)
-        this->mGrid->AutoSizeColLabelSize(i);
+    for (auto i = 0; i < mGrid->GetNumberCols(); ++i) {
+        auto oldWidth = mGrid->GetColSize(i);
+        mGrid->AutoSizeColLabelSize(i);
+
+        // Make sure that the column does not become narrower than its default width
+        auto newWidth = mGrid->GetColSize(i);
+        if (newWidth < oldWidth) {
+            mGrid->SetColSize(i, oldWidth);
+        }
+    }
 }
 
 FileDropTarget::FileDropTarget(MainFrame* frame)
