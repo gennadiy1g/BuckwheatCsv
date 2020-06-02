@@ -398,15 +398,15 @@ void MainFrame::OnFindColumn(wxCommandEvent& event)
 
 void MainFrame::OnAutosizeColumns(wxCommandEvent& event)
 {
+    auto defaultWidth = mGrid->GetDefaultColSize();
+
     wxGridUpdateLocker updateLocker(mGrid);
     for (auto i = 0; i < mGrid->GetNumberCols(); ++i) {
-        auto oldWidth = mGrid->GetColSize(i);
         mGrid->AutoSizeColLabelSize(i);
 
         // Make sure that the column does not become narrower than its default width
-        auto newWidth = mGrid->GetColSize(i);
-        if (newWidth < oldWidth) {
-            mGrid->SetColSize(i, oldWidth);
+        if (mGrid->GetColSize(i) < defaultWidth) {
+            mGrid->SetColSize(i, defaultWidth);
         }
     }
 }
