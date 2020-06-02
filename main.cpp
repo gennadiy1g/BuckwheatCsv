@@ -81,12 +81,18 @@ MainFrame::MainFrame()
     menuGoTo->Append(ID_GOTO_COLUMN, "Go to &Column...\tCtrl-Shift-G", "Go to a column by name");
     menuGoTo->Append(ID_FIND_COLUMN, "&Find &Column...\tCtrl-Shift-F", "Find a column by name");
 
+    wxMenu* menuView = new wxMenu;
+    menuView->Append(ID_AUTOSIZE_ALL_LABELS, "Adjust columns to fit labels\tCtrl-+", "Adjust widths of all columns to fit their labels");
+    menuView->Append(
+        ID_AUTOSIZE_ALL_DEFAULT, "Set widths of columns to defaults\tCtrl-Enter", "Set widths of all columns to their defaults");
+
     wxMenu* menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
 
     wxMenuBar* menuBar = new wxMenuBar;
     menuBar->Append(menuFile, "&File");
     menuBar->Append(menuGoTo, "&Go to");
+    menuBar->Append(menuView, "&View");
     menuBar->Append(menuHelp, "&Help");
 
     SetMenuBar(menuBar);

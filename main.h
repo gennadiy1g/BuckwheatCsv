@@ -12,7 +12,14 @@
 #include <wx/progdlg.h>
 #include <wx/thread.h>
 
-enum EventID { ID_ON_DROP_FILES = wxID_HIGHEST + 1, ID_GOTO_ROW, ID_GOTO_COLUMN, ID_FIND_COLUMN };
+enum EventID {
+    ID_ON_DROP_FILES = wxID_HIGHEST + 1,
+    ID_GOTO_ROW,
+    ID_GOTO_COLUMN,
+    ID_FIND_COLUMN,
+    ID_AUTOSIZE_ALL_LABELS,
+    ID_AUTOSIZE_ALL_DEFAULT
+};
 
 enum class ThreadStatus { NotStarted, InProgress, Failed, Finished };
 
