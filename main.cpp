@@ -362,7 +362,7 @@ void MainFrame::OnGoToColumn(wxCommandEvent& event)
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
-    GoToColumnDialog goToColumnDialog(this, this->mGridTable.get());
+    GoToColumnDialog goToColumnDialog(this, mGridTable.get());
     if (goToColumnDialog.ShowModal() != wxID_CANCEL) {
         wxASSERT(goToColumnDialog.getColumn() != wxNOT_FOUND);
         mGrid->GoToCell(mGrid->GetGridCursorRow(), goToColumnDialog.getColumn());
@@ -375,7 +375,7 @@ void MainFrame::OnGoToRow(wxCommandEvent& event)
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
 
-    GoToRowDialog goToRowDialog(this, this->mGridTable.get());
+    GoToRowDialog goToRowDialog(this, mGridTable.get());
     if (goToRowDialog.ShowModal() != wxID_CANCEL) {
         mGrid->GoToCell(goToRowDialog.getRow() - 1, mGrid->GetGridCursorCol());
         mGrid->SelectRow(goToRowDialog.getRow() - 1);
@@ -384,7 +384,7 @@ void MainFrame::OnGoToRow(wxCommandEvent& event)
 
 void MainFrame::OnFindColumn(wxCommandEvent& event)
 {
-    FindColumnDialog findColumnDialog(this, this->mGridTable.get());
+    FindColumnDialog findColumnDialog(this, mGridTable.get());
     if (findColumnDialog.ShowModal() != wxID_CANCEL) {
         auto column = findColumnDialog.getColumn();
         if (column != wxNOT_FOUND) {

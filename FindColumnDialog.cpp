@@ -81,7 +81,7 @@ void FindColumnDialog::OnTextChange(wxCommandEvent& event)
     mTimer.StartOnce(500);
 }
 
-void FindColumnDialog::OnDataViewItemActivated(wxDataViewEvent& event) { this->EndModal(wxID_OK); }
+void FindColumnDialog::OnDataViewItemActivated(wxDataViewEvent& event) { EndModal(wxID_OK); }
 
 int FindColumnDialog::getColumn() const
 {
