@@ -83,8 +83,8 @@ MainFrame::MainFrame()
 
     wxMenu* menuView = new wxMenu;
     menuView->Append(
-        ID_AUTOSIZE_COLUMNS_FIT, "&Adjust widths of columns\tShift+Ctrl+A", "Adjust widths of all columns to fit their labels");
-    menuView->Append(ID_AUTOSIZE_COLUMNS_DEFAULT, "&Restore width of columns to the default\tCtrl-Shift+Ctrl+R",
+        ID_ADJUST_WIDTHS_COLUMNS, "&Adjust widths of columns\tShift+Ctrl+A", "Adjust widths of all columns to fit their labels");
+    menuView->Append(ID_RESTORE_DEFAULT_WIDTH_COLUMNS, "&Restore width of columns to the default\tCtrl-Shift+Ctrl+R",
         "Restore width of all columns to the default");
 
     wxMenu* menuHelp = new wxMenu;
@@ -113,8 +113,8 @@ MainFrame::MainFrame()
     Bind(wxEVT_MENU, &MainFrame::OnGoToRow, this, ID_GOTO_ROW);
     Bind(wxEVT_MENU, &MainFrame::OnGoToColumn, this, ID_GOTO_COLUMN);
     Bind(wxEVT_MENU, &MainFrame::OnFindColumn, this, ID_FIND_COLUMN);
-    Bind(wxEVT_MENU, &MainFrame::OnAutosizeColumns, this, ID_AUTOSIZE_COLUMNS_FIT);
-    Bind(wxEVT_MENU, &MainFrame::OnRestoreDefaultColumnsWidth, this, ID_AUTOSIZE_COLUMNS_DEFAULT);
+    Bind(wxEVT_MENU, &MainFrame::OnAutosizeColumns, this, ID_ADJUST_WIDTHS_COLUMNS);
+    Bind(wxEVT_MENU, &MainFrame::OnRestoreDefaultColumnsWidth, this, ID_RESTORE_DEFAULT_WIDTH_COLUMNS);
     Bind(wxEVT_THREAD, &MainFrame::OnDropFiles, this, ID_ON_DROP_FILES);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
