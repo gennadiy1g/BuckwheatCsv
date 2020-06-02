@@ -396,6 +396,7 @@ void MainFrame::OnFindColumn(wxCommandEvent& event)
 
 void MainFrame::OnAutosizeColumns(wxCommandEvent& event)
 {
+    wxGridUpdateLocker updateLocker(mGrid);
     for (auto i = 0; i < this->mGrid->GetNumberCols(); ++i)
         this->mGrid->AutoSizeColLabelSize(i);
 }
