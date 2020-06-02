@@ -82,9 +82,8 @@ MainFrame::MainFrame()
     menuGoTo->Append(ID_FIND_COLUMN, "&Find &Column...\tCtrl-Shift-F", "Find a column by name");
 
     wxMenu* menuView = new wxMenu;
-    menuView->Append(ID_AUTOSIZE_ALL_LABELS, "Adjust columns to fit labels\tCtrl-+", "Adjust widths of all columns to fit their labels");
-    menuView->Append(
-        ID_AUTOSIZE_ALL_DEFAULT, "Set widths of columns to defaults\tCtrl-Enter", "Set widths of all columns to their defaults");
+    menuView->Append(ID_AUTOSIZE_COLUMNS_FIT, "Adjust columns' widths\tCtrl-+", "Adjust widths of all columns to fit their labels");
+    menuView->Append(ID_AUTOSIZE_COLUMNS_DEFAULT, "Restore columns' widths\tCtrl-Enter", "Set widths of all columns to their defaults");
 
     wxMenu* menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
@@ -117,7 +116,7 @@ MainFrame::MainFrame()
             for (auto i = 0; i < this->mGrid->GetNumberCols(); ++i)
                 this->mGrid->AutoSizeColLabelSize(i);
         },
-        ID_AUTOSIZE_ALL_LABELS);
+        ID_AUTOSIZE_COLUMNS_FIT);
     Bind(wxEVT_THREAD, &MainFrame::OnDropFiles, this, ID_ON_DROP_FILES);
 
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;

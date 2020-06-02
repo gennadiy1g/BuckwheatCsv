@@ -17,8 +17,8 @@ enum EventID {
     ID_GOTO_ROW,
     ID_GOTO_COLUMN,
     ID_FIND_COLUMN,
-    ID_AUTOSIZE_ALL_LABELS,
-    ID_AUTOSIZE_ALL_DEFAULT
+    ID_AUTOSIZE_COLUMNS_FIT,
+    ID_AUTOSIZE_COLUMNS_DEFAULT
 };
 
 enum class ThreadStatus { NotStarted, InProgress, Failed, Finished };
