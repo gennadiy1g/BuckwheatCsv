@@ -83,9 +83,9 @@ MainFrame::MainFrame()
 
     wxMenu* menuView = new wxMenu;
     menuView->Append(
-        ID_ADJUST_WIDTHS_COLUMNS, "&Adjust widths of columns\tShift+Ctrl+A", "Adjust widths of all columns to fit their labels");
-    menuView->Append(ID_RESTORE_DEFAULT_WIDTH_COLUMNS, "&Restore width of columns to the default\tCtrl-Shift+Ctrl+R",
-        "Restore width of all columns to the default");
+        ID_ADJUST_WIDTHS_COLUMNS, "&Adjust widths of all columns\tShift+Ctrl+A", "Adjust widths of all columns to fit their labels");
+    menuView->Append(ID_RESTORE_DEFAULT_WIDTH_COLUMNS, "&Restore default widths of columns\tCtrl-Shift+Ctrl+R",
+        "Restore widths of all columns to the default");
 
     wxMenu* menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
