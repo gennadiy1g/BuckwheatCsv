@@ -58,7 +58,7 @@ wxString CsvFileGridTable::getStatusText()
     return stringStream.str();
 }
 
-wxString CsvFileGridTable::getTitle()
+wxString CsvFileGridTable::getTitle() const
 {
     std::ostringstream stringStream;
     stringStream << mFilePath.filename().string() << " - " << mFilePath.parent_path().string() << " - ";

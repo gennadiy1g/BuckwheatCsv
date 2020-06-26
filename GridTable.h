@@ -19,7 +19,7 @@ public:
 
     virtual void setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote) {};
     virtual wxString getStatusText() { return ""; };
-    virtual wxString getTitle() { return ""; };
+    virtual wxString getTitle() const { return ""; };
     void SetValue(int, int, const wxString&) override {};
 
     /* The default implementation of this function makes the applicaiton very slow: it takes a long time to jump between the
@@ -61,7 +61,7 @@ public:
 
     virtual void setTokenizerParams(wchar_t escape, wchar_t separator, wchar_t quote) override;
     virtual wxString getStatusText() override;
-    virtual wxString getTitle() override;
+    virtual wxString getTitle() const override;
 
     virtual bool isNumLinesLimitReached() override { return mTokenizedFileLines.isNumLinesLimitReached(); }
 
