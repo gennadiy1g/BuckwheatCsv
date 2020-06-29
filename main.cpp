@@ -257,7 +257,8 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                     wxMessageDialog messageDialog(this, stringStream.str(), "Attention", wxOK | wxICON_WARNING | wxCENTRE);
                     messageDialog.ShowModal();
                 }
-            } else if (threadStatus == ThreadStatus::Failed) {
+            } else {
+                wxASSERT(threadStatus == ThreadStatus::Failed);
                 wxMessageDialog messageDialog(this, mErrorMessage, "Attention", wxOK | wxICON_WARNING | wxCENTRE);
                 messageDialog.ShowModal();
             }
