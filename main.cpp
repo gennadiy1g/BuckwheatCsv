@@ -182,7 +182,6 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
 
         if (path != mPath) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-            auto oldPath { mPath };
             mPath = path;
             mThreadStatus = ThreadStatus::InProgress;
             mIsCancelled = false;
@@ -238,12 +237,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
 
             BOOST_LOG_SEV(gLogger, bltrivial::trace)
                 << "threadStatus=" << int(threadStatus) << ", isCancelled=" << isCancelled << FUNCTION_FILE_LINE;
-            if (isCancelled) {
-                BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
-                mPath = oldPath;
-                mGridTableNew.reset(nullptr);
-                return;
-            } else if (threadStatus == ThreadStatus::Finished) {
+            if (threadStatus == ThreadStatus::Finished || isCancelled) {
                 BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
                 wxASSERT(mGridTableNew);
                 mGridTableNew->setTokenizerParams(escape, separator, quote);
