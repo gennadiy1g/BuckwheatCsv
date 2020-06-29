@@ -54,7 +54,12 @@ wxString CsvFileGridTable::getStatusText()
 {
     std::ostringstream stringStream;
     stringStream.imbue(*sLocale);
-    stringStream << "Rows: " << (isNumLinesLimitReached() ? "more than " : "") << GetNumberRows() << "  Columns: " << GetNumberCols();
+    if (!mTokenizedFileLines.isCancelled()) {
+        stringStream << "Rows: " << (isNumLinesLimitReached() ? "more than " : "") << GetNumberRows();
+    } else {
+        stringStream << "Rows: " << GetNumberRows() << " out of approximately " << mTokenizedFileLines.approxNumLines();
+    };
+    stringStream << "  Columns: " << GetNumberCols();
     return stringStream.str();
 }
 
