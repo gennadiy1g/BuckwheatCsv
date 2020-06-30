@@ -57,7 +57,7 @@ wxString CsvFileGridTable::getStatusText()
     if (!mTokenizedFileLines.isCancelled()) {
         stringStream << "Rows: " << (isNumLinesLimitReached() ? "more than " : "") << GetNumberRows();
     } else {
-        stringStream << "Rows: " << GetNumberRows() << " out of approximately " << mTokenizedFileLines.approxNumLines();
+        stringStream << "Rows: top " << GetNumberRows() << " out of approximately " << mTokenizedFileLines.approxNumLines();
     };
     stringStream << "  Columns: " << GetNumberCols();
     return stringStream.str();
