@@ -28,6 +28,7 @@ public:
     bool IsEmptyCell(int, int) override { return false; };
 
     virtual bool isNumLinesLimitReached() { return false; }
+    virtual bool isCancelled() const { return false; };
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -64,6 +65,7 @@ public:
     virtual wxString getTitle() const override;
 
     virtual bool isNumLinesLimitReached() override { return mTokenizedFileLines.isNumLinesLimitReached(); }
+    virtual bool isCancelled() const { return mTokenizedFileLines.isCancelled(); };
 
     static inline std::unique_ptr<std::locale> sLocale { nullptr };
 

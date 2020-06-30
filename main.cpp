@@ -180,7 +180,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
     {
         wxGridUpdateLocker gridUpdateLocker(mGrid);
 
-        if (path != mPath) {
+        if (path != mPath || mGridTable.get()->isCancelled()) {
             BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
             mPath = path;
             mThreadStatus = ThreadStatus::InProgress;
