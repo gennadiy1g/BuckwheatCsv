@@ -27,7 +27,7 @@ public:
       very fast, but it does not allow the applicaiton to search for empty cells. */
     bool IsEmptyCell(int, int) override { return false; };
 
-    virtual bool isNumLinesLimitReached() { return false; }
+    virtual bool isNumLinesLimitReached() const { return false; }
     virtual bool isCancelled() const { return false; };
 
     static inline std::unique_ptr<std::locale> sLocale { nullptr };
@@ -66,7 +66,7 @@ public:
     virtual wxString getStatusText() override;
     virtual wxString getTitle() const override;
 
-    virtual bool isNumLinesLimitReached() override { return mTokenizedFileLines.isNumLinesLimitReached(); }
+    virtual bool isNumLinesLimitReached() const override { return mTokenizedFileLines.isNumLinesLimitReached(); }
     virtual bool isCancelled() const { return mTokenizedFileLines.isCancelled(); };
 
 private:
