@@ -29,6 +29,8 @@ public:
 
     virtual bool isNumLinesLimitReached() { return false; }
     virtual bool isCancelled() const { return false; };
+
+    static inline std::unique_ptr<std::locale> sLocale { nullptr };
 };
 
 class EmptyGridTable : public GridTableBase {
@@ -66,8 +68,6 @@ public:
 
     virtual bool isNumLinesLimitReached() override { return mTokenizedFileLines.isNumLinesLimitReached(); }
     virtual bool isCancelled() const { return mTokenizedFileLines.isCancelled(); };
-
-    static inline std::unique_ptr<std::locale> sLocale { nullptr };
 
 private:
     TokenizedFileLines mTokenizedFileLines;

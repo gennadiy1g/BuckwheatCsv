@@ -248,7 +248,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
                 SetStatusText(mGridTable->getStatusText());
                 if (mGridTable.get()->isNumLinesLimitReached()) {
                     std::ostringstream stringStream;
-                    stringStream.imbue(*dynamic_cast<CsvFileGridTable*>(mGridTable.get())->sLocale);
+                    stringStream.imbue(*mGridTable.get()->sLocale);
                     stringStream
                         << "Number of rows in the file exceeds the maximum number of rows that the grid is able to display. Only first "
                         << mGridTable.get()->GetNumberRows() << " rows are displayed.";
