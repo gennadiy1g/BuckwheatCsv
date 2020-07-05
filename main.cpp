@@ -172,7 +172,28 @@ void MainFrame::showFile(wxString path)
     }
 }
 
-void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote) {}
+void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote)
+{
+    // The file must be at least this size to make use of "preview" mode.
+    constexpr boost::uintmax_t kMinFileSize { 10'000'000 };
+    bool previewModeNeeded { false };
+    bool previewModeFailed { false };
+
+    if (path != mPath && bfs::file_size(bfs::path(path)) >= kMinFileSize) {
+        previewModeNeeded = true;
+        try {
+            showFilePreviewMode(path, separator, escape, quote);
+        } catch (const std::exception& e) {
+            previewModeFailed = true;
+            wxMessageDialog messageDialog(this, e.what(), "Attention", wxOK | wxICON_ERROR | wxCENTRE);
+            messageDialog.ShowModal();
+        }
+    }
+
+    if (!(previewModeNeeded && previewModeFailed)) {
+        showFileNormalMode(path, separator, escape, quote);
+    }
+}
 
 void MainFrame::showFilePreviewMode(wxString path, wxChar separator, wxChar escape, wxChar quote) {}
 
