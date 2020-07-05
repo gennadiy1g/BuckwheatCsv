@@ -172,7 +172,11 @@ void MainFrame::showFile(wxString path)
     }
 }
 
-void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote)
+void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote) {}
+
+void MainFrame::showFilePreviewMode(wxString path, wxChar separator, wxChar escape, wxChar quote) {}
+
+void MainFrame::showFileNormalMode(wxString path, wxChar separator, wxChar escape, wxChar quote)
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;
