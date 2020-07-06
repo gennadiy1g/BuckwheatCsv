@@ -195,7 +195,19 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
     }
 }
 
-void MainFrame::showFilePreviewMode(wxString path, wxChar separator, wxChar escape, wxChar quote) {}
+void MainFrame::showFilePreviewMode(wxString path, wxChar separator, wxChar escape, wxChar quote)
+{
+    {
+        wxGridUpdateLocker gridUpdateLocker(mGrid);
+        mGridTableNew = std::make_unique<CsvFileGridTable>(bfs::path(path), 50);
+        mGridTableNew->setTokenizerParams(escape, separator, quote);
+        mGrid->SetGridCursor(-1, -1);
+        mGrid->SetTable(mGridTableNew.get());
+        SetTitle(mGridTableNew->getTitle() + App::kAppName);
+        mGridTable = std::move(mGridTableNew);
+        SetStatusText("Please wait...");
+    }
+}
 
 void MainFrame::showFileNormalMode(wxString path, wxChar separator, wxChar escape, wxChar quote)
 {
