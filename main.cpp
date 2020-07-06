@@ -153,7 +153,7 @@ void MainFrame::OnOpen(wxCommandEvent& event)
     }
 }
 
-void MainFrame::showFile(wxString path)
+void MainFrame::showFile(const wxString& path)
 {
     std::optional<wchar_t> separator;
     std::optional<wchar_t> quote;
@@ -172,7 +172,7 @@ void MainFrame::showFile(wxString path)
     }
 }
 
-void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar quote)
+void MainFrame::showFile(const wxString& path, wxChar separator, wxChar escape, wxChar quote)
 {
     // The file must be at least this size to make use of "preview" mode.
     constexpr boost::uintmax_t kMinFileSize { 10'000'000 };
@@ -195,7 +195,7 @@ void MainFrame::showFile(wxString path, wxChar separator, wxChar escape, wxChar 
     }
 }
 
-void MainFrame::showFilePreviewMode(wxString path, wxChar separator, wxChar escape, wxChar quote)
+void MainFrame::showFilePreviewMode(const wxString& path, wxChar separator, wxChar escape, wxChar quote)
 {
     {
         wxGridUpdateLocker gridUpdateLocker(mGrid);
@@ -209,7 +209,7 @@ void MainFrame::showFilePreviewMode(wxString path, wxChar separator, wxChar esca
     }
 }
 
-void MainFrame::showFileNormalMode(wxString path, wxChar separator, wxChar escape, wxChar quote)
+void MainFrame::showFileNormalMode(const wxString& path, wxChar separator, wxChar escape, wxChar quote)
 {
     auto& gLogger = GlobalLogger::get();
     BOOST_LOG_SEV(gLogger, bltrivial::trace) << FUNCTION_FILE_LINE;

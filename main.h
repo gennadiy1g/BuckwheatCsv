@@ -38,10 +38,10 @@ public:
     virtual wxThread::ExitCode Entry();
     bool isReadyForDragDrop();
 
-    void showFile(wxString path);
-    void showFile(wxString path, wxChar separator, wxChar escape, wxChar quote);
-    void showFilePreviewMode(wxString path, wxChar separator, wxChar escape, wxChar quote);
-    void showFileNormalMode(wxString path, wxChar separator, wxChar escape, wxChar quote);
+    void showFile(const wxString& path);
+    void showFile(const wxString& path, wxChar separator, wxChar escape, wxChar quote);
+    void showFilePreviewMode(const wxString& path, wxChar separator, wxChar escape, wxChar quote);
+    void showFileNormalMode(const wxString& path, wxChar separator, wxChar escape, wxChar quote);
 
 private:
     void OnOpen(wxCommandEvent& event);
