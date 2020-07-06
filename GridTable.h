@@ -46,6 +46,7 @@ public:
 class CsvFileGridTable : public GridTableBase {
 public:
     explicit CsvFileGridTable(const bfs::path& filePath, OnProgress onProgress = OnProgress(), IsCancelled isCancelled = IsCancelled());
+    CsvFileGridTable(const bfs::path& filePath, std::size_t linesToPreview);
     virtual ~CsvFileGridTable() = default; // Defaulted virtual destructor
 
     // Disallow assignment and pass-by-value.

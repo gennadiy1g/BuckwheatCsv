@@ -12,6 +12,12 @@ CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath, OnProgress onProgr
     }
 }
 
+CsvFileGridTable::CsvFileGridTable(const bfs::path& filePath, std::size_t linesToPreview)
+    : mTokenizedFileLines(filePath, linesToPreview)
+    , mFilePath(filePath)
+{
+}
+
 wxString CsvFileGridTable::GetValue(int row, int col)
 {
     auto& gLogger = GlobalLogger::get();
