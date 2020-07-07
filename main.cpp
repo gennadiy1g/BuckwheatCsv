@@ -197,9 +197,12 @@ void MainFrame::showFile(const wxString& path, wxChar separator, wxChar escape, 
 
 void MainFrame::showFilePreviewMode(const wxString& path, wxChar separator, wxChar escape, wxChar quote)
 {
+    auto screenHeight = wxSystemSettings::GetMetric(wxSYS_SCREEN_Y);
+    auto captionHeight = wxSystemSettings::GetMetric(wxSYS_CAPTION_Y, this);
+    auto linesToPreview = (screenHeight == -1 || captionHeight == -1) ? 50 : static_cast<std::size_t>(screenHeight / captionHeight);
     {
         wxGridUpdateLocker gridUpdateLocker(mGrid);
-        mGridTableNew = std::make_unique<CsvFileGridTable>(bfs::path(path), 50);
+        mGridTableNew = std::make_unique<CsvFileGridTable>(bfs::path(path), linesToPreview);
         mGridTableNew->setTokenizerParams(escape, separator, quote);
         mGrid->SetGridCursor(-1, -1);
         mGrid->SetTable(mGridTableNew.get());
