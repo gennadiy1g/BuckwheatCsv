@@ -134,7 +134,7 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 {
     wxAboutDialogInfo aboutInfo;
     aboutInfo.SetName(wxTheApp->GetAppDisplayName());
-    aboutInfo.SetVersion("1.2");
+    aboutInfo.SetVersion("1.3");
     aboutInfo.SetDescription("Viewer for CSV files");
     aboutInfo.SetCopyright("(C) 2019-2020");
     aboutInfo.SetWebSite("https://github.com/gennadiy1g/BuckwheatCsv/releases");
