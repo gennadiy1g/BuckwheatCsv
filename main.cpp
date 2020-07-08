@@ -211,6 +211,7 @@ void MainFrame::showFilePreviewMode(const wxString& path, wxChar separator, wxCh
         SetTitle(mGridTableNew->getTitle() + App::kAppName);
         mGridTable = std::move(mGridTableNew);
         SetStatusText("Please wait...");
+        mGrid->GoToCell(0, 0);
     }
 }
 
