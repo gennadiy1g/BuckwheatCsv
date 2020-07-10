@@ -68,7 +68,7 @@ public:
     virtual wxString getTitle() const override;
 
     virtual bool isNumLinesLimitReached() const override { return mTokenizedFileLines.isNumLinesLimitReached(); }
-    virtual bool isCancelled() const { return mTokenizedFileLines.isCancelled(); };
+    virtual bool isCancelled() const override { return mTokenizedFileLines.isCancelled(); };
 
 private:
     TokenizedFileLines mTokenizedFileLines;
