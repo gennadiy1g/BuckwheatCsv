@@ -11,7 +11,7 @@
 #include "GridTable.h"
 #include "OpenFileDialog.h"
 #include "main.h"
-#if defined(__WXGTK__)
+#ifdef __WXGTK__
 #include "table.xpm"
 #endif
 

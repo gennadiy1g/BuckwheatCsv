@@ -2,7 +2,7 @@
 #include "CsvTable/log.h"
 #include "CsvTable/utilities.h"
 #include "OpenFileDialog.h"
-#if defined(__WXGTK__)
+#ifdef __WXGTK__
 #include "folder_table.xpm"
 #endif
 

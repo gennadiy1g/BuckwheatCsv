@@ -4,7 +4,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "FindColumnDialog.h"
-#if defined(__WXGTK__)
+#ifdef __WXGTK__
 #include "table_select_column.xpm"
 #endif
 
