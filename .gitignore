@@ -3,3 +3,5 @@
 /*.ico
 todo.md
 .vscode/
+/.cache
+/compile_commands.json
