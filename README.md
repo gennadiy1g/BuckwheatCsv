@@ -1,4 +1,4 @@
-**This is an old version**. Please go to [https://github.com/gennadiy1g/BuckwheatCsv2](https://github.com/gennadiy1g/BuckwheatCsv2) for the new version.
+**This is an old and deprecated version!**. Please go to [https://github.com/gennadiy1g/BuckwheatCsv2](https://github.com/gennadiy1g/BuckwheatCsv2) for the new much improved version.
 
 # Buckwheat CSV
 
