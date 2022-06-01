@@ -1,3 +1,5 @@
+**This is an old version**. Please go to [https://github.com/gennadiy1g/BuckwheatCsv2](https://github.com/gennadiy1g/BuckwheatCsv2) for the new version.
+
 # Buckwheat CSV
 
 A viewer for (big) CSV files.
